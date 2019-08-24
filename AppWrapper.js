@@ -2,14 +2,16 @@ import React from 'react';
 import {
   I18nManager, StyleSheet, View, Text,
   ScrollView, Animated, StatusBar, Dimensions,
-  TouchableOpacity, Image, SafeAreaView, 
+  TouchableOpacity, Image, SafeAreaView, Easing
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { createAppContainer, createDrawerNavigator,
+import { createAppContainer, createDrawerNavigator, StackViewTransitionConfigs,
    createStackNavigator, DrawerItems } from 'react-navigation';
+import StackViewStyleInterpolator from 'react-navigation-stack/lib/module/views/StackView/StackViewStyleInterpolator.js';
 import { scale } from 'react-native-size-matters';
-import HomePage from './src/screens/HomePage';
+import {HomePage, BusPage, FoodPage, FacilitiesPage,
+   MedicalPage, ProblemPage, GalleryPage, WeatherPage} from './src/screens';
 
 class AppWrapper extends React.Component {
   constructor(props) {
@@ -23,53 +25,76 @@ class AppWrapper extends React.Component {
   }
 }
 
-class Profile extends React.Component {
-  render() {
-    return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} >
-      <TouchableOpacity onPress={() => { this.props.navigation.navigate("HomePage") }} >
-        <Text style={{ color: 'black' }} >Profile</Text>
-      </TouchableOpacity>
-    </View>);
-  }
-}
 const HomePageStackNavigator = createStackNavigator({
   HomePage: {
     screen: HomePage,
     navigationOptions: ({ navigation }) => {
       return {
         header: null,
-        /*headerStyle: { backgroundColor: 'transparent', marginTop: scale(30) }, // this hides the ripple that crosses the header lines
-        headerLeft: (
-          <View style={{ borderRadius: scale(40), overflow: 'hidden', }} >
-            <TouchableNativeFeedback onPress={() => navigation.openDrawer()}
-              background={TouchableNativeFeedback.Ripple('#2b2b2b', false)}
-              style={{
-                width: scale(70), height: scale(70),
-                alignItems: 'center', justifyContent: 'center'
-              }}>
-              <Icon name="md-menu" size={30} />
-            </TouchableNativeFeedback>
-          </View>
-        ),
-        headerRight: (
-          <View style={{ marginRight: scale(10), borderRadius: scale(25), overflow: 'hidden' }} >
-            <Image style={{ height: scale(45), width: scale(45) }} source={{ uri: imageUri }} />
-          </View>
-        )*/
       };
-    }
+    },
   },
-  Profile: { screen: Profile }
+  BusPage: { 
+    screen: BusPage,
+   },
+   FoodPage: {
+     screen: FoodPage
+   },
+   FacilitiesPage: {
+     screen: FacilitiesPage
+   },
+   MedicalPage: {
+    screen: MedicalPage
+  },
+  ProblemPage: {
+    screen: ProblemPage
+  },
+  GalleryPage: {
+    screen: GalleryPage
+  },
+  WeatherPage: {
+    screen: WeatherPage
+  }
+}, {
+  //initialRouteName: 'BusPage',
+  defaultNavigationOptions: {
+    gesturesEnabled: true,
+      headerStyle: {backgroundColor: '#4b5320', height: scale(85), paddingTop: scale(20) },
+      headerLeftContainerStyle: { paddingLeft: scale(6), color: '#fff' },
+      headerTintColor: 'white',
+    
+  },
+  transitionConfig: () => ({
+    screenInterpolator: StackViewStyleInterpolator.forHorizontal,
+    transitionSpec: {
+      useNativeDriver: true,
+      duration: 350,
+      timing: Animated.timing,
+      easing: Easing.inOut(Easing.ease),
+
+    },
+
+  })
+
 })
+
 
 const AppDrawerNavigator = createDrawerNavigator({
   HomePage: {
     screen: HomePageStackNavigator,
+    navigationOptions: ({ navigation }) => {
+      return { drawerLabel: "דף הבית",  }
+    },
   },
-  TestPage: {
-    screen: HomePage
+  BusPage: {
+    screen: BusPage,
+    navigationOptions: ({ navigation }) => {
+      return { drawerLabel: "שאטלים", }
+    },
   }
 }, {
+  
+  contentOptions: {  itemStyle: { alignItems: 'flex-end' }  },
   edgeWidth: scale(20),
   hideStatusBar: true,
   contentComponent: (props) => 

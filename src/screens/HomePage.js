@@ -1,13 +1,16 @@
 import React from 'react';
 import {
     View, Text, ScrollView, Animated, StyleSheet,
-    StatusBar, Dimensions, TouchableOpacity, Image
+    StatusBar, Dimensions, TouchableOpacity, Image, ImageBackground
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
+import FAIcon from 'react-native-vector-icons/FontAwesome5';
 import { createAppContainer, createDrawerNavigator } from 'react-navigation';
 import { scale } from 'react-native-size-matters';
 import LinearGradient from 'react-native-linear-gradient';
+
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export default class HomePage extends React.Component {
     constructor(props) {
@@ -18,15 +21,16 @@ export default class HomePage extends React.Component {
         const imageUri = 'https://upload.wikimedia.org/wikipedia/he/5/5b/%D7%AA%D7%92_%D7%99%D7%97%D7%99%D7%93%D7%94_%D7%A7%D7%A8%D7%99%D7%99%D7%AA_%D7%94%D7%94%D7%93%D7%A8%D7%9B%D7%94_-_%D7%A2%D7%99%D7%A8_%D7%94%D7%91%D7%94%D7%93%D7%99%D7%9D.png';
 
         return (
-            <View style={{ flex: 1, }} >
-                <View style={{
-                    alignItems: 'center', //backgroundColor: 'blue'
-                }} >
-                    <LinearGradient colors={["#586125", "#4b5320",]}
+            <View style={{ flex: 1, alignItems: 'center' }} >
+                <View style={{backgroundColor: '#eaeed3',//'#F5F5DC', // this View defines the height and width of the LG and it's background color.
+                width: '160%', height: scale(250),}} > 
+                    <LinearGradient colors={["#586125", "#4b5320",]} 
                         style={{
-                            height: scale(250), width: '160%',
+                            height: '100%', width: '100%',
+                            //height: scale(250), width: '160%', 
                             borderBottomRightRadius: scale(500), borderBottomLeftRadius: scale(500)
                         }} >
+                        
                         <View style={{
                             marginTop: scale(22), //backgroundColor: 'green', 
                             alignItems: 'center', overflow: 'hidden',
@@ -52,25 +56,65 @@ export default class HomePage extends React.Component {
                         <View style={{ alignSelf: 'center', }} >
                             <Text style={styles.title} >עיר הבה"דים</Text>
                         </View>
+                        
                     </LinearGradient>
-                    <View style={{ width: '100%', height: scale(250), backgroundColor: 'blue',
-                            justifyContent: 'space-around'  }} >
-                        <View style={{flexDirection: 'row', justifyContent: 'space-around'}} ><Button /><Button /><Button /></View>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-around'}} ><Button /><Button /><Button /></View>
                     </View>
-                </View>
+                    <View style={{ width: '100%', height: SCREEN_HEIGHT - scale(250), justifyContent: 'center',
+                                backgroundColor: '#eaeed3' }} >
+                        <View style={{
+                            width: '100%', height: scale(375), //backgroundColor: 'blue',
+                            
+                            justifyContent: 'space-around'
+                        }} >
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }} >
+                                <Button buttonInfo={{ name: 'ios-business', text: 'מתקנים קריתיים', pageName: 'FacilitiesPage' }} navigate={this.props.navigation.navigate} />
+                                <Button buttonInfo={{ name: 'md-pizza', text: 'אוכל', pageName: 'FoodPage' }} navigate={this.props.navigation.navigate} />
+                                <Button buttonInfo={{ name: 'md-bus', text: 'שאטלים', pageName: 'BusPage' }} navigate={this.props.navigation.navigate} />
+                            </View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}  >
+                                <Button buttonInfo={{ name: 'md-medkit', text: 'רפואה', pageName: 'MedicalPage' }} navigate={this.props.navigation.navigate} />
+                                <Button buttonInfo={{ name: 'ios-call', text: 'פתיחת תקלה', pageName: 'ProblemPage' }} navigate={this.props.navigation.navigate} />
+                                <Button buttonInfo={{ name: 'md-images', text: 'גלריה', pageName: 'GalleryPage' }} navigate={this.props.navigation.navigate} />
+                            </View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}  >
+                                <Button buttonInfo={{ name: 'ios-information-circle', text: 'מידע נוסף', pageName: 'MedicPage' }} navigate={this.props.navigation.navigate} />
+                                <Button buttonInfo={{ name: 'ios-mail', text: 'פנייה למפקד', pageName: 'ProblemPage' }} navigate={this.props.navigation.navigate} />
+                                <Button buttonInfo={{ name: 'ios-partly-sunny', text: 'מזג אוויר', pageName: 'WeatherPage' }} navigate={this.props.navigation.navigate} />
+                            </View>
+                        </View>
+                    </View>
+                
 
             </View>
         );
     }
 }
 
-const Button = () => {
+const onButtonPress = (pageName, navigate) => {
+    navigate(pageName);
+}
+
+const Button = (props) => {
+    var buttonInfo = props.buttonInfo;
+    buttonInfo = buttonInfo == undefined ? { name: null, text: null } : buttonInfo;
     return (
-        <View style={{ width: scale(90), height: scale(90),
-            borderRadius: scale(10), overflow: 'hidden', elevation: 10 }} >
-            <TouchableNativeFeedback style={{width: '100%', height: '100%',backgroundColor: 'purple'}} >
+        <View style={{
+            width: scale(90), height: scale(90),
+            borderRadius: scale(10), overflow: 'hidden', elevation: 14
+        }} >
+
+            <TouchableNativeFeedback onPress={onButtonPress.bind(null, buttonInfo.pageName, props.navigate)} 
+            style={{ width: '100%', height: '100%', 
+                alignItems: 'center', justifyContent: 'center' }}
+                delayPressIn={0}  >
+                <ImageBackground style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}
+                source={{ uri: 'https://i.pinimg.com/originals/2b/dc/19/2bdc1957378e4fb9be6f47800b49b045.gif'}}>
+                    <Icon name={buttonInfo.name} size={50} color='white' />
+                    <Text style={{ color: 'white', fontSize: buttonInfo.pageName == 'FacilitiesPage' ? scale(12) : scale(14), }} >{buttonInfo.text}</Text>
+
+                </ImageBackground>
             </TouchableNativeFeedback>
+
         </View>
     )
 }
@@ -78,7 +122,6 @@ const Button = () => {
 const styles = StyleSheet.create({
     container: { flex: 1 },
     title: {
-        color: '#000',
         fontSize: scale(38),
         color: '#fff'
 
