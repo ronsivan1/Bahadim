@@ -69,7 +69,7 @@ export default class HomePage extends React.Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-around' }} >
                                 <Button buttonInfo={{ name: 'ios-business', text: 'מתקנים קריתיים', pageName: 'FacilitiesPage' }} navigate={this.props.navigation.navigate} />
                                 <Button buttonInfo={{ name: 'md-pizza', text: 'אוכל', pageName: 'FoodPage' }} navigate={this.props.navigation.navigate} />
-                                <Button buttonInfo={{ name: 'md-bus', text: 'שאטלים', pageName: 'BusPage' }} navigate={this.props.navigation.navigate} />
+                                <Button buttonInfo={{ name: 'ios-bus', text: 'שאטלים', pageName: 'BusPage' }} navigate={this.props.navigation.navigate} />
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}  >
                                 <Button buttonInfo={{ name: 'md-medkit', text: 'רפואה', pageName: 'MedicalPage' }} navigate={this.props.navigation.navigate} />
@@ -77,7 +77,7 @@ export default class HomePage extends React.Component {
                                 <Button buttonInfo={{ name: 'md-images', text: 'גלריה', pageName: 'GalleryPage' }} navigate={this.props.navigation.navigate} />
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}  >
-                                <Button buttonInfo={{ name: 'ios-information-circle', text: 'מידע נוסף', pageName: 'MedicPage' }} navigate={this.props.navigation.navigate} />
+                                <Button buttonInfo={{ name: 'ios-information-circle', text: 'מידע נוסף', pageName: 'MedicalPage' }} navigate={this.props.navigation.navigate} />
                                 <Button buttonInfo={{ name: 'ios-mail', text: 'פנייה למפקד', pageName: 'ProblemPage' }} navigate={this.props.navigation.navigate} />
                                 <Button buttonInfo={{ name: 'ios-partly-sunny', text: 'מזג אוויר', pageName: 'WeatherPage' }} navigate={this.props.navigation.navigate} />
                             </View>
