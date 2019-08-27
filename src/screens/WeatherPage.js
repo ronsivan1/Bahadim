@@ -41,8 +41,10 @@ class WeatherPage extends React.Component {
     this.setState({ curHour: this.state.curDate.substring(0, 2) });
     this.getLocation();
   }
+  
 
   getLocation() {
+    
     navigator.geolocation.getCurrentPosition(
       posData => {
         fetchWeatherOpenWeather(

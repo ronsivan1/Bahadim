@@ -1,20 +1,33 @@
 
 import React, { Fragment } from 'react';
 import AppWrapper from './AppWrapper';
-import { I18nManager, SafeAreaView, StatusBar } from 'react-native';
+import { I18nManager, SafeAreaView, StatusBar, PermissionsAndroid } from 'react-native';
 import { createAppContainer, createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
-import HomePage from './src/screens/HomePage'
 
+class App extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
+  
+  renderAndroidBars = () => {
+    changeNavigationBarColor('#eaeed3', true);
+    return (
+      <StatusBar translucent backgroundColor={'transparent'}
+        animated showHideTransition={'slide'} />
+    )
+  }
 
-const App = () => {
-  changeNavigationBarColor('#eaeed3', true);
-  return (
-    <SafeAreaView style={{flex: 1}} >
-      <StatusBar translucent backgroundColor={'transparent'}   />
-      <AppWrapper />
-    </SafeAreaView>
-  )
+  render() {
+    //this.renderAndroidBars()
+    return (
+      <SafeAreaView style={{ flex: 1 }} >
+        {this.renderAndroidBars()}
+        <AppWrapper />
+      </SafeAreaView>
+    )
+  }
 }
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     View, Text, ScrollView, Animated, StyleSheet,
-    StatusBar, Dimensions, TouchableOpacity, Image, TouchableWithoutFeedback
+    InteractionManager
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -14,11 +14,21 @@ export default class FoodPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            interactionsComplete: false
         }
 
     }
 
+    componentDidMount() {
+        InteractionManager.runAfterInteractions(() => {
+          this.setState({interactionsComplete: true});
+        });
+      }
+
     render() {
+        if (!this.state.interactionsComplete) {
+            return (<Text>loading...</Text>);
+        }
         return (
             <View style={styles.container} >
                 <Text>FoodPage.js</Text>
