@@ -13,7 +13,7 @@ import { SearchBar } from 'react-native-elements';
 import _ from 'lodash';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 import { SpringScrollView } from 'react-native-spring-scrollview';
-import { sundayFullData, thursdayFullData, fridayFullData } from '../../constants'
+import { sundayFullData, thursdayFullData, fridayFullData } from '../../utils/index'
 
 export default class BusPage extends React.PureComponent {
     constructor(props) {
@@ -35,8 +35,8 @@ export default class BusPage extends React.PureComponent {
         this.blurSearchBar = this.blurSearchBar.bind(this);
         this.updateSearch = this.updateSearch.bind(this);
 
-        this.tableHead = ['שעות', 'מיקום', 'עיר'];
-        this.tableHead2 = ['יעד', 'שעות'];
+        this.tableHead = ['עיר', 'מיקום', 'שעות'];
+        this.tableHead2 = ['יעד' ,'שעות'];
 
 
     }
@@ -55,7 +55,7 @@ export default class BusPage extends React.PureComponent {
             });
         })*/
         setTimeout(() => {
-            console.log('interaction completed')
+            //console.log('interaction completed')
             this.setState({
                 interactionsComplete: true,
             });
@@ -113,7 +113,7 @@ export default class BusPage extends React.PureComponent {
         else {
             const imageUri = 'https://upload.wikimedia.org/wikipedia/he/5/5b/%D7%AA%D7%92_%D7%99%D7%97%D7%99%D7%93%D7%94_%D7%A7%D7%A8%D7%99%D7%99%D7%AA_%D7%94%D7%94%D7%93%D7%A8%D7%9B%D7%94_-_%D7%A2%D7%99%D7%A8_%D7%94%D7%91%D7%94%D7%93%D7%99%D7%9D.png';
             const state = this.state;
-            const flexArr = [4, 4, 2.5];
+            const flexArr = [3, 4, 5];
             return (
                 <TouchableWithoutFeedback onPress={this.blurSearchBar}  >
                     <ScrollView style={{ flex: 1, /*backgroundColor: '#eaeed3'*/ }}
@@ -125,7 +125,7 @@ export default class BusPage extends React.PureComponent {
 
                             <Text style={{ marginVertical: scale(10) }} >יום ראשון</Text>
                             <Table style={{ width: '92%', }} borderStyle={{ borderWidth: 0, borderColor: 'lightskyblue' }}>
-                                <Row data={this.tableHead} flexArr={flexArr} style={styles.head} textStyle={styles.text} />
+                                <Row data={this.tableHead} flexArr={flexArr}  style={styles.head} textStyle={styles.text} />
                                 <Rows data={state.sundayTableData} flexArr={flexArr} style={styles.row} textStyle={styles.text} />
 
                             </Table>
@@ -156,9 +156,6 @@ const styles = StyleSheet.create({
         fontSize: scale(38),
         color: '#fff'
 
-    },
-    text: {
-        textAlign: 'right',
     },
 
     head: { height: scale(40), backgroundColor: '#f1f8ff' },

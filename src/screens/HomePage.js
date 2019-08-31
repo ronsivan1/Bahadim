@@ -10,6 +10,7 @@ import FAIcon from 'react-native-vector-icons/FontAwesome5';
 import { createAppContainer, createDrawerNavigator } from 'react-navigation';
 import { scale } from 'react-native-size-matters';
 import LinearGradient from 'react-native-linear-gradient';
+import { borderRadiusStyle } from '../utils';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
@@ -23,7 +24,7 @@ export default class HomePage extends React.Component {
         const imageUri = 'https://upload.wikimedia.org/wikipedia/he/5/5b/%D7%AA%D7%92_%D7%99%D7%97%D7%99%D7%93%D7%94_%D7%A7%D7%A8%D7%99%D7%99%D7%AA_%D7%94%D7%94%D7%93%D7%A8%D7%9B%D7%94_-_%D7%A2%D7%99%D7%A8_%D7%94%D7%91%D7%94%D7%93%D7%99%D7%9D.png';
 
         return (
-            <View style={{ flex: 1, alignItems: 'center' }} >
+            <ScrollView style={{ flex: 1, }} contentContainerStyle={{ alignItems: 'center' }}  >
                 <View style={{
                     backgroundColor: '#eaeed3',//'#F5F5DC', // this View defines the height and width of the LG and it's background color.
                     width: '160%', height: scale(250),
@@ -40,6 +41,9 @@ export default class HomePage extends React.Component {
                             alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row',
                             //overflow: 'hidden', backgroundColor: 'green',
                         }} >
+                            <View style={{ marginStart: scale(10), borderRadius: scale(25), overflow: 'hidden' }} >
+                                <Image style={{ height: scale(45), width: scale(45) }} source={{ uri: imageUri }} />
+                            </View>
 
                             <View style={{ borderRadius: scale(40), overflow: 'hidden' }} >
                                 <TouchableNativeFeedback onPress={() => this.props.navigation.openDrawer()}
@@ -50,10 +54,6 @@ export default class HomePage extends React.Component {
                                     }}>
                                     <Icon name="md-menu" size={30} color={'#fff'} />
                                 </TouchableNativeFeedback>
-                            </View>
-
-                            <View style={{ marginRight: scale(10), borderRadius: scale(25), overflow: 'hidden' }} >
-                                <Image style={{ height: scale(45), width: scale(45) }} source={{ uri: imageUri }} />
                             </View>
                         </View>
 
@@ -70,29 +70,30 @@ export default class HomePage extends React.Component {
                 }} >
                     <View style={{
                         width: '100%', height: scale(375), //backgroundColor: 'blue',
-
                         justifyContent: 'space-around'
                     }} >
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }} >
-                            <Button buttonInfo={{ name: 'ios-business', text: 'מתקנים קריתיים', pageName: 'FacilitiesPage' }} navigate={this.props.navigation.navigate} />
-                            <Button buttonInfo={{ name: 'md-pizza', text: 'אוכל', pageName: 'FoodPage' }} navigate={this.props.navigation.navigate} />
+                        <View style={styles.buttonsRow} >
                             <Button buttonInfo={{ name: 'ios-bus', text: 'שאטלים', pageName: 'BusPage' }} navigate={this.props.navigation.navigate} />
+                            <Button buttonInfo={{ name: 'md-pizza', text: 'אוכל', pageName: 'FoodPage' }} navigate={this.props.navigation.navigate} />
+                            <Button buttonInfo={{ name: 'ios-business', text: 'מתקנים קריתיים', pageName: 'FacilitiesPage' }} navigate={this.props.navigation.navigate} />
+
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}  >
-                            <Button buttonInfo={{ name: 'md-medkit', text: 'רפואה', pageName: 'MedicalPage' }} navigate={this.props.navigation.navigate} />
-                            <Button buttonInfo={{ name: 'ios-call', text: 'טלפונים', pageName: 'ProblemPage' }} navigate={this.props.navigation.navigate} />
+                        <View style={styles.buttonsRow} >
                             <Button buttonInfo={{ name: 'md-images', text: 'גלריה', pageName: 'GalleryPage' }} navigate={this.props.navigation.navigate} />
+                            <Button buttonInfo={{ name: 'ios-call', text: 'טלפונים', pageName: 'ProblemPage' }} navigate={this.props.navigation.navigate} />
+                            <Button buttonInfo={{ name: 'md-medkit', text: 'רפואה', pageName: 'MedicalPage' }} navigate={this.props.navigation.navigate} />
+
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}  >
-                            <Button buttonInfo={{ name: 'ios-information-circle', text: 'מידע נוסף', pageName: 'MedicalPage' }} navigate={this.props.navigation.navigate} />
-                            <Button buttonInfo={{ name: 'ios-mail', text: 'פנייה למפקד', pageName: 'ProblemPage' }} navigate={this.props.navigation.navigate} />
+                        <View style={styles.buttonsRow} >
                             <Button buttonInfo={{ name: 'ios-partly-sunny', text: 'מזג אוויר', pageName: 'WeatherPage' }} navigate={this.props.navigation.navigate} />
-                        </View>
+                            <Button buttonInfo={{ name: 'ios-mail', text: 'פנייה למפקד', pageName: 'ProblemPage' }} navigate={this.props.navigation.navigate} />              
+                            <Button buttonInfo={{ name: 'ios-information-circle', text: 'מידע נוסף', pageName: 'MedicalPage' }} navigate={this.props.navigation.navigate} />
+                         </View>
                     </View>
                 </View>
 
 
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -107,12 +108,13 @@ const Button = (props) => {
         <View style={styles.btnWrapper} >
             {Platform.select({
                 'android':
-                <TouchableNativeFeedback onPress={onButtonPress.bind(null, buttonInfo.pageName, props.navigate)}
-                    style={styles.btn} delayPressIn={0}  >
-                    <ButtonImageBackground buttonInfo={{ name: buttonInfo.name, pageName: buttonInfo.pageName, text: buttonInfo.text }} />
-                </TouchableNativeFeedback>,
-                'ios': <TouchableOpacity  onPress={onButtonPress.bind(null, buttonInfo.pageName, props.navigate)}
-                    style={styles.btn} activeOpacity={0.6} delayPressIn={0}  >
+                    <TouchableNativeFeedback onPress={onButtonPress.bind(null, buttonInfo.pageName, props.navigate)}
+                        background={TouchableNativeFeedback.Ripple('#98a841', false)}
+                        style={styles.btn} delayPressIn={0}  >
+                        <ButtonImageBackground buttonInfo={{ name: buttonInfo.name, pageName: buttonInfo.pageName, text: buttonInfo.text }} />
+                    </TouchableNativeFeedback>,
+                'ios': <TouchableOpacity onPress={onButtonPress.bind(null, buttonInfo.pageName, props.navigate)}
+                    style={styles.btn} activeOpacity={0.45} delayPressIn={0}  >
                     <ButtonImageBackground buttonInfo={{ name: buttonInfo.name, pageName: buttonInfo.pageName, text: buttonInfo.text }} />
                 </TouchableOpacity>
             })}
@@ -128,7 +130,17 @@ const ButtonImageBackground = ({ buttonInfo }) => (
         <Text style={{ color: 'white', fontSize: buttonInfo.pageName == 'FacilitiesPage' ? scale(12) : scale(14), }} >{buttonInfo.text}</Text>
 
     </ImageBackground>
-)
+);
+
+function elevationShadowStyle(elevation) {
+    return {
+        elevation,
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: 0.5 * elevation },
+        shadowOpacity: 0.3,
+        shadowRadius: 0.8 * elevation
+    };
+}
 
 const styles = StyleSheet.create({
     container: { flex: 1 },
@@ -138,12 +150,16 @@ const styles = StyleSheet.create({
 
     },
     btnWrapper: {
-        width: scale(90), height: scale(90),
-        borderRadius: scale(10), overflow: 'hidden', elevation: 14
+        ...elevationShadowStyle(10),
+        ...borderRadiusStyle(10, true)
     },
     btn: {
-        width: '100%', height: '100%',
-        alignItems: 'center', justifyContent: 'center'
+        width: scale(90), height: scale(90),
+        alignItems: 'center', justifyContent: 'center',
+        ...borderRadiusStyle(10, false)
+    },
+    buttonsRow: {
+        flexDirection: 'row', justifyContent: 'space-around'
     }
 })
 

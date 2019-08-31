@@ -1,16 +1,22 @@
 import React from 'react';
 import {
     View, Text, ScrollView, Animated, StyleSheet,
-    InteractionManager
+    InteractionManager, Platform
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { createAppContainer, createDrawerNavigator } from 'react-navigation';
 import { scale } from 'react-native-size-matters';
 import { SearchBar } from 'react-native-elements';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 
-export default class FoodPage extends React.Component {
+export default class PitiaPage extends React.Component {
+
+    /*static navigationOptions = ({ navigation }) => {
+        return {
+            tabBarLabel: 'פיתייה'
+        };
+    };*/
+
     constructor(props) {
         super(props);
         this.state = {
@@ -20,15 +26,13 @@ export default class FoodPage extends React.Component {
     }
 
     componentDidMount() {
-        InteractionManager.runAfterInteractions(() => {
-          this.setState({interactionsComplete: true});
-        });
+        this.props.navigation.setParams({ headerTitle: 'פיתייה' })
       }
 
     render() {
         return (
             <View style={styles.container} >
-                
+                <Text>Page</Text>
             </View>
 
         );
@@ -40,6 +44,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+        justifyContent: 'center'
     }
 })
 

@@ -8,7 +8,7 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { createAppContainer, createDrawerNavigator } from 'react-navigation';
 import { scale } from 'react-native-size-matters';
-import { callNumber } from '../constants';
+import { callNumber, borderRadiusStyle, PhoneComponent } from '../utils';
 
 export default class ProblemPage extends React.Component {
     constructor(props) {
@@ -32,13 +32,13 @@ export default class ProblemPage extends React.Component {
                         borderRadius: scale(60), overflow: 'hidden'
                     }} >
                         {Platform.select({
-                            'ios':
+                            'android':
                                 <TouchableNativeFeedback style={styles.mainButton}
                                     onPress={() => callNumber('0733772000')}
-                                    background={TouchableNativeFeedback.Ripple('#000000', false)} >
+                                    background={TouchableNativeFeedback.Ripple('#2b2b2b', false)} >
                                     <MainButtonContent />
                                 </TouchableNativeFeedback>,
-                            'android':
+                            'ios':
                                 <TouchableOpacity activeOpacity={0.5} style={styles.mainButton}
                                     onPress={() => callNumber('0733772000')} >
                                     <MainButtonContent />
@@ -70,45 +70,10 @@ export default class ProblemPage extends React.Component {
     }
 }
 
-onPhonePress = (performCall) => {
-    if (performCall) callNumber(phone);
-}
-
-const PhoneComponent = ({ info }) => {
-    const { text, phone, bcolor, iconName, performCall } = info;
-    //const largerComponent = iconName == 'email' || iconName == 'heart' ? true : false;
-    return (
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginTop: scale(10) }} >
-            <View style={{
-                height: scale(35), width: scale(180),
-                borderRadius: scale(7), overflow: 'hidden',
-            }} >
-                <TouchableNativeFeedback style={{
-                    backgroundColor: bcolor, flexDirection: 'row',
-                    height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center'
-                }}
-                    onPress={this.performCall}
-                    background={TouchableNativeFeedback.Ripple('#000000', false)} >
-                    <Text style={{ color: 'white' }} >{phone}</Text>
-                    <MCIcon name={iconName} size={21} color="white"
-                        style={{ marginLeft: scale(5) }} />
-
-                </TouchableNativeFeedback>
-            </View>
-            <Text style={{
-                color: '#075e54', fontSize: scale(15),
-                width: scale(85)
-            }} >{text} - </Text>
-        </View>
-    )
-}
-
 const MainButtonContent = () => (
     <View style={{ alignItems: 'center', justifyContent: 'center', /*backgroundColor: 'blue,'*/ marginBottom: scale(10) }} >
-        <MCIcon name={'phone'} size={scale(110)} color="white"
-        />
+        <MCIcon name={'phone'} size={scale(110)} color="white" />
         <Text style={{ fontSize: scale(17), color: 'white', fontWeight: 'bold' }} >{'מוקד 2000'}</Text>
-
     </View>
 )
 
@@ -123,6 +88,6 @@ const styles = StyleSheet.create({
         fontSize: scale(24), color: '#4b5320',
         marginVertical: scale(20)
 
-    }
+    },
 })
 

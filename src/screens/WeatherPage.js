@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, PermissionsAndroid } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import {
@@ -11,6 +11,10 @@ import { fetchWeatherHourly } from "../exports/hourlyWeather";
 import HourBar from "./HourBar";
 import { Seperator } from "./Seperator";
 import DailySection from "./DailySection";
+
+import Geolocation from 'react-native-geolocation-service';
+import LinearGradient from "react-native-linear-gradient";
+
 
 class WeatherPage extends React.Component {
   constructor(props) {
@@ -37,15 +41,54 @@ class WeatherPage extends React.Component {
     };
   }
 
+  async requestLocation() {
+    try {
+      const result = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'גישה למיקום הפלאפון',
+          message:
+            'אפליקציית קריית ההדרכה צריכה גישה למיקום ' +
+            'בכדי שתוכל להציג לך מידע על מזג האוויר',
+          buttonNeutral: 'שאל אותי מאוחר יותר',
+          buttonNegative: 'ביטול',
+          buttonPositive: 'סבבה',
+        },
+      );
+      if (result === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the location');
+      } else {
+        console.log('Location permission denied');
+      }
+    }
+    catch (err) {
+      console.log('err: ' + err)
+    }
+
+  }
+
+
   componentDidMount() {
     this.setState({ curHour: this.state.curDate.substring(0, 2) });
+    this.requestLocation();
     this.getLocation();
   }
   
 
   getLocation() {
     
-    navigator.geolocation.getCurrentPosition(
+    Geolocation.getCurrentPosition(
+      (position) => {
+        console.log(position);
+      },
+      (error) => {
+        // See error code charts below.
+        console.log(error.code, error.message);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+    );
+
+    Geolocation.getCurrentPosition(
       posData => {
         fetchWeatherOpenWeather(
           posData.coords.latitude,
@@ -221,8 +264,8 @@ class WeatherPage extends React.Component {
     return false;
   }
 
+
   render() {
-    const { lat, lng } = this.props;
     var { curHour } = this.state;
     //var curHour = "00";
     var nextDay = false;
@@ -230,7 +273,8 @@ class WeatherPage extends React.Component {
     const mainWeatherIconColor = this.getTempIconColor(mainWeatherIconName);
     var description = this.firstLetterToCapital(this.state.description);
     return (
-      <ScrollView>
+      <LinearGradient colors={["#5338b9", "#00c9e5"]} style={{ flex: 1 }}>
+      <ScrollView >
         <View style={styles.locationDate}>
           <Icon name={"md-locate"} color={"white"} size={20} />
           <Text style={styles.text}>{this.state.location}</Text>
@@ -346,6 +390,7 @@ class WeatherPage extends React.Component {
           }}
         />
       </ScrollView>
+      </LinearGradient>
     );
   }
 }

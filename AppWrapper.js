@@ -1,32 +1,55 @@
 import React from 'react';
 import {
   I18nManager, StyleSheet, View, Text,
-  ScrollView, Animated, StatusBar, Dimensions,
+  ScrollView, Animated, Platform, Dimensions,
   TouchableOpacity, Image, SafeAreaView, Easing,
-  InteractionManager
+  InteractionManager, PermissionsAndroid
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
   createAppContainer, createDrawerNavigator, StackViewTransitionConfigs,
-  createStackNavigator, createBottomTabNavigator, DrawerItems
+  createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator, DrawerItems
 } from 'react-navigation';
 import StackViewStyleInterpolator from 'react-navigation-stack/lib/module/views/StackView/StackViewStyleInterpolator.js';
 import { scale } from 'react-native-size-matters';
+
+
+
 import {
   HomePage, BusPage, FoodPage, FacilitiesPage,
   MedicalPage, ProblemPage, GalleryPage, WeatherPage,
-  InnerBusPage,
+  InnerBusPage, DiningRoomPage, ShekemPage, PitiaPage
 } from './src/screens';
 
 import { useScreens } from 'react-native-screens';
 useScreens();
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 class AppWrapper extends React.Component {
   constructor(props) {
     super(props);
     this.state = {}
   }
+
+  /*async checkLocationPermission() {
+    try {
+      const result = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
+      console.log(result)
+    }
+    catch (err) {
+      console.log('err: ' + err)
+    }
+  }*/
+
+  
+  componentDidMount() {
+    
+
+    
+  }
+
   render() {
     return (
       <AppNavigationContainer />
@@ -35,18 +58,19 @@ class AppWrapper extends React.Component {
 }
 
 const BusBottomNav = createBottomTabNavigator({
-  InnerBusPage: {
-    screen: InnerBusPage,
-    navigationOptions: {
-      tabBarLabel: 'שאטלים פנימיים'
-    }
-  },
   BusPage: {
     screen: BusPage,
     navigationOptions: {
       tabBarLabel: 'שאטלים תופסים קו'
     }
   },
+  InnerBusPage: {
+    screen: InnerBusPage,
+    navigationOptions: {
+      tabBarLabel: 'שאטלים פנימיים'
+    }
+  },
+
 
 }, {
     initialRouteName: 'BusPage',
@@ -61,9 +85,57 @@ const BusBottomNav = createBottomTabNavigator({
     },
   });
 
+const FoodBottomNav = createBottomTabNavigator({
+  ShekemPage: {
+    screen: ShekemPage,
+    navigationOptions: ({ navigation }) => {
+
+      return {
+        title: 'שק"ם',
+      };
+    },
+  },
+  DiningRoomPage: {
+    screen: DiningRoomPage,
+    navigationOptions: ({ navigation }) => {
+      //console.log(navigation.dangerouslyGetParent().dangerouslyGetParent())
+      return {
+        title: 'חדר אוכל',
+      };
+    },
+  },
+  PitiaPage: {
+    screen: PitiaPage,
+    navigationOptions: ({ navigation }) => {
+      return {
+        title: 'פיתייה',
+      };
+    },
+  },
 
 
-let transitionNum = -1;
+
+
+}, {
+    defaultNavigationOptions: {
+      tabBarButtonComponent: Platform.OS == 'android' ? TouchableNativeFeedback : Platform.OS == 'ios' ? TouchableOpacity : TouchableOpacity
+    },
+    swipeEnabled: true,
+    tabBarOptions: {
+      style: { backgroundColor: '#eaeed3', justifyContent: 'space-around' },
+      labelStyle: {
+        fontSize: scale(14),
+        fontWeight: 'bold',
+        marginBottom: scale(15)
+      },
+      tabStyle: { width: SCREEN_WIDTH / 3 }
+    },
+
+  })
+
+
+
+//let transitionNum = -1;
 const HomePageStackNavigator = createStackNavigator({
   HomePage: {
     screen: HomePage,
@@ -76,13 +148,25 @@ const HomePageStackNavigator = createStackNavigator({
   BusPage: {
     screen: BusBottomNav,
     navigationOptions: ({ navigation }) => {
+      const tabIndex = navigation.state.index;
+      const headerTitle = tabIndex == 0 ? 'שאטלים' : 'שאטלים פנימיים';
       return {
-        headerTitle: 'שאטלים',
+        headerTitle: headerTitle,
       };
     },
   },
   FoodPage: {
-    screen: FoodPage
+    screen: FoodBottomNav,
+    navigationOptions: ({ navigation }) => {
+      const tabIndex = navigation.state.index;
+      var tabParams = navigation.state.routes[tabIndex].params;
+      tabParams = tabParams == undefined && tabIndex == 0 ? { headerTitle: 'שק"ם' }
+        : tabParams == undefined ? {} : tabParams;
+      return {
+        headerTitle: tabParams.headerTitle,
+      };
+    },
+
   },
   FacilitiesPage: {
     screen: FacilitiesPage
@@ -110,17 +194,19 @@ const HomePageStackNavigator = createStackNavigator({
     screen: WeatherPage
   }
 }, {
-    //initialRouteName: 'ProblemPage',
+    //initialRouteName: 'FoodPage',
     defaultNavigationOptions: {
       //gesturesEnabled: true,
-      
+
       headerStyle: {
         backgroundColor: '#4b5320', height: scale(85), paddingTop: scale(20),
       },
       headerLeftContainerStyle: { paddingLeft: scale(6), color: '#fff', },
       headerTintColor: 'white',
     },
+
     transitionConfig: () => ({
+
       screenInterpolator: StackViewStyleInterpolator.forHorizontal,
       transitionSpec: {
         useNativeDriver: true,
@@ -131,6 +217,7 @@ const HomePageStackNavigator = createStackNavigator({
       },
 
     }),
+
     /*
         onTransitionStart: (props) => { 
           console.log('onTransitionStart')
@@ -160,7 +247,7 @@ const AppDrawerNavigator = createDrawerNavigator({
     },
   },
 }, {
-  overlayColor: 'rgba(0, 0, 0, 0.8)',
+    overlayColor: 'rgba(0, 0, 0, 0.8)',
     contentOptions: {
       iconContainerStyle: { alignSelf: 'center', transform: [{ translateX: scale(80) }] },
       labelStyle: { transform: [{ translateX: scale(-40) }] },
@@ -193,8 +280,10 @@ const Logo = () => (
     borderBottomColor: 'rgba(0,0,0,0.1)', borderBottomWidth: 0.9,
     justifyContent: 'center'
   }} >
-    <View style={{ width: '100%', height: '90%', marginStart: scale(60), 
-      justifyContent: 'flex-end' }} >
+    <View style={{
+      width: '100%', height: '90%', marginStart: scale(60),
+      justifyContent: 'flex-end'
+    }} >
       {/*<Text>אפליקציית עיר הבה"דים החדשה</Text>*/}
       <Image style={{ flex: 1, width: null, height: null, resizeMode: 'contain' }}
         source={{ uri: nicelogo }} />
@@ -206,26 +295,3 @@ const Logo = () => (
 const AppNavigationContainer = createAppContainer(AppDrawerNavigator);
 
 export default AppWrapper;
-
-const styles = StyleSheet.create({
-
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  imageContainer: {
-    height: scale(45),
-    width: scale(55),
-    marginRight: scale(8)
-  },
-  headerRight: {
-    backgroundColor: '#fff',
-    marginRight: scale(10),
-    width: scale(55),
-    height: scale(55),
-    borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});

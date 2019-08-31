@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { fetchWeatherDaily } from "../exports/hourlyWeather";
 import Icon from "react-native-vector-icons/Ionicons";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import Geolocation from 'react-native-geolocation-service';
 import { newIconNames } from "../exports/Phrases";
 
 export default class DayBar extends Component {
@@ -23,7 +24,7 @@ export default class DayBar extends Component {
     this.getHourLocation();
   }
   getHourLocation() {
-    navigator.geolocation.getCurrentPosition(posData => {
+    Geolocation.getCurrentPosition(posData => {
       fetchWeatherDaily(posData.coords.latitude, posData.coords.longitude).then(
         res => {
           //var isFound = this.findHour(res.json, "09");
