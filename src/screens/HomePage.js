@@ -2,7 +2,7 @@ import React from 'react';
 import {
     View, Text, ScrollView, Animated, StyleSheet,
     Platform, Dimensions, TouchableOpacity, Image, ImageBackground,
-    InteractionManager
+    InteractionManager, PermissionsAndroid
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -20,7 +20,7 @@ export default class HomePage extends React.Component {
         this.state = {}
     }
     render() {
-        console.log('rendered BusPage')
+        //console.log('rendered HomePage')
         const imageUri = 'https://upload.wikimedia.org/wikipedia/he/5/5b/%D7%AA%D7%92_%D7%99%D7%97%D7%99%D7%93%D7%94_%D7%A7%D7%A8%D7%99%D7%99%D7%AA_%D7%94%D7%94%D7%93%D7%A8%D7%9B%D7%94_-_%D7%A2%D7%99%D7%A8_%D7%94%D7%91%D7%94%D7%93%D7%99%D7%9D.png';
 
         return (
@@ -80,14 +80,14 @@ export default class HomePage extends React.Component {
                         </View>
                         <View style={styles.buttonsRow} >
                             <Button buttonInfo={{ name: 'md-images', text: 'גלריה', pageName: 'GalleryPage' }} navigate={this.props.navigation.navigate} />
-                            <Button buttonInfo={{ name: 'ios-call', text: 'טלפונים', pageName: 'ProblemPage' }} navigate={this.props.navigation.navigate} />
+                            <Button buttonInfo={{ name: 'ios-call', text: 'טלפונים', pageName: 'PhonesPage' }} navigate={this.props.navigation.navigate} />
                             <Button buttonInfo={{ name: 'md-medkit', text: 'רפואה', pageName: 'MedicalPage' }} navigate={this.props.navigation.navigate} />
 
                         </View>
                         <View style={styles.buttonsRow} >
                             <Button buttonInfo={{ name: 'ios-partly-sunny', text: 'מזג אוויר', pageName: 'WeatherPage' }} navigate={this.props.navigation.navigate} />
-                            <Button buttonInfo={{ name: 'ios-mail', text: 'פנייה למפקד', pageName: 'ProblemPage' }} navigate={this.props.navigation.navigate} />              
-                            <Button buttonInfo={{ name: 'ios-information-circle', text: 'מידע נוסף', pageName: 'MedicalPage' }} navigate={this.props.navigation.navigate} />
+                            <Button buttonInfo={{ name: 'ios-mail', text: 'פנייה למפקד', pageName: '' }} navigate={this.props.navigation.navigate} />              
+                            <Button buttonInfo={{ name: 'ios-information-circle', text: 'מידע נוסף', pageName: '' }} navigate={this.props.navigation.navigate} />
                          </View>
                     </View>
                 </View>

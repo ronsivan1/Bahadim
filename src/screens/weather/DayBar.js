@@ -1,50 +1,53 @@
 import React, { Component } from "react";
-import { fetchWeatherDaily } from "../exports/hourlyWeather";
 import Icon from "react-native-vector-icons/Ionicons";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import Geolocation from 'react-native-geolocation-service';
-import { newIconNames } from "../exports/Phrases";
+import Geolocation from '@react-native-community/geolocation';
+
+import { newIconNames } from "./exports/Phrases";
+import { fetchWeatherDaily } from "./exports/hourlyWeather";
+import { lat, lon} from './exports/weatherAPI';
 
 export default class DayBar extends Component {
-  state = {
-    perception: 0,
-    perceptionDesc: "",
-    skyDescription: "Default",
-    weatherInfo: "",
-    json: "",
-    loaded: false,
-    skyDescLoaded: false,
-
-    currentDay: "",
-    maxTemp: 0,
-    minTemp: 0,
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      perception: 0,
+      perceptionDesc: "",
+      skyDescription: "Default",
+      weatherInfo: "",
+      json: "",
+      loaded: false,
+      skyDescLoaded: false,
+  
+      currentDay: "",
+      maxTemp: 0,
+      minTemp: 0,
+    };
+  }
 
   componentDidMount() {
     this.getHourLocation();
   }
   getHourLocation() {
-    Geolocation.getCurrentPosition(posData => {
-      fetchWeatherDaily(posData.coords.latitude, posData.coords.longitude).then(
-        res => {
-          //var isFound = this.findHour(res.json, "09");
+    fetchWeatherDaily(lat, lon).then(
+      res => {
+        //var isFound = this.findHour(res.json, "09");
 
-          this.setState({
-            json: res.json,
-            loaded: true
-          });
+        this.setState({
+          json: res.json,
+          loaded: true
+        });
 
-          this.getDayInfo();
+        this.getDayInfo();
 
-          //var hour = "" + this.props.hour;
-          //this.getHourInfo(hour);
-          //hour = this.removeZeroNumber(hour);
-          //this.setState({
-          //  hourTime: hour
-          //});
-        }
-      );
-    });
+        //var hour = "" + this.props.hour;
+        //this.getHourInfo(hour);
+        //hour = this.removeZeroNumber(hour);
+        //this.setState({
+        //  hourTime: hour
+        //});
+      }
+    );
   }
   getDayInfo() {
     if (!this.state.loaded) {
@@ -60,7 +63,8 @@ export default class DayBar extends Component {
     const perception = Math.round(json.dailyForecasts.forecastLocation.forecast[i].precipitationProbability);
     const perceptionDesc = json.dailyForecasts.forecastLocation.forecast[i].precipitationDesc;
     const skyDescription = json.dailyForecasts.forecastLocation.forecast[i].skyDescription;
-
+    day = day == 'Sunday' ? 'ראשון' : day == 'Monday' ? 'שני' : day == 'Tuesday' ? 'שלישי' : 
+      day == 'Wednesday' ? 'רביעי' : day == 'Thursday' ? 'חמישי' : day == 'Friday' ? 'שישי' : 'שבת' 
     this.setState({ 
       currentDay: day,
       maxTemp: maxTemp,
@@ -166,17 +170,17 @@ export default class DayBar extends Component {
     var morningIconName = this.getMorningIconName();
     var nightIconName = this.getNightIconName();
     //var weatherIconSize = this.getIconSize(weatherIconName);
-
+    
     return (
       <TouchableOpacity style={[styles.container]}>
         <View style={styles.marginViewStyle}>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Text style={[styles.text, { fontSize: 9, marginVertical: 5 }]}>
+            <Text style={[styles.text, { fontSize: 11, marginVertical: 5 }]}>
               {this.state.currentDay + ""}
             </Text>
             <Icon
               name={morningIconName}
-              style={{ margin: 5, marginRight: 18 }}
+              style={{ margin: 5, marginStart: 18 }}
               color={this.getIconColor(morningIconName)}
               size={20}
             />
@@ -185,7 +189,7 @@ export default class DayBar extends Component {
 
             <Icon
               name={nightIconName}
-              style={{ margin: 5, marginLeft: 18 }}
+              style={{ margin: 5, marginEnd: 18 }}
               color={this.getIconColor(nightIconName)}
               size={20}
             />
@@ -203,12 +207,12 @@ export default class DayBar extends Component {
             />
           </View>
 
-          <Text style={[styles.text, { marginVertical: 5, marginRight: 15 }]}>
+          <Text style={[styles.text, { marginVertical: 5, marginStart: 15 }]}>
             {this.state.maxTemp}°{/*this.state.curIndex}° */}
           </Text>
           <View style={{borderBottomColor: 'white', borderBottomWidth: 0.6, width: 50,
                   transform: ([{rotate: '135deg'}])}}  />
-          <Text style={[styles.text, { marginVertical: 5, marginLeft: 15 }]}>
+          <Text style={[styles.text, { marginVertical: 5, marginEnd: 15 }]}>
             {this.state.minTemp}°{/*this.state.curIndex}° */}
           </Text>
         </View>

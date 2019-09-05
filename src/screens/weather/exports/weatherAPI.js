@@ -12,6 +12,8 @@ http://api.worldweatheronline.com/premium/v1/weather.ashx?key=ab3f67bdace343e4b8
 
 const tempUrl = "https://weather.cit.api.here.com/weather/1.0/report.json?product=observation&oneobservation=true&app_id=Nn6jBcCMYo0MvoPjr4Nb&app_code=_fJAXiBt0TCOl39bpP3VFA";
 
+export const lat = 31.0559752;
+export const lon = 34.8492397;
 
 export const fetchWeatherOpenWeather = (lat, lon) => {
   const url = rootUrl + "&lat=" + lat + "&lon=" + lon;

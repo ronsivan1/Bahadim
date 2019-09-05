@@ -1,37 +1,40 @@
-import React, { Component } from "react";
-import { fetchWeatherHourly } from "../exports/hourlyWeather";
+import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation from '@react-native-community/geolocation';
 
-import { newIconNames } from "../exports/Phrases";
+import { newIconNames } from "./exports/Phrases";
+import { fetchWeatherHourly } from "./exports/hourlyWeather";
+import { lat, lon} from './exports/weatherAPI';
 
-export default class HourBar extends Component {
-  state = {
-    hourTime: "",
-    hourTemprature: 0,
-    hourPerception: 0,
-    perceptionDesc: "",
-    skyDescription: "Default",
-    weatherInfo: "",
-    json: "",
-    loaded: false,
-    skyDescLoaded: false,
-    curDate: new Date().toLocaleDateString(),
-    curIndex: 0,
-    curDayTest: "",
-    resultDayTest: ""
-  };
+export default class HourBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hourTime: "",
+      hourTemprature: 0,
+      hourPerception: 0,
+      perceptionDesc: "",
+      skyDescription: "Default",
+      weatherInfo: "",
+      json: "",
+      loaded: false,
+      skyDescLoaded: false,
+      curDate: new Date().toLocaleDateString(),
+      curIndex: 0,
+      //curDayTest: "",
+      //resultDayTest: ""
+    };
+  }
+  
 
   componentDidMount() {
     this.getHourLocation();
   }
   getHourLocation() {
-    Geolocation.getCurrentPosition(posData => {
       fetchWeatherHourly(
-        posData.coords.latitude,
-        posData.coords.longitude
+        lat, lon
       ).then(res => {
         //var isFound = this.findHour(res.json, "09");
 
@@ -46,7 +49,6 @@ export default class HourBar extends Component {
           hourTime: hour
         });
       });
-    });
   }
 
   getHourInfo(hour) {
@@ -56,15 +58,18 @@ export default class HourBar extends Component {
     }
     const { json } = this.state;
     var curDay = parseInt(this.getDayNum().toString());
+    const todayNumber = new Date().getDate();
     for (let i = 0; i < 60; i++) {
       var wholeTime =
         "" + json.hourlyForecasts.forecastLocation.forecast[i].localTime;
       var resultHour = wholeTime.substring(0, 2);
       var resultDay = wholeTime.substring(4, 6);
-      
+      //resultDay = resultDay[0] == 0 ? resultDay[1]: resultDay; // if result day is 02 return 2
+
       if ( (hour == resultHour || (resultHour[0] == 0 && hour == resultHour[1])) ) {
-        if(  parseInt(resultDay)  == curDay ) { // IF APP IS TAKING TOO MUCH TIME TO LOAD  REMOVE THIS IF STATEMENT
-          // for example if hour=7 and resultHour=07, go in
+        //console.log('resultDay = ' + resultDay, 'curDay = ' + curDay)
+        //if( resultDay  == curDay ) { // IF APP IS TAKING TOO MUCH TIME TO LOAD REMOVE THIS IF STATEMENT
+          
           var hourTemp = Math.round(
             json.hourlyForecasts.forecastLocation.forecast[i].temperature
           );
@@ -84,11 +89,11 @@ export default class HourBar extends Component {
             weatherInfo: json.hourlyForecasts.forecastLocation.forecast[i].iconName,
             skyDescLoaded: true,
             curIndex: i,
-            curDayTest: curDay,
-            resultDayTest: resultDay,
+            //curDayTest: curDay,
+            //resultDayTest: resultDay,
           });
           return;
-        }
+        //}
       }
     }
     this.setState({ hourTemprature: "non" });

@@ -7,19 +7,19 @@ import {
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
+import LinearGradient from 'react-native-linear-gradient';
 import {
-  createAppContainer, createDrawerNavigator, StackViewTransitionConfigs,
-  createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator, DrawerItems
+  createAppContainer, createDrawerNavigator,
+  createStackNavigator, createBottomTabNavigator, DrawerItems
 } from 'react-navigation';
 import StackViewStyleInterpolator from 'react-navigation-stack/lib/module/views/StackView/StackViewStyleInterpolator.js';
 import { scale } from 'react-native-size-matters';
-
-
-
 import {
-  HomePage, BusPage, FoodPage, FacilitiesPage,
-  MedicalPage, ProblemPage, GalleryPage, WeatherPage,
-  InnerBusPage, DiningRoomPage, ShekemPage, PitiaPage
+  HomePage, BusPage,
+  MedicalPage, PhonesPage, GalleryPage, WeatherPage,
+  InnerBusPage, DiningRoomPage, ShekemPage, PitiaPage,
+
+  FacilitiesPage, SportPage, ArmoryPage, BarberPage, OtherFacilitiesPage
 } from './src/screens';
 
 import { useScreens } from 'react-native-screens';
@@ -33,28 +33,35 @@ class AppWrapper extends React.Component {
     this.state = {}
   }
 
-  /*async checkLocationPermission() {
-    try {
-      const result = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
-      console.log(result)
-    }
-    catch (err) {
-      console.log('err: ' + err)
-    }
-  }*/
-
-  
-  componentDidMount() {
-    
-
-    
-  }
-
   render() {
     return (
       <AppNavigationContainer />
     );
   }
+}
+
+const mainStackNavConfig = {
+  //initialRouteName: 'FacilitiesPage',
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#4b5320', height: scale(85), paddingTop: scale(20),
+    },
+    headerLeftContainerStyle: { paddingLeft: scale(6), color: '#fff', },
+    headerTintColor: 'white',
+  },
+
+  transitionConfig: () => ({
+
+    screenInterpolator: StackViewStyleInterpolator.forHorizontal,
+    transitionSpec: {
+      useNativeDriver: true,
+      duration: 300,
+      timing: Animated.timing,
+      easing: Easing.inOut(Easing.ease),
+
+    },
+
+  }),
 }
 
 const BusBottomNav = createBottomTabNavigator({
@@ -112,10 +119,6 @@ const FoodBottomNav = createBottomTabNavigator({
       };
     },
   },
-
-
-
-
 }, {
     defaultNavigationOptions: {
       tabBarButtonComponent: Platform.OS == 'android' ? TouchableNativeFeedback : Platform.OS == 'ios' ? TouchableOpacity : TouchableOpacity
@@ -133,7 +136,41 @@ const FoodBottomNav = createBottomTabNavigator({
 
   })
 
+const FacilitiesStackNav = createStackNavigator({
+  
+  FacilitiesPage: { screen: FacilitiesPage,
+    navigationOptions: ({ navigation }) => {
+      return {
+        header: null
+        //header: (headerProps) => <CustomHeader props={{headerTitle, navigation}} />
+      };
+    }
+  },
+  SportPage: { screen: SportPage, navigationOptions: {headerTitle: 'מרכז הספורט'} },
+  ArmoryPage: { screen: ArmoryPage, navigationOptions: {headerTitle: 'נשקייה'} },
+  BarberPage: { screen: BarberPage, navigationOptions: {headerTitle: 'מספרה'} },
+  OtherFacilitiesPage: { screen: OtherFacilitiesPage, navigationOptions: {headerTitle: 'מתקנים נוספים'} }
+}, {
+  //initialRouteName: 'SportPage',
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#4b5320', height: scale(85), paddingTop: scale(20),
+    },
+    headerLeftContainerStyle: { paddingLeft: scale(6), color: '#fff', },
+    headerTintColor: 'white',
+  },
 
+  transitionConfig: () => ({
+    screenInterpolator: StackViewStyleInterpolator.forHorizontal,
+    transitionSpec: {
+      useNativeDriver: true,
+      duration: 350,
+      timing: Animated.timing,
+      easing: Easing.inOut(Easing.ease),
+
+    },
+  })
+})
 
 //let transitionNum = -1;
 const HomePageStackNavigator = createStackNavigator({
@@ -169,68 +206,74 @@ const HomePageStackNavigator = createStackNavigator({
 
   },
   FacilitiesPage: {
-    screen: FacilitiesPage
+    screen: FacilitiesStackNav,
+    navigationOptions: {header: null}
   },
   MedicalPage: {
-    screen: MedicalPage,
-    navigationOptions: () => {
-      return {
-        headerTitle: 'רפואה'
-      };
-    }
+    screen: MedicalPage, navigationOptions: { headerTitle: 'רפואה' }
   },
-  ProblemPage: {
-    screen: ProblemPage,
-    navigationOptions: () => {
-      return {
-        headerTitle: 'טלפונים חשובים'
-      };
-    }
+  PhonesPage: {
+    screen: PhonesPage, navigationOptions: { headerTitle: 'טלפונים חשובים' }
   },
   GalleryPage: {
-    screen: GalleryPage
+    screen: GalleryPage,
+    navigationOptions: () => {
+      return {
+        headerTitle: 'גלריה'
+      };
+    }
   },
   WeatherPage: {
-    screen: WeatherPage
+    screen: WeatherPage,
+    navigationOptions: () => {
+      return {
+        headerTitle: 'מזג אוויר'
+      };
+    }
   }
-}, {
-    //initialRouteName: 'FoodPage',
-    defaultNavigationOptions: {
-      //gesturesEnabled: true,
+}, mainStackNavConfig)
 
-      headerStyle: {
-        backgroundColor: '#4b5320', height: scale(85), paddingTop: scale(20),
-      },
-      headerLeftContainerStyle: { paddingLeft: scale(6), color: '#fff', },
-      headerTintColor: 'white',
-    },
-
-    transitionConfig: () => ({
-
-      screenInterpolator: StackViewStyleInterpolator.forHorizontal,
-      transitionSpec: {
-        useNativeDriver: true,
-        duration: 350,
-        timing: Animated.timing,
-        easing: Easing.inOut(Easing.ease),
-
-      },
-
-    }),
-
-    /*
-        onTransitionStart: (props) => { 
-          console.log('onTransitionStart')
-          transitionNum = InteractionManager.createInteractionHandle();
-          InteractionManager.setDeadline()
-         },
-        onTransitionEnd: (props) => { 
-          console.log('onTransitionEnd')
-          if(transitionNum != -1)
-            InteractionManager.clearInteractionHandle(transitionNum);
-        },
-    */
-  })
+  const CustomHeader = ({props}) => {
+    const goBackIconName = Platform.OS == 'ios' ? 'ios-arrow-forward' : 'md-arrow-forward';
+    //console.log(props.navigation.actions.goBack());
+    return (
+      <View style={{
+        //backgroundColor: 'transparent',//'#F5F5DC', // this View defines the height and width of the LG and it's background color.
+        alignItems: 'center'
+      }} >
+        <LinearGradient colors={["#586125", "#4b5320",]}
+          style={{
+            width: '130%', height: scale(200), alignSelf: 'center',
+            borderBottomRightRadius: scale(180), borderBottomLeftRadius: scale(180),
+            
+          }} >
+          <View style={{
+            marginTop: scale(28), height: scale(60), width: '80%',
+            alignSelf: 'center', justifyContent: 'center',
+            //backgroundColor: 'blue',
+          }} >
+  
+            <View style={{ borderRadius: scale(40), overflow: 'hidden',  //backgroundColor: 'green',
+              width: scale(40), height: scale(40), marginStart: scale(20) }} >
+              <TouchableNativeFeedback onPress={() => {props.navigation.goBack(null)} }
+                background={TouchableNativeFeedback.Ripple('#1b1b1b', false)}
+                style={{
+                  width: '100%', height: '100%',
+                  alignItems: 'center', justifyContent: 'center'
+                }}>
+                <Icon name={goBackIconName} size={26} color={'#fff'} />
+              </TouchableNativeFeedback>
+            </View>
+  
+          </View>
+  
+          <View style={{ alignSelf: 'center', alignItems: 'center' }} >
+              <Text style={styles.title} >{props.headerTitle}</Text>
+          </View>
+        </LinearGradient>
+      </View>
+    )
+  }
 
 
 
@@ -245,21 +288,19 @@ const AppDrawerNavigator = createDrawerNavigator({
 
       }
     },
-  },
+  }
 }, {
     overlayColor: 'rgba(0, 0, 0, 0.8)',
     contentOptions: {
-      iconContainerStyle: { alignSelf: 'center', transform: [{ translateX: scale(80) }] },
-      labelStyle: { transform: [{ translateX: scale(-40) }] },
-      itemStyle: {
-        justifyContent: 'flex-end',
-      }
+      iconContainerStyle: { alignSelf: 'center', /*transform: [{ translateX: scale(80) }]*/ },
+      labelStyle: { transform: [{ translateX: scale(20) }] },
     },
     edgeWidth: scale(20),
     hideStatusBar: true,
     contentComponent: (props) =>
       <CustomDrawerContentComponent {...props} />,
   });
+
 
 const CustomDrawerContentComponent = props => (
   <ScrollView>
@@ -278,11 +319,11 @@ const Logo = () => (
   <View style={{
     width: scale(300), height: scale(90), marginBottom: scale(20), marginTop: scale(10),
     borderBottomColor: 'rgba(0,0,0,0.1)', borderBottomWidth: 0.9,
-    justifyContent: 'center'
+
   }} >
     <View style={{
-      width: '100%', height: '90%', marginStart: scale(60),
-      justifyContent: 'flex-end'
+      width: scale(120), height: '90%', //marginStart: scale(60),
+      //backgroundColor: 'blue', 
     }} >
       {/*<Text>אפליקציית עיר הבה"דים החדשה</Text>*/}
       <Image style={{ flex: 1, width: null, height: null, resizeMode: 'contain' }}
@@ -295,3 +336,10 @@ const Logo = () => (
 const AppNavigationContainer = createAppContainer(AppDrawerNavigator);
 
 export default AppWrapper;
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: scale(32),
+    color: '#fff'
+  }
+})

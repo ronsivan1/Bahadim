@@ -31,7 +31,7 @@ export default class ShekemPage extends React.Component {
             this.setState({
                 interactionsComplete: true,
             });
-        }, 350)
+        }, 300)
     }
 
     render() {
@@ -40,6 +40,8 @@ export default class ShekemPage extends React.Component {
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                     <ActivityIndicator size={45} color={'#4b5320'} /></View>);
         }
+        const bistopHours = `א'-ד' 7:00-22:00, ה' 7:00-20:30,` + '\n' + `ו' 7:00-13:00`;
+        const burger110Hours =  `א'-ד' 21:30-11:00, ה' 18:00-11:00`;
         return (
             
             <ScrollView style={{ flex: 1 }} contentContainerStyle={{ alignItems: 'center' }} >
@@ -48,13 +50,15 @@ export default class ShekemPage extends React.Component {
                     <Paragraph text={'השק"ם בבסיס הוא המרכז המסחרי שנמצא ממול לחדר אוכל, מעבר לגשרים שמחברים ביניהם.'} />
                     <Paragraph text={'מימן למרכז המסחרי ממוקמת המרפאה.'} />
 
-                    <Shop info={{ imageSource: require('../../images/bistopImage.jpg'), imageHeight: 40, resizeMode: 'stretch', openingHours: '8:00-22:00', phone: '08-634-4474',
+                    <Shop info={{ imageSource: require('../../images/bistopImage.jpg'), imageHeight: 40, resizeMode: 'stretch', openingHours: bistopHours, phone: '?',
                      web: 'http://bistopbhadim.co.il' }} />
-                    <Shop info={{ imageSource: require('../../images/shnitzelia.jpg'), imageHeight: 70, resizeMode: 'contain', openingHours: '8:00-22:00', phone: '08-634-4474',
+                    <Shop info={{ imageSource: require('../../images/shnitzelia.jpg'), imageHeight: 70, resizeMode: 'contain', openingHours: burger110Hours, phone: '08-634-4474',
                      web: 'https://hashnizelia.co.il' }} />
-                    <Shop info={{ imageSource: require('../../images/110burger.png'), imageHeight: 70, resizeMode: 'contain', openingHours: `א'-ד' 21:30-11:00, ה' 18:00-11:00`,
+                    <Shop info={{ imageSource: require('../../images/110burger.png'), imageHeight: 70, resizeMode: 'contain', openingHours: burger110Hours,
                      phone: '052-348-1497', web: 'https://110burger.co.il' }} />
-                    <Shop info={{ imageSource: require('../../images/coffeetime.png'), imageHeight: 70, resizeMode: 'contain', openingHours: `א'-ד' 21:30-11:00, ה' 18:00-11:00`,
+                    <Shop info={{ imageSource: require('../../images/coffeetime.png'), imageHeight: 70, resizeMode: 'contain', openingHours: `א'-ה' 6:00-23:00`,
+                     phone: '09-7964499', web: 'http://coffeetime.co.il' }} />
+                    <Shop info={{ imageSource: require('../../images/coffeetime.png'), imageHeight: 70, resizeMode: 'contain', openingHours: `א'-ה' 6:00-23:00`,
                      phone: '09-7964499', web: 'http://coffeetime.co.il' }} />
 
                 </View>

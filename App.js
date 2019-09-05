@@ -8,7 +8,7 @@ import changeNavigationBarColor from 'react-native-navigation-bar-color';
 I18nManager.allowRTL(true)
 I18nManager.forceRTL(true)
 
-class App extends React.PureComponent {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {}

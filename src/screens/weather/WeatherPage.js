@@ -4,19 +4,22 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import {
   fetchWeatherOpenWeather,
-  fetchWeatherCIT
-} from "../exports/weatherAPI";
-import { iconNames } from "../exports/Phrases";
-import { fetchWeatherHourly } from "../exports/hourlyWeather";
+  fetchWeatherCIT,
+  lat, lon
+} from "./exports/weatherAPI";
+
+import { iconNames } from "./exports/Phrases";
+import { fetchWeatherHourly } from "./exports/hourlyWeather";
 import HourBar from "./HourBar";
 import { Seperator } from "./Seperator";
 import DailySection from "./DailySection";
 
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation from '@react-native-community/geolocation';
 import LinearGradient from "react-native-linear-gradient";
+import changeNavigationBarColor from "react-native-navigation-bar-color";
 
 
-class WeatherPage extends React.Component {
+class WeatherPage extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,79 +35,43 @@ class WeatherPage extends React.Component {
       jsonCIT: "",
       hour: "",
       curDate: new Date().toLocaleTimeString(),
-      curHour: "",
+      curHour: new Date().getHours(),
 
       isNextDay: false,
       weatherInfo: "",
       perceptionDesc: "",
-      skyDescLoaded: false
+      skyDescLoaded: false,
     };
   }
 
-  async requestLocation() {
-    try {
-      const result = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: 'גישה למיקום הפלאפון',
-          message:
-            'אפליקציית קריית ההדרכה צריכה גישה למיקום ' +
-            'בכדי שתוכל להציג לך מידע על מזג האוויר',
-          buttonNeutral: 'שאל אותי מאוחר יותר',
-          buttonNegative: 'ביטול',
-          buttonPositive: 'סבבה',
-        },
-      );
-      if (result === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the location');
-      } else {
-        console.log('Location permission denied');
-      }
-    }
-    catch (err) {
-      console.log('err: ' + err)
-    }
-
-  }
+  
 
 
   componentDidMount() {
-    this.setState({ curHour: this.state.curDate.substring(0, 2) });
-    this.requestLocation();
+
+    setTimeout(() => { changeNavigationBarColor('#00c9e5') }, 300);
+    
     this.getLocation();
+  }
+
+  componentWillUnmount() {
+    changeNavigationBarColor('#eaeed3', true)
   }
   
 
   getLocation() {
-    
-    Geolocation.getCurrentPosition(
-      (position) => {
-        console.log(position);
-      },
-      (error) => {
-        // See error code charts below.
-        console.log(error.code, error.message);
-      },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-    );
-
-    Geolocation.getCurrentPosition(
-      posData => {
         fetchWeatherOpenWeather(
-          posData.coords.latitude,
-          posData.coords.longitude
+          lat, lon
         ).then(
           res => {
+            
             this.setState({
               weather: res.weather,
-              location: res.location
+              //location: res.location,
               //date: res.date
             });
           },
-          fetchWeatherCIT(
-            posData.coords.latitude,
-            posData.coords.longitude
-          ).then(
+          fetchWeatherCIT(lat, lon).then(
             res => {
               var resultDate = res.date + "";
               var tempStr = resultDate.substring(0, resultDate.indexOf("T"));
@@ -119,10 +86,7 @@ class WeatherPage extends React.Component {
                 //skyDescription: this.switchToCapital(res.skyDescription)
               });
             },
-            fetchWeatherHourly(
-              posData.coords.latitude,
-              posData.coords.longitude
-            ).then(res => {
+            fetchWeatherHourly(lat, lon).then(res => {
               var curIndex = 0;
               var json = res.json;
               for (var i = 0; i < 40; i++) {
@@ -167,17 +131,12 @@ class WeatherPage extends React.Component {
             })
           )
         );
-        //error => alert(error), { timeout: 10000 };
-      },
-      error => alert(error),
-      { timeout: 10000 }
-    );
   }
   getDayOfHour(hour) {
     var day = new Date("2019-02-28"); // Feb 28 2019
     var nextDay = new Date(day);
     nextDay.setDate(day.getDate() + 1);
-    console.log(nextDay); // Mar 01 2019
+    //console.log(nextDay); // Mar 01 2019
     var tomorrowDay = ("" + nextDay).substring(7, 10);
   }
   //Gets a string like "2018-12-30" flips it to "30-12-2018"
@@ -266,7 +225,8 @@ class WeatherPage extends React.Component {
 
 
   render() {
-    var { curHour } = this.state;
+    var { curHour, lat, lon } = this.state;
+    
     //var curHour = "00";
     var nextDay = false;
     const mainWeatherIconName = this.getTempIconName(curHour);
@@ -277,28 +237,17 @@ class WeatherPage extends React.Component {
       <ScrollView >
         <View style={styles.locationDate}>
           <Icon name={"md-locate"} color={"white"} size={20} />
-          <Text style={styles.text}>{this.state.location}</Text>
+          <Text style={styles.text}>עיר הבה"דים</Text>
           <Text style={styles.text}>{this.state.date}</Text>
         </View>
         <View style={[styles.tempInfo]}>
-          <View style={[styles.arrow, { top: 10 }]}>
-            <Icon
-              style={[styles.text, { fontSize: 20 }]}
-              name={"ios-arrow-back"}
-            />
-          </View>
 
           <View style={{ alignItems: "center", flexDirection: "row" }}>
-            <Text style={styles.tempText}>{this.state.temp}° </Text>
             {this.getMainIcon(mainWeatherIconName, mainWeatherIconColor)}
+            <Text style={styles.tempText}>{this.state.temp}° </Text>
+            
           </View>
 
-          <View style={[styles.arrow, { top: 10 }]}>
-            <Icon
-              style={[styles.text, { fontSize: 20 }]}
-              name={"ios-arrow-forward"}
-            />
-          </View>
         </View>
         <View style={styles.tempMaxMin}>
           <Text style={[styles.text, { marginVertical: 10 }]}>
@@ -332,39 +281,45 @@ class WeatherPage extends React.Component {
 
         {/* the hourly forecast starts from here */}
         <View style={[styles.hoursContainer, {}]}>
-          <Text style={[styles.text]}>Hours</Text>
+          <Text style={[styles.text]}>שעות</Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <HourBar
+              lat={lat} lon={lon}
               hour={(curHour = this.checkHour(parseInt(curHour) + 1))}
               nextDay={curHour == "00" ? true : nextDay}
             />
             {(nextDay = this.checkNextDay(curHour, nextDay))}
             <Seperator height={130} />
             <HourBar
+              lat={lat} lon={lon}
               hour={(curHour = this.checkHour(parseInt(curHour) + 4))}
               nextDay={nextDay}
             />
             {(nextDay = this.checkNextDay(curHour, nextDay))}
             <Seperator height={130} />
             <HourBar
+              lat={lat} lon={lon}
               hour={(curHour = this.checkHour(parseInt(curHour) + 4))}
               nextDay={nextDay}
             />
             {(nextDay = this.checkNextDay(curHour, nextDay))}
             <Seperator height={130} />
             <HourBar
+              lat={lat} lon={lon}
               hour={(curHour = this.checkHour(parseInt(curHour) + 4))}
               nextDay={nextDay}
             />
             {(nextDay = this.checkNextDay(curHour, nextDay))}
             <Seperator height={130} />
             <HourBar
+              lat={lat} lon={lon}
               hour={(curHour = this.checkHour(parseInt(curHour) + 4))}
               nextDay={nextDay}
             />
             {(nextDay = this.checkNextDay(curHour, nextDay))}
             <Seperator height={130} />
             <HourBar
+              lat={lat} lon={lon}
               hour={(curHour = this.checkHour(parseInt(curHour) + 4))}
               nextDay={nextDay}
             />
@@ -380,7 +335,7 @@ class WeatherPage extends React.Component {
           }}
         />
 
-        <DailySection />
+        <DailySection coords={{lat, lon}} />
         <View
           style={{
             borderBottomColor: "#c4d3db",
@@ -418,9 +373,9 @@ const styles = StyleSheet.create({
     marginVertical: 20
   },
   tempInfo: {
-    justifyContent: "space-between",
+    justifyContent: "center",
     marginHorizontal: 20,
-    flexDirection: "row"
+    flexDirection: "row",
   },
   tempMaxMin: {
     alignItems: "center",

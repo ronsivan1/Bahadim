@@ -1,21 +1,19 @@
-import React, { Component } from "react";
-//import { fetchWeatherHourly } from "../exports/hourlyWeather";
+import React from "react";
+//import { fetchWeatherHourly } from "./exports/hourlyWeather";
 import Icon from "react-native-vector-icons/Ionicons";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import {newIconNames} from '../exports/Phrases';
+import {newIconNames} from './exports/Phrases';
 import HourBar from "./HourBar";
 import { Seperator } from "./Seperator";
 import DayBar from './DayBar';
 
-export default class DailySection extends Component {
-    state = { 
-        curDate: new Date().toLocaleTimeString(),
-        curHour: "",
-     }
-
-     componentDidMount() {
-        this.setState({curHour: this.state.curDate.substring(0, 2)});
+export default class DailySection extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { 
+        curHour: new Date().getHours(),
       }
+    }
 
     checkHour(hour) {
         if(hour == 24) return "00";
@@ -35,11 +33,11 @@ export default class DailySection extends Component {
       }
 
     render() { 
-        var {curHour} = this.state;
+        var {curHour, coords} = this.state;
         var nextDay = false;
         return ( 
           <View style={[styles.hoursContainer, {} ]}>
-          <Text style={[styles.text]}>Daily</Text>
+          <Text style={[styles.text]}>ימים</Text>
           <View style={{flexDirection: 'row', alignItems: 'center'  }}>
             <DayBar day={0}
                     nextDay={curHour == "00" ? true : nextDay}/>

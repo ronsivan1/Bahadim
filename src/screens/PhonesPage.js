@@ -10,7 +10,7 @@ import { createAppContainer, createDrawerNavigator } from 'react-navigation';
 import { scale } from 'react-native-size-matters';
 import { callNumber, borderRadiusStyle, PhoneComponent } from '../utils';
 
-export default class ProblemPage extends React.Component {
+export default class PhonesPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -56,7 +56,7 @@ export default class ProblemPage extends React.Component {
                     <Text style={styles.title} >טלפונים מטכליים</Text>
                     <PhoneComponent info={{ text: 'מקול הלב', phone: '03-39999', bcolor: '#4b5320', iconName: 'deskphone', performCall: true }} />
 
-                    <View  >
+                    <View>
                     <Text style={{ fontSize: scale(13), textDecorationLine: 'underline', color: '#4b5320', marginTop: scale(15) }} >טיפ:</Text>
                         <Text style={{ fontSize: scale(12), color: '#4b5320', }} >
                             בעזרת טלפון משרדי ניתן להתקשר למספרים אחרים בקריית ההדרכה. לדוגמה: בכדי להתקשר למספר 0733772000 ניתן להתקשר ל2000 עם טלפון משרדי.

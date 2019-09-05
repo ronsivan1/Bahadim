@@ -59,7 +59,7 @@ export default class BusPage extends React.PureComponent {
             this.setState({
                 interactionsComplete: true,
             });
-        }, 350)
+        }, 300)
     }
 
     componentWillUnmount() {
@@ -123,19 +123,19 @@ export default class BusPage extends React.PureComponent {
                             value={state.search} onChangeText={this.updateSearch} />
                         <View style={{ alignItems: 'center' }} >
 
-                            <Text style={{ marginVertical: scale(10) }} >יום ראשון</Text>
+                            <Text style={styles.tableTitle} >יום ראשון</Text>
                             <Table style={{ width: '92%', }} borderStyle={{ borderWidth: 0, borderColor: 'lightskyblue' }}>
                                 <Row data={this.tableHead} flexArr={flexArr}  style={styles.head} textStyle={styles.text} />
                                 <Rows data={state.sundayTableData} flexArr={flexArr} style={styles.row} textStyle={styles.text} />
 
                             </Table>
-                            <Text style={{ marginVertical: scale(10) }} >יום חמישי</Text>
+                            <Text style={styles.tableTitle} >יום חמישי</Text>
                             <Table style={{ width: '92%', }} borderStyle={{ borderWidth: 0, borderColor: 'lightskyblue' }}>
                                 <Row data={this.tableHead2} flexArr={flexArr} style={styles.head} textStyle={styles.text} />
                                 <Rows data={state.thursdayTableData} flexArr={flexArr} style={styles.row} textStyle={styles.text} />
 
                             </Table>
-                            <Text style={{ marginVertical: scale(10) }} >יום שישי</Text>
+                            <Text style={styles.tableTitle} >יום שישי</Text>
                             <Table style={{ width: '92%', }} borderStyle={{ borderWidth: 0, borderColor: 'lightskyblue' }}>
                                 <Row data={this.tableHead2} flexArr={flexArr} style={styles.head} textStyle={styles.text} />
                                 <Rows data={state.fridayTableData} flexArr={flexArr} style={styles.row} textStyle={styles.text} />
@@ -151,13 +151,12 @@ export default class BusPage extends React.PureComponent {
 
 
 const styles = StyleSheet.create({
-    title: {
-        color: '#000',
-        fontSize: scale(38),
-        color: '#fff'
-
+    tableTitle: {
+        color: '#4b5310',
+        fontSize: scale(27),
+        marginVertical: scale(25),
+        fontWeight: 'bold', textDecorationLine: 'underline'
     },
-
     head: { height: scale(40), backgroundColor: '#f1f8ff' },
     wrapper: { flexDirection: 'row', },
     title: { flex: 1, backgroundColor: '#f6f8fa' },
