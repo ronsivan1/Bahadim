@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView, PermissionsAndroid } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import LinearGradient from "react-native-linear-gradient";
+import changeNavigationBarColor from "react-native-navigation-bar-color";
 
 import {
   fetchWeatherOpenWeather,
@@ -14,9 +16,7 @@ import HourBar from "./HourBar";
 import { Seperator } from "./Seperator";
 import DailySection from "./DailySection";
 
-import Geolocation from '@react-native-community/geolocation';
-import LinearGradient from "react-native-linear-gradient";
-import changeNavigationBarColor from "react-native-navigation-bar-color";
+
 
 
 class WeatherPage extends React.PureComponent {

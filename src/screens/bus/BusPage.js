@@ -18,9 +18,6 @@ import { sundayFullData, thursdayFullData, fridayFullData } from '../../utils/in
 export default class BusPage extends React.PureComponent {
     constructor(props) {
         super(props);
-        /*var s = {}
-        s.a = s.b = s.c = 0
-        Alert.alert('hi', JSON.stringify(s))*/
         this.state = {
             interactionsComplete: false,
             //search: '',
@@ -37,8 +34,7 @@ export default class BusPage extends React.PureComponent {
 
         this.tableHead = ['עיר', 'מיקום', 'שעות'];
         this.tableHead2 = ['יעד' ,'שעות'];
-
-
+        
     }
 
     /*shouldComponentUpdate(nextState, nextProps) {

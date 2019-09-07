@@ -13,7 +13,7 @@ import ShekemPage from './food/ShekemPage';
 
 import WeatherPage from './weather/WeatherPage';
 
-import { FacilitiesPage, SportPage, ArmoryPage,
+import { FacilitiesPage, SportPage, LaundryPage,
      BarberPage, OtherFacilitiesPage } from './facilities';
 
 
@@ -31,5 +31,5 @@ export {
 
     DiningRoomPage, PitiaPage, ShekemPage,
 
-    FacilitiesPage, SportPage, ArmoryPage, BarberPage, OtherFacilitiesPage
+    FacilitiesPage, SportPage, LaundryPage, BarberPage, OtherFacilitiesPage
 }

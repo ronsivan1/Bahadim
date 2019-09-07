@@ -1,5 +1,4 @@
 import React from "react";
-//import { fetchWeatherHourly } from "./exports/hourlyWeather";
 import Icon from "react-native-vector-icons/Ionicons";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import {newIconNames} from './exports/Phrases';

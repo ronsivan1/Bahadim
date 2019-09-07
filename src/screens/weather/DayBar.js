@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import Geolocation from '@react-native-community/geolocation';
 
-import { newIconNames } from "./exports/Phrases";
 import { fetchWeatherDaily } from "./exports/hourlyWeather";
 import { lat, lon} from './exports/weatherAPI';
 

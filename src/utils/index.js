@@ -5,6 +5,8 @@ import { scale } from 'react-native-size-matters';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { Paragraph, globalStyles } from './components';
+import Container from './Container';
+import CustomHeader from './CustomHeader';
 
 export const sundayFullData = [
     ['קריית שמונה, עצירה בחצור', 'תחנה מרכזית רציף 1', '06:15, 06:45'],
@@ -158,7 +160,9 @@ const PhoneButtonContent = ({info}) => {
 
 export {
     Paragraph,
-    globalStyles
+    globalStyles,
+    Container,
+    CustomHeader
 };
 
 const styles = StyleSheet.create({

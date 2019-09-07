@@ -1,17 +1,11 @@
 import { StyleSheet, View } from "react-native";
 import React, { Component } from "react";
 
-export const Seperator = ({height}) => {
-
-    return ( 
+export const Seperator = ({height}) => ( 
         <View style={[styles.seperator, {height: parseInt(height)}]}/>
-     );
-
-     
-}
+);
 
 const styles = StyleSheet.create({
-
     seperator: {
         borderRightColor: "#8b969b",
         borderRightWidth: 0.8,

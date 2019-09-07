@@ -8,6 +8,9 @@ import changeNavigationBarColor from 'react-native-navigation-bar-color';
 I18nManager.allowRTL(true)
 I18nManager.forceRTL(true)
 
+import { useScreens } from 'react-native-screens';
+useScreens();
+
 class App extends React.Component {
   constructor(props) {
     super(props);

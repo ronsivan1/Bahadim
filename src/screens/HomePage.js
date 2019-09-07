@@ -1,13 +1,10 @@
 import React from 'react';
 import {
-    View, Text, ScrollView, Animated, StyleSheet,
+    View, Text, ScrollView, StyleSheet,
     Platform, Dimensions, TouchableOpacity, Image, ImageBackground,
-    InteractionManager, PermissionsAndroid
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
-import FAIcon from 'react-native-vector-icons/FontAwesome5';
-import { createAppContainer, createDrawerNavigator } from 'react-navigation';
 import { scale } from 'react-native-size-matters';
 import LinearGradient from 'react-native-linear-gradient';
 import { borderRadiusStyle } from '../utils';

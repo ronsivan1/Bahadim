@@ -1,8 +1,8 @@
 import FacilitiesPage from './FacilitiesPage';
 import SportPage from './SportPage';
-import ArmoryPage from './ArmoryPage';
+import LaundryPage from './LaundryPage';
 import BarberPage from './BarberPage';
 import OtherFacilitiesPage from './OtherFacilitiesPage';
 
-export { FacilitiesPage, SportPage, ArmoryPage, BarberPage,
+export { FacilitiesPage, SportPage, LaundryPage, BarberPage,
     OtherFacilitiesPage }; 

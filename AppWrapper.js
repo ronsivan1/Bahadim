@@ -1,29 +1,25 @@
 import React from 'react';
 import {
-  I18nManager, StyleSheet, View, Text,
+  StyleSheet, View, Text,
   ScrollView, Animated, Platform, Dimensions,
-  TouchableOpacity, Image, SafeAreaView, Easing,
-  InteractionManager, PermissionsAndroid
+   Image, SafeAreaView, Easing,
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {
-  createAppContainer, createDrawerNavigator,
-  createStackNavigator, createBottomTabNavigator, DrawerItems
-} from 'react-navigation';
+  createAppContainer,} from 'react-navigation';
+import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import StackViewStyleInterpolator from 'react-navigation-stack/lib/module/views/StackView/StackViewStyleInterpolator.js';
 import { scale } from 'react-native-size-matters';
 import {
   HomePage, BusPage,
   MedicalPage, PhonesPage, GalleryPage, WeatherPage,
   InnerBusPage, DiningRoomPage, ShekemPage, PitiaPage,
-
-  FacilitiesPage, SportPage, ArmoryPage, BarberPage, OtherFacilitiesPage
+  FacilitiesPage, SportPage, LaundryPage, BarberPage, OtherFacilitiesPage
 } from './src/screens';
-
-import { useScreens } from 'react-native-screens';
-useScreens();
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -63,8 +59,26 @@ const mainStackNavConfig = {
 
   }),
 }
-
-const BusBottomNav = createBottomTabNavigator({
+const bottomNavConfig = {
+  //initialRouteName: 'BusPage',
+  tabBarOptions: {
+    style: { backgroundColor: '#eaeed3', 
+    transform:[{translateY: scale(1)}], shadowColor: 'transparent', elevation: 0 }, // these styles are to hide the borderBottom
+    labelStyle: {
+      fontSize: scale(14),
+      fontWeight: 'bold',
+      //marginBottom: scale(15),
+    },
+    inactiveTintColor: '#6b6b6b',
+    activeTintColor: '#4169E1',
+    indicatorStyle: { backgroundColor: 'lightskyblue' },
+    pressColor: '#5b5b5b',
+    //scrollEnabled: true // it's working with hebrew in react-navigation 4 !!!
+  },
+  
+  tabBarPosition: 'bottom'
+}
+const BusBottomNav = createMaterialTopTabNavigator({
   BusPage: {
     screen: BusPage,
     navigationOptions: {
@@ -79,20 +93,9 @@ const BusBottomNav = createBottomTabNavigator({
   },
 
 
-}, {
-    initialRouteName: 'BusPage',
-    swipeEnabled: true,
-    tabBarOptions: {
-      style: { backgroundColor: '#eaeed3' },
-      labelStyle: {
-        fontSize: scale(14),
-        fontWeight: 'bold',
-        marginBottom: scale(15)
-      }
-    },
-  });
+}, bottomNavConfig);
 
-const FoodBottomNav = createBottomTabNavigator({
+const FoodBottomNav = createMaterialTopTabNavigator({
   ShekemPage: {
     screen: ShekemPage,
     navigationOptions: ({ navigation }) => {
@@ -119,22 +122,7 @@ const FoodBottomNav = createBottomTabNavigator({
       };
     },
   },
-}, {
-    defaultNavigationOptions: {
-      tabBarButtonComponent: Platform.OS == 'android' ? TouchableNativeFeedback : Platform.OS == 'ios' ? TouchableOpacity : TouchableOpacity
-    },
-    swipeEnabled: true,
-    tabBarOptions: {
-      style: { backgroundColor: '#eaeed3', justifyContent: 'space-around' },
-      labelStyle: {
-        fontSize: scale(14),
-        fontWeight: 'bold',
-        marginBottom: scale(15)
-      },
-      tabStyle: { width: SCREEN_WIDTH / 3 }
-    },
-
-  })
+}, bottomNavConfig)
 
 const FacilitiesStackNav = createStackNavigator({
   
@@ -147,11 +135,11 @@ const FacilitiesStackNav = createStackNavigator({
     }
   },
   SportPage: { screen: SportPage, navigationOptions: {headerTitle: 'מרכז הספורט'} },
-  ArmoryPage: { screen: ArmoryPage, navigationOptions: {headerTitle: 'נשקייה'} },
+  LaundryPage: { screen: LaundryPage, navigationOptions: {headerTitle: 'מכבסה'} },
   BarberPage: { screen: BarberPage, navigationOptions: {headerTitle: 'מספרה'} },
   OtherFacilitiesPage: { screen: OtherFacilitiesPage, navigationOptions: {headerTitle: 'מתקנים נוספים'} }
 }, {
-  //initialRouteName: 'SportPage',
+  //initialRouteName: 'LaundryPage',
   defaultNavigationOptions: {
     headerStyle: {
       backgroundColor: '#4b5320', height: scale(85), paddingTop: scale(20),
@@ -164,7 +152,7 @@ const FacilitiesStackNav = createStackNavigator({
     screenInterpolator: StackViewStyleInterpolator.forHorizontal,
     transitionSpec: {
       useNativeDriver: true,
-      duration: 350,
+      duration: 300,
       timing: Animated.timing,
       easing: Easing.inOut(Easing.ease),
 
@@ -280,20 +268,18 @@ const HomePageStackNavigator = createStackNavigator({
 const AppDrawerNavigator = createDrawerNavigator({
   HomePage: {
     screen: HomePageStackNavigator,
-
-    navigationOptions: ({ navigation }) => {
-      return {
+    navigationOptions: {
         title: "דף הבית",
         drawerIcon: () => <Icon name={'md-home'} size={30} />,
-
-      }
-    },
+    }
   }
 }, {
-    overlayColor: 'rgba(0, 0, 0, 0.8)',
+    drawerPosition: 'left',
+    //overlayColor: 'rgba(0, 0, 0, 0.8)',
     contentOptions: {
       iconContainerStyle: { alignSelf: 'center', /*transform: [{ translateX: scale(80) }]*/ },
       labelStyle: { transform: [{ translateX: scale(20) }] },
+
     },
     edgeWidth: scale(20),
     hideStatusBar: true,
@@ -301,13 +287,12 @@ const AppDrawerNavigator = createDrawerNavigator({
       <CustomDrawerContentComponent {...props} />,
   });
 
-
 const CustomDrawerContentComponent = props => (
   <ScrollView>
     <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
 
       <Logo />
-      <DrawerItems {...props} />
+      <DrawerNavigatorItems {...props} />
 
     </SafeAreaView>
   </ScrollView>
