@@ -4,14 +4,13 @@ import {
 } from 'react-native';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { scale } from 'react-native-size-matters';
-import { PhoneComponent } from '../utils';
+import { PhoneComponent, RTLText } from '../utils';
 
 export default class MedicalPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
         }
-
     }
 
     render() {
@@ -26,11 +25,11 @@ export default class MedicalPage extends React.Component {
                     }} >חר"פ עיר הבה"דים</Text>
                     <View style={styles.paragraph} >
                         <DotIcon />
-                        <Text style={styles.text} >החר"פ או בשמו האחר מרפ"א דרום פועל בימים א'-ה' בין השעות 8:00 ל-17:00. הוא ממוקם בסמוך לקריית ההדרכה, כך שכל דרכי ההגעה לקריית ההדרכה רלוונטיות גם אליו.</Text>
+                        <RTLText style={styles.text} >החר"פ או בשמו האחר מרפ"א דרום פועל בימים א'-ה' בין השעות 8:00 ל-17:00. הוא ממוקם בסמוך לקריית ההדרכה, כך שכל דרכי ההגעה לקריית ההדרכה רלוונטיות גם אליו.</RTLText>
                     </View>
                     <View style={styles.paragraph} >
                         <DotIcon />
-                        <Text style={styles.text} >במרכז יינתנו שירותי רפואה מגוונים, ביניהם: רפואה ראשונית, מומחים, וייעוצים, מרפאת בריאות הנפש, רפואת שיניים, פיזיותרפיה, שירותי דימות, רפואה שלישונית, ריפוי בעיסוק, מכשור וציוד רפואי מתקדם, שירותי מעבדה ובית מרקחת אזורי.</Text>
+                        <RTLText style={styles.text} >במרכז יינתנו שירותי רפואה מגוונים, ביניהם: רפואה ראשונית, מומחים, וייעוצים, מרפאת בריאות הנפש, רפואת שיניים, פיזיותרפיה, שירותי דימות, רפואה שלישונית, ריפוי בעיסוק, מכשור וציוד רפואי מתקדם, שירותי מעבדה ובית מרקחת אזורי.</RTLText>
                     </View>
 
                     {/*<View style={styles.paragraph} >
@@ -39,7 +38,8 @@ export default class MedicalPage extends React.Component {
                     </View>*/}
 
                     <View style={{ marginTop: scale(15) }} >
-                        <Text style={{ fontSize: scale(20), textDecorationLine: 'underline' }} >צור קשר:</Text>
+                        <Text style={{ fontSize: scale(20), textDecorationLine: 'underline',
+                    writingDirection: 'rtl' }} >צור קשר:</Text>
 
                     </View>
 
@@ -61,8 +61,6 @@ const DotIcon = () => {
 }
 
 
-
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -78,7 +76,9 @@ const styles = StyleSheet.create({
 
     },
     text: {
-        fontSize: scale(15)
+        fontSize: scale(15),
+        lineHeight: scale(20),
+        //writingDirection: 'rtl'
     },
 })
 

@@ -18,7 +18,7 @@ export default class ShekemPage extends React.Component {
     }
 
     componentDidMount() {
-        //this.props.navigation.setParams({ headerTitle: 'שק"ם' });
+        this.props.navigation.setParams({ headerTitle: 'שק"ם' });
 
         setTimeout(() => {
             //console.log('interaction completed')
@@ -32,7 +32,9 @@ export default class ShekemPage extends React.Component {
         if (!this.state.interactionsComplete) {
             return (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-                    <ActivityIndicator size={45} color={'#4b5320'} /></View>);
+                    <ActivityIndicator color={'#4b5320'}
+                    size={Platform.OS == 'ios' ? 0 : 45} />
+                </View>);
         }
         else {
             const bistopHours = `א'-ד' 7:00-22:00, ה' 7:00-20:30,` + '\n' + `ו' 7:00-13:00`;
@@ -76,7 +78,7 @@ const Shop = ({ info }) => {
                 source={imageSource} />
             <View style={{ marginStart: scale(10), justifyContent: 'center', width: '70%', overflow: 'hidden' }} >
                 <View style={{}} >
-                    <Text style={{ textDecorationLine: 'underline' }} >שעות פתיחה:</Text>
+                    <Text style={{ textDecorationLine: 'underline', textAlign: 'left' }} >שעות פתיחה:</Text>
                     <Text style={{ textAlign: 'left' }} >{openingHours} </Text>
                 </View>
                 
@@ -96,7 +98,7 @@ const Paragraph = ({ text }) => {
         <View style={styles.paragraph} >
             <MCIcon name={'circle'} style={{ marginTop: scale(8), marginEnd: scale(8) }}
                 solid size={6} color={'black'} />
-            <Text>{text}</Text>
+            <Text style={{textAlign: 'left'}} >{text}</Text>
 
         </View>
     )

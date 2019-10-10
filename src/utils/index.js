@@ -4,7 +4,7 @@ import { Alert, Linking, Platform,
 import { scale } from 'react-native-size-matters';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
-import { Paragraph, globalStyles } from './components';
+import { Paragraph, RTLText, globalStyles } from './components';
 import Container from './Container';
 import CustomHeader from './CustomHeader';
 
@@ -121,8 +121,8 @@ export const PhoneComponent = ({info}) => {
     return (
         <View style={{flexDirection: 'row', marginTop: scale(10), 
         alignItems: 'center' }} >
-            {shouldContainText ? <Text style={{ color: '#075e54', fontSize: scale(15),
-            width: scale(85) }} >{text} - </Text>: null}
+            {shouldContainText ? <RTLText style={{ color: '#075e54', fontSize: scale(15),
+            width: scale(85)}} >{text} - </RTLText>: null}
             
                 
                 {Platform.select({
@@ -152,7 +152,7 @@ const PhoneButtonContent = ({info}) => {
         <View style={[styles.phoneBtnContent, { backgroundColor: bcolor }] } >
             <MCIcon name={iconName} size={21} color="white"
                 style={{ marginEnd: scale(5) }}/>
-            <Text style={{ color: 'white', fontSize: scale(fontSize) }} >{phone}</Text>
+            <RTLText style={{ color: 'white', fontSize: scale(fontSize) }} >{phone}</RTLText>
             
         </View>
     );
@@ -162,7 +162,8 @@ export {
     Paragraph,
     globalStyles,
     Container,
-    CustomHeader
+    CustomHeader,
+    RTLText
 };
 
 const styles = StyleSheet.create({

@@ -6,7 +6,6 @@ import {
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { scale } from 'react-native-size-matters';
-import { SearchBar } from 'react-native-elements';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 
 export default class PitiaPage extends React.Component {
@@ -32,7 +31,7 @@ export default class PitiaPage extends React.Component {
     render() {
         return (
             <View style={styles.container} >
-                <Text>Page</Text>
+                <Text>PitiaPage.js</Text>
             </View>
 
         );

@@ -7,8 +7,7 @@ import {
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
-import {
-  createAppContainer,} from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
@@ -20,8 +19,10 @@ import {
   InnerBusPage, DiningRoomPage, ShekemPage, PitiaPage,
   FacilitiesPage, SportPage, LaundryPage, BarberPage, OtherFacilitiesPage
 } from './src/screens';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
+const sbHeight = getStatusBarHeight();
 
 class AppWrapper extends React.Component {
   constructor(props) {
@@ -35,13 +36,11 @@ class AppWrapper extends React.Component {
     );
   }
 }
-
 const mainStackNavConfig = {
   //initialRouteName: 'FacilitiesPage',
   defaultNavigationOptions: {
-    headerStyle: {
-      backgroundColor: '#4b5320', height: scale(85), paddingTop: scale(20),
-    },
+    headerStyle: { backgroundColor: '#4b5320', height: scale(50) },
+    headerForceInset: { top: 'never', bottom: 'never' }, // this removes the SafeArea paddingTop on iOS
     headerLeftContainerStyle: { paddingLeft: scale(6), color: '#fff', },
     headerTintColor: 'white',
   },
@@ -129,8 +128,9 @@ const FacilitiesStackNav = createStackNavigator({
   FacilitiesPage: { screen: FacilitiesPage,
     navigationOptions: ({ navigation }) => {
       return {
-        header: null
-        //header: (headerProps) => <CustomHeader props={{headerTitle, navigation}} />
+        header: null,
+        headerBackTitle: 'מתקנים'
+        //header: (headerProps) => <CustomHeader props={{headerTitle: 'מתקנים קריתיים', navigation}} />
       };
     }
   },
@@ -142,9 +142,10 @@ const FacilitiesStackNav = createStackNavigator({
   //initialRouteName: 'LaundryPage',
   defaultNavigationOptions: {
     headerStyle: {
-      backgroundColor: '#4b5320', height: scale(85), paddingTop: scale(20),
+      backgroundColor: '#4b5320', height: scale(50)
     },
     headerLeftContainerStyle: { paddingLeft: scale(6), color: '#fff', },
+    headerForceInset: { top: 'never', bottom: 'never' }, // this removes the SafeArea paddingTop on iOS
     headerTintColor: 'white',
   },
 
@@ -167,6 +168,7 @@ const HomePageStackNavigator = createStackNavigator({
     navigationOptions: ({ navigation }) => {
       return {
         header: null,
+        headerBackTitle: 'דף הבית'
       };
     },
   },
@@ -195,7 +197,9 @@ const HomePageStackNavigator = createStackNavigator({
   },
   FacilitiesPage: {
     screen: FacilitiesStackNav,
-    navigationOptions: {header: null}
+    navigationOptions: {
+      header: null
+    }
   },
   MedicalPage: {
     screen: MedicalPage, navigationOptions: { headerTitle: 'רפואה' }
@@ -236,7 +240,7 @@ const HomePageStackNavigator = createStackNavigator({
             
           }} >
           <View style={{
-            marginTop: scale(28), height: scale(60), width: '80%',
+             height: scale(60), width: '80%',
             alignSelf: 'center', justifyContent: 'center',
             //backgroundColor: 'blue',
           }} >
@@ -282,7 +286,7 @@ const AppDrawerNavigator = createDrawerNavigator({
 
     },
     edgeWidth: scale(20),
-    hideStatusBar: true,
+    //hideStatusBar: true,
     contentComponent: (props) =>
       <CustomDrawerContentComponent {...props} />,
   });
@@ -302,17 +306,16 @@ const nicelogo = 'http://rng.org.il/wp-content/uploads/2015/08/%D7%A2%D7%99%D7%A
 const pic = 'https://lh3.googleusercontent.com/CvakuCnEPCgBLB1AyfjwfZ5mYyRsnGxx3qCos1uPUKQ3zXDe_vGnj0rbmiEXQe8Xtho';
 const Logo = () => (
   <View style={{
-    width: scale(300), height: scale(90), marginBottom: scale(20), marginTop: scale(10),
+    width: scale(300), height: scale(90), marginBottom: scale(20),
     borderBottomColor: 'rgba(0,0,0,0.1)', borderBottomWidth: 0.9,
-
+    justifyContent: 'center'
   }} >
     <View style={{
-      width: scale(120), height: '90%', //marginStart: scale(60),
-      //backgroundColor: 'blue', 
+      width: scale(120), height: '90%', //backgroundColor: 'blue', 
     }} >
-      {/*<Text>אפליקציית עיר הבה"דים החדשה</Text>*/}
-      <Image style={{ flex: 1, width: null, height: null, resizeMode: 'contain' }}
-        source={{ uri: nicelogo }} />
+      <Image style={{ flex: 1, width: null, height: null, resizeMode: 'contain',
+      }}
+        source={require('./src/images/bahadimLogo.jpg')} />
     </View>
   </View>
 )

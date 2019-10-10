@@ -31,8 +31,6 @@ target 'bahad' do
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
-  pod 'RNSpringScrollView', :path => '../node_modules/react-native-spring-scrollview'
-
   target 'bahadTests' do
     inherit! :search_paths
     # Pods for testing

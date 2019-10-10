@@ -1,7 +1,8 @@
 import React from 'react';
 import {
     View, Text, ScrollView, StyleSheet,
-    Platform, Dimensions, TouchableOpacity, Image, ImageBackground,
+    Platform, Dimensions, TouchableOpacity,
+    Image, ImageBackground, SafeAreaView, NativeModules
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -9,48 +10,66 @@ import { scale } from 'react-native-size-matters';
 import LinearGradient from 'react-native-linear-gradient';
 import { borderRadiusStyle } from '../utils';
 
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+
 const SCREEN_HEIGHT = Dimensions.get('window').height;
+const SCREEN_WIDTH = Dimensions.get('window').width;
+
+
 
 export default class HomePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {}
+
+        this.sbHeight = getStatusBarHeight();
     }
     render() {
         //console.log('rendered HomePage')
         const imageUri = 'https://upload.wikimedia.org/wikipedia/he/5/5b/%D7%AA%D7%92_%D7%99%D7%97%D7%99%D7%93%D7%94_%D7%A7%D7%A8%D7%99%D7%99%D7%AA_%D7%94%D7%94%D7%93%D7%A8%D7%9B%D7%94_-_%D7%A2%D7%99%D7%A8_%D7%94%D7%91%D7%94%D7%93%D7%99%D7%9D.png';
 
         return (
-            <ScrollView style={{ flex: 1, }} contentContainerStyle={{ alignItems: 'center' }}  >
+            <View style={{ flex: 1, alignItems: 'center' }}  >
                 <View style={{
                     backgroundColor: '#eaeed3',//'#F5F5DC', // this View defines the height and width of the LG and it's background color.
-                    width: '160%', height: scale(250),
+                    width: scale(475), height: '35%', 
                 }} >
-                    <LinearGradient colors={["#586125", "#4b5320",]}
+                    <LinearGradient colors={[/*"#586125", */"#4b5320","#4b5320",]}
                         style={{
                             height: '100%', width: '100%',
-                            //height: scale(250), width: '160%', 
-                            borderBottomRightRadius: scale(500), borderBottomLeftRadius: scale(500)
+                            borderBottomRightRadius: scale(500), borderBottomLeftRadius: scale(500)                 
                         }} >
 
                         <View style={{
-                            marginTop: scale(22), height: scale(60), width: '100%',
-                            alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row',
-                            //overflow: 'hidden', backgroundColor: 'green',
+                            marginTop: 0,
+                            height: scale(60), width: SCREEN_WIDTH, alignSelf: 'center',
+                            alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row',
+                            paddingHorizontal: scale(10)
+                            //overflow: 'hidden', 
                         }} >
-                            <View style={{ marginStart: scale(10), borderRadius: scale(25), overflow: 'hidden' }} >
+                            <View style={{ marginStart: scale(5), borderRadius: scale(25), overflow: 'hidden' }} >
                                 <Image style={{ height: scale(45), width: scale(45) }} source={{ uri: imageUri }} />
                             </View>
 
-                            <View style={{ borderRadius: scale(40), overflow: 'hidden' }} >
-                                <TouchableNativeFeedback onPress={() => this.props.navigation.openDrawer()}
+                            <View style={{ borderRadius: scale(40), overflow: 'hidden',
+                         }} >
+                                {Platform.OS == 'android' ? 
+                                    <TouchableNativeFeedback onPress={() => this.props.navigation.openDrawer()}
                                     background={TouchableNativeFeedback.Ripple('#98a841', false)}
                                     style={{
-                                        width: scale(70), height: scale(70),
+                                        width: scale(70), height: scale(70), 
                                         alignItems: 'center', justifyContent: 'center'
                                     }}>
                                     <Icon name="md-menu" size={30} color={'#fff'} />
-                                </TouchableNativeFeedback>
+                                </TouchableNativeFeedback> :
+                                Platform.OS == 'ios' ? 
+                                <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}
+                                    style={{ width: scale(60), height: scale(60),
+                                        alignItems: 'center', justifyContent: 'center'
+                                        }}>
+                                    <Icon name="md-menu" size={30} color={'#fff'} />
+                                </TouchableOpacity>
+                                : null}
                             </View>
                         </View>
 
@@ -61,13 +80,14 @@ export default class HomePage extends React.Component {
 
                     </LinearGradient>
                 </View>
-                <View style={{
-                    width: '100%', height: SCREEN_HEIGHT - scale(250), justifyContent: 'center',
-                    backgroundColor: '#eaeed3'
+                <SafeAreaView style={{
+                    width: '100%', justifyContent: 'center', backgroundColor: '#eaeed3',
+                    //height: SCREEN_HEIGHT - (scale(250) + this.sbHeight),
+                    height: '65%'
                 }} >
                     <View style={{
-                        width: '100%', height: scale(375), //backgroundColor: 'blue',
-                        justifyContent: 'space-around'
+                        width: '100%', height: scale(375),
+                        justifyContent: 'space-around',// backgroundColor: 'green'
                     }} >
                         <View style={styles.buttonsRow} >
                             <Button buttonInfo={{ name: 'ios-bus', text: 'שאטלים', pageName: 'BusPage' }} navigate={this.props.navigation.navigate} />
@@ -87,10 +107,10 @@ export default class HomePage extends React.Component {
                             <Button buttonInfo={{ name: 'ios-information-circle', text: 'מידע נוסף', pageName: '' }} navigate={this.props.navigation.navigate} />
                          </View>
                     </View>
-                </View>
+                </SafeAreaView>
 
 
-            </ScrollView>
+            </View>
         );
     }
 }

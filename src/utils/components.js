@@ -7,14 +7,23 @@ export const Paragraph = ({ text, num }) => (
     num ? 
     <View style={[globalStyles.paragraph]} >
         <Text style={{ fontSize: scale(17), marginEnd: scale(8), fontWeight: 'bold' }} >.{num}</Text>
-        <Text style={{ fontSize: scale(17) }} >{text}</Text>
+        <Text style={globalStyles.text} >{text}</Text>
     </View> :
     <View style={globalStyles.paragraph} >
         <MCIcon name={'circle'} style={{ marginTop: scale(8), marginEnd: scale(8) }}
             solid size={6} color={'black'} />
-        <Text style={{ fontSize: scale(17) }} >{text}</Text>
+        <Text style={globalStyles.text} >{text}</Text>
     </View>
 );
+
+export const RTLText = ({ style, children }) => {
+    var s = style;
+    var pair = {writingDirection: 'rtl'};
+    s = {...s, ...pair}; // this line combines s with pair
+    return (
+        <Text style={s} >{children}</Text>
+    );
+}
 
 export const globalStyles = StyleSheet.create({
     pageContainer: {
@@ -29,8 +38,11 @@ export const globalStyles = StyleSheet.create({
     paragraph: {
         flexDirection: 'row',
         marginVertical: scale(10),
+        //backgroundColor: 'blue'
     },
     text: {
-        fontSize: scale(17)
+        fontSize: scale(17),
+        lineHeight: scale(20),
+        writingDirection: 'rtl'
     },
 })

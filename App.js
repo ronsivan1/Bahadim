@@ -1,15 +1,12 @@
-
 import React, { Fragment } from 'react';
 import AppWrapper from './AppWrapper';
-import { I18nManager, SafeAreaView, StatusBar, Platform } from 'react-native';
-import { createAppContainer, createDrawerNavigator, createStackNavigator } from 'react-navigation';
+import { I18nManager, SafeAreaView, StatusBar, View,
+  Platform } from 'react-native';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import { scale } from 'react-native-size-matters';
 
-I18nManager.allowRTL(true)
-I18nManager.forceRTL(true)
-
-import { useScreens } from 'react-native-screens';
-useScreens();
+I18nManager.allowRTL(true);
+I18nManager.forceRTL(true);
 
 class App extends React.Component {
   constructor(props) {
@@ -17,21 +14,26 @@ class App extends React.Component {
     this.state = {}
   }
   
-  renderAndroidBars = () => {
+  renderNavigationBars = () => {
     changeNavigationBarColor('#eaeed3', true);
-    return (
-      <StatusBar translucent backgroundColor={'transparent'}
-        animated showHideTransition={'slide'} />
-    )
+    return Platform.select({
+      android: 
+        <StatusBar backgroundColor='#4b5320' animated />,
+      ios:
+        <StatusBar barStyle='light-content' showHideTransition='fade' />
+    })
+  
   }
 
   render() {
-    //this.renderAndroidBars()
     return (
-      <SafeAreaView style={{ flex: 1 }} >
-        {this.renderAndroidBars()}
-        <AppWrapper />
-      </SafeAreaView>
+      <Fragment>
+        <SafeAreaView style={{ flex: 0, backgroundColor: '#4b5320' }} />
+          <SafeAreaView style={{ flex: 1, backgroundColor: '#eaeed3' }} >
+            {this.renderNavigationBars()}
+            <AppWrapper />
+          </SafeAreaView>
+      </Fragment>
     )
   }
 }
