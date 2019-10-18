@@ -16,6 +16,8 @@ import WeatherPage from './weather/WeatherPage';
 import { FacilitiesPage, SportPage, LaundryPage,
      BarberPage, OtherFacilitiesPage } from './facilities';
 
+import { InfoPage } from './info'
+
 
 
 export {
@@ -31,5 +33,7 @@ export {
 
     DiningRoomPage, PitiaPage, ShekemPage,
 
-    FacilitiesPage, SportPage, LaundryPage, BarberPage, OtherFacilitiesPage
+    FacilitiesPage, SportPage, LaundryPage, BarberPage, OtherFacilitiesPage,
+
+    InfoPage
 }

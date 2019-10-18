@@ -10,11 +10,10 @@ import { scale } from 'react-native-size-matters';
 import LinearGradient from 'react-native-linear-gradient';
 import { borderRadiusStyle } from '../utils';
 
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+//import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
-
 
 
 export default class HomePage extends React.Component {
@@ -22,7 +21,7 @@ export default class HomePage extends React.Component {
         super(props);
         this.state = {}
 
-        this.sbHeight = getStatusBarHeight();
+        //this.sbHeight = getStatusBarHeight();
     }
     render() {
         //console.log('rendered HomePage')
@@ -104,7 +103,7 @@ export default class HomePage extends React.Component {
                         <View style={styles.buttonsRow} >
                             <Button buttonInfo={{ name: 'ios-partly-sunny', text: 'מזג אוויר', pageName: 'WeatherPage' }} navigate={this.props.navigation.navigate} />
                             <Button buttonInfo={{ name: 'ios-mail', text: 'פנייה למפקד', pageName: '' }} navigate={this.props.navigation.navigate} />              
-                            <Button buttonInfo={{ name: 'ios-information-circle', text: 'מידע נוסף', pageName: '' }} navigate={this.props.navigation.navigate} />
+                            <Button buttonInfo={{ name: 'ios-information-circle', text: 'מידע נוסף', pageName: 'InfoPage' }} navigate={this.props.navigation.navigate} />
                          </View>
                     </View>
                 </SafeAreaView>

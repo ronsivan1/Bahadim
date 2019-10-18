@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 import {
     View, Text, ScrollView, StyleSheet,
     Dimensions, TouchableOpacity, ImageBackground,
-    ActivityIndicator, Platform
+    ActivityIndicator, Platform, Image
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import FAIcon from 'react-native-vector-icons/FontAwesome5';
@@ -14,26 +14,27 @@ import { CustomHeader, Container } from '../../utils';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-export default class FacilitiesPage extends React.Component {
+export default class InfoPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { }
+        this.state = {  }
     }
-
     render() {
         return (
-            <CustomHeader {...this.props} headerTitle='מתקנים קריתיים' >
+            <CustomHeader {...this.props} headerTitle='מידע נוסף' >
                 <Container {...this.props} >
                 
                         <View style={styles.pageContainer} >
-                            <Button info={{ iconName: 'dumbbell', pageName: 'SportPage', text: 'מרכז הספורט', }}
+                            <Button info={{ iconName: 'people', iconType: 'MIIcon', pageName: '', text: 'פרט ות"ש', }}
                                 navigate={this.props.navigation.navigate} />
-                            <Button info={{ iconName: 'local-laundry-service', iconType: 'MCIcon', pageName: 'LaundryPage', text: 'מכבסה' }}
+                            <Button info={{ iconName: 'security', iconType: 'MIIcon', pageName: '', text: 'ביטחון מידע' }}
                                 navigate={this.props.navigation.navigate} />
-                            <Button info={{ iconName: 'content-cut', iconType: 'MCIcon', pageName: 'BarberPage', text: 'מספרה' }}
+                            <Button info={{ iconName: 'star-of-david', pageName: '', text: 'יהדות' }}
                                 navigate={this.props.navigation.navigate} />
-                            <Button info={{ iconName: 'clock-outline', iconType: 'MCIcon', pageName: 'OtherFacilitiesPage', text: 'מתקנים נוספים' }}
+                            <Button info={{ iconName: 'pistol', iconType: 'MCIcon', pageName: '', text: 'טירונות ורובאות' }}
                                 navigate={this.props.navigation.navigate} />
+                            <Button info={{ iconName: 'caveret', pageName: '', text: 'אתר כוורת' }}
+                            navigate={this.props.navigation.navigate} />
                         </View>
                 
                 </Container>
@@ -75,9 +76,10 @@ const ButtonImageBackground = (info) => {
                 source={{ uri: 'https://wallpaperplay.com/walls/full/4/4/1/32261.jpg' }} >
                 <RTLText style={{ color: 'white', fontSize: scale(26), fontWeight: 'bold', width: '58%',  }} >{info.text}</RTLText>
 
-                {info.text == 'מכבסה' ? <MIIcon name={info.iconName} size={50} color='white' />
-                    : info.iconType == 'MCIcon' ? <MCIcon name={info.iconName} size={50} color='white' />
-                        : <FAIcon name={info.iconName} size={50} color='white' />}
+                {info.iconName == 'caveret' ? <Image source={require('../../images/caveret.png')} style={{ height: scale(50), width: scale(50), resizeMode: 'contain' }} /> :
+                    info.iconType == 'MIIcon' ? <MIIcon name={info.iconName} size={50} color='white' /> :
+                        info.iconType == 'MCIcon' ? <MCIcon name={info.iconName} size={50} color='white' />
+                            : <FAIcon name={info.iconName} size={50} color='white' />}
                 
             </ImageBackground>
         )
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
         //flex: 1
     },
     pageContainer: {
-        width: '90%', height: SCREEN_HEIGHT-scale(180),
+        width: '90%', height: SCREEN_HEIGHT-scale(125),
         alignSelf: 'center', 
         justifyContent: 'space-around'
         //marginVertical: scale(15),

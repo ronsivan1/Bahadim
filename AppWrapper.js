@@ -17,12 +17,13 @@ import {
   HomePage, BusPage,
   MedicalPage, PhonesPage, GalleryPage, WeatherPage,
   InnerBusPage, DiningRoomPage, ShekemPage, PitiaPage,
-  FacilitiesPage, SportPage, LaundryPage, BarberPage, OtherFacilitiesPage
+  FacilitiesPage, SportPage, LaundryPage, BarberPage, OtherFacilitiesPage,
+  InfoPage
 } from './src/screens';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+//import { getStatusBarHeight } from 'react-native-status-bar-height';
+//const sbHeight = getStatusBarHeight();
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
-const sbHeight = getStatusBarHeight();
 
 class AppWrapper extends React.Component {
   constructor(props) {
@@ -215,6 +216,7 @@ const HomePageStackNavigator = createStackNavigator({
       };
     }
   },
+  InfoPage: { screen: InfoPage, navigationOptions: { header: null } },
   WeatherPage: {
     screen: WeatherPage,
     navigationOptions: () => {
