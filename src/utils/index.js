@@ -3,10 +3,11 @@ import { Alert, Linking, Platform,
     View, Text, ScrollView, StyleSheet, TouchableOpacity, } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
-import { Paragraph, RTLText, globalStyles } from './components';
+import { Bullet, RTLText, globalStyles, PhoneComponent, callNumber } from './components';
 import Container from './Container';
 import CustomHeader from './CustomHeader';
+import PageButton from './PageButton';
+import {data} from './data.json';
 
 export const sundayFullData = [
     ['קריית שמונה, עצירה בחצור', 'תחנה מרכזית רציף 1', '06:15, 06:45'],
@@ -78,31 +79,7 @@ export const fridayFullData = [
     ['אילת', '07:15'],
 ];
 
-export const callNumber = (phone) => {
-    //console.log('callNumber ----> ', phone);
-    let phoneNumber = phone;
-    if (Platform.OS !== 'android') {
-        phoneNumber = `telprompt:${phone}`;
-    }
-    else if(Platform.OS === 'android') {
-        phoneNumber = `tel:${phone}`;
-    }
-    if(phoneNumber.includes('@')) {
-        phoneNumber = `mailto:${phone}`;
-    }
-    if(phoneNumber.includes('http'))
-        phoneNumber = phone;
-    
-    Linking.canOpenURL(phoneNumber)
-        .then(supported => {
-            if (!supported) {
-                Alert.alert('Phone number is not available');
-            } else {
-                return Linking.openURL(phoneNumber);
-            }
-        })
-        .catch(err => console.log(err));
-};
+
 
 // if platform is ios, dont add borderRadius to avoid the weird square behind the button when clicking it.
 // if platform is android this will add borderRadius to the btnWrapper so the Ripple won't appear outside of button bounds.
@@ -113,71 +90,21 @@ export function borderRadiusStyle(borderRadius, isCalledFromWrapper){
     };
 }
 
-
-const onPhonePress = (phone) => callNumber(phone)
-
-export const PhoneComponent = ({info}) => {
-    const { text, phone, bcolor, iconName, shouldContainText = true, width = 180, fontSize = 13 } = info;
-    return (
-        <View style={{flexDirection: 'row', marginTop: scale(10), 
-        alignItems: 'center' }} >
-            {shouldContainText ? <RTLText style={{ color: '#075e54', fontSize: scale(15),
-            width: scale(85)}} >{text} - </RTLText>: null}
-            
-                
-                {Platform.select({
-                    'android': 
-                        <View style={{ borderRadius: scale(7), overflow: 'hidden' }} >
-                            <TouchableNativeFeedback style={[styles.btn, { width: scale(width) }]} onPress={onPhonePress.bind(null, phone)}
-                            background={TouchableNativeFeedback.Ripple('#3b3b3b', false)} >
-                                <PhoneButtonContent info={{phone, iconName, bcolor, fontSize}} />
-                            </TouchableNativeFeedback>
-                        </View>,
-                    'ios': 
-                        <TouchableOpacity style={[styles.btn, { width: scale(width) }]} onPress={onPhonePress.bind(null, phone)}
-                        activeOpacity={0.5} >
-                            <PhoneButtonContent info={{phone, iconName, bcolor, fontSize}} />
-                        </TouchableOpacity>,
-                })}
-
-            
-            
-        </View>
-    )
-}
-
-const PhoneButtonContent = ({info}) => {
-    const { phone, iconName, bcolor, fontSize } = info;
-    return(
-        <View style={[styles.phoneBtnContent, { backgroundColor: bcolor }] } >
-            <MCIcon name={iconName} size={21} color="white"
-                style={{ marginEnd: scale(5) }}/>
-            <RTLText style={{ color: 'white', fontSize: scale(fontSize) }} >{phone}</RTLText>
-            
-        </View>
-    );
-}
+/*const innerBuses = data.bus.innerBuses;
+data.bus.innerBuses.sundayFullData.map((sundayRow, i) => {
+    innerBuses.midWeekFullData[i][0] = sundayRow[0];
+    innerBuses.thursdayFullData[i][0] = sundayRow[0];
+})*/
 
 export {
-    Paragraph,
+    Bullet,
+    PhoneComponent,
     globalStyles,
     Container,
     CustomHeader,
-    RTLText
+    PageButton,
+    callNumber,
+    RTLText,
+    data
 };
 
-const styles = StyleSheet.create({
-    btnWrapper: {
-        
-        ...borderRadiusStyle(7, true)
-    },
-    btn: {
-        justifyContent: 'center',
-        height: scale(40), width: scale(180),
-        ...borderRadiusStyle(7, false)
-    },
-    phoneBtnContent: {
-        alignItems: 'center', justifyContent: 'center', flexDirection: 'row',
-        height: '100%', width: '100%' 
-    }
-})

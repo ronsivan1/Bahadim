@@ -1,14 +1,13 @@
 import React from 'react';
 import {
-    View, Text, ScrollView, Animated, StyleSheet,
+    View, Text, ScrollView, StyleSheet,
     Platform, Dimensions, TouchableOpacity, Image
 } from 'react-native';
-import { TouchableNativeFeedback, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import { createAppContainer, createDrawerNavigator } from 'react-navigation';
 import { scale } from 'react-native-size-matters';
-import { callNumber, borderRadiusStyle, PhoneComponent, RTLText } from '../utils';
+import { callNumber, PageButton, PhoneComponent, RTLText } from '../../utils';
 
 export default class PhonesPage extends React.Component {
     constructor(props) {
@@ -23,7 +22,7 @@ export default class PhonesPage extends React.Component {
             <ScrollView style={{ flex: 1 }} contentContainerStyle={{ alignItems: 'center' }} >
 
                 <View style={{
-                    width: '80%', marginVertical: scale(15), //backgroundColor: 'blue',
+                    width: '90%', marginVertical: scale(15), //backgroundColor: 'blue',
                     alignItems: 'center'
                 }} >
                     {/*<Text style={{textDecorationLine: 'underline', alignSelf: 'center', fontSize: scale(24),color: '#4b5320',}} >פתיחת תקלה</Text>*/}
@@ -45,24 +44,27 @@ export default class PhonesPage extends React.Component {
                                 </TouchableOpacity>
                         })}
                     </View>
+                    <PageButton info={{
+                        iconName: 'bahadimTag', pageName: 'GeneralPhones', text: 'כללי',
+                        pageProps: { headerTitle: 'בה"ד 13' }
+                    }} />
+                    <PageButton info={{ iconName: 'weirdBahadimLogo', iconType: 'MIIcon', pageName: 'BahadPhones', text: 'לשכות הבה"דים', }} />
 
-                    <Text style={styles.title} >טלפונים אזרחיים</Text>
+                    <PageButton info={{
+                        iconName: 'ahshamLogo', pageName: 'MorePhones', text: 'טלפונים נוספים',
+                        pageProps: { headerTitle: 'טלפונים נוספים' }
+                    }} />
 
-                    <PhoneComponent info={{ text: 'מקול הלב', phone: '*6690', bcolor: '#F20000', iconName: 'heart', performCall: true }} />
-                    <PhoneComponent info={{ text: 'מייל', phone: 'moked6690@idf.gov.il', bcolor: '#4798cc', iconName: 'email', performCall: true }} />
 
 
-                    <Text style={styles.title} >טלפונים מטכליים</Text>
-                    <PhoneComponent info={{ text: 'מקול הלב', phone: '03-39999', bcolor: '#4b5320', iconName: 'deskphone', performCall: true }} />
-
-                    <View>
+                    {/*<View>
                         <RTLText style={{ fontSize: scale(14), textDecorationLine: 'underline', color: '#4b5320', marginTop: scale(15) }} >טיפ:</RTLText>
                         <RTLText style={{ fontSize: scale(14), color: '#4b5320', lineHeight:scale(16) }} >
                             בעזרת טלפון משרדי ניתן להתקשר למספרים אחרים בקריית ההדרכה. לדוגמה: בכדי להתקשר למספר 0733772000 ניתן להתקשר ל2000 עם טלפון משרדי.
                         </RTLText>
                             
                     </View>
-
+                    */}
                 </View>
             </ScrollView>
         );
@@ -83,7 +85,7 @@ const styles = StyleSheet.create({
         height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center',
     },
     title: {
-        textDecorationLine: 'underline', 
+        textDecorationLine: 'underline',
         fontSize: scale(24), color: '#4b5320',
         marginVertical: scale(20)
 

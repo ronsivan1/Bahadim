@@ -1,7 +1,7 @@
 import HomePage from './HomePage';
 
-import MedicalPage from './MedicalPage';
-import PhonesPage from './PhonesPage';
+import { MedicalPage, Pharmacy, Moked6690, Harap, LabServices } from './medical';
+import { PhonesPage, GeneralPhones, BahadPhones, MorePhones } from './phones';
 import GalleryPage from './GalleryPage';
 
 import BusPage from './bus/BusPage';
@@ -16,8 +16,11 @@ import WeatherPage from './weather/WeatherPage';
 import { FacilitiesPage, SportPage, LaundryPage,
      BarberPage, OtherFacilitiesPage } from './facilities';
 
-import { InfoPage } from './info'
+import { InfoPage, RookieRights } from './info';
+import { JewishPage, PrayTimes, Lessons, Contact } from './info/jewish';
+import { TashPage, Procedures, Yohalam, SoldierRights } from './info/tash';
 
+import FoodDelivery from './FoodDelivery';
 
 
 export {
@@ -26,8 +29,8 @@ export {
     BusPage,
     InnerBusPage,
     
-    MedicalPage,
-    PhonesPage,
+    MedicalPage,Pharmacy, Moked6690, Harap, LabServices,
+    PhonesPage, GeneralPhones, BahadPhones, MorePhones,
     GalleryPage,
     WeatherPage,
 
@@ -35,5 +38,11 @@ export {
 
     FacilitiesPage, SportPage, LaundryPage, BarberPage, OtherFacilitiesPage,
 
-    InfoPage
+    InfoPage, RookieRights,
+    
+    JewishPage, PrayTimes, Lessons, Contact,
+
+    TashPage, Procedures, Yohalam, SoldierRights,
+    
+    FoodDelivery
 }

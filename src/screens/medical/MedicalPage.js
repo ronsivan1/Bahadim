@@ -14,24 +14,24 @@ import { CustomHeader, Container, PageButton } from '../../utils';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-export default class InfoPage extends React.Component {
+export default class MedicalPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {  }
     }
     render() {
         return (
-            <CustomHeader {...this.props} headerTitle='מידע נוסף' >
+            <CustomHeader {...this.props} headerTitle='רפואה' >
 
                         <View style={styles.pageContainer} >
-                            <PageButton info={{ iconName: 'people', iconType: 'MIIcon', pageName: 'TashPage', text: 'פרט ות"ש', }}
-                                navigate={this.props.navigation.navigate} />
-                            <PageButton info={{ iconName: 'star-of-david', pageName: 'JewishPage', text: 'יהדות' }}
-                                navigate={this.props.navigation.navigate} />
-                            <PageButton info={{ iconName: 'pistol', iconType: 'MCIcon', pageName: 'RookieRights', text: 'טירונות ורובאות' }}
-                                navigate={this.props.navigation.navigate} />
-                            <PageButton info={{ iconName: 'caveret', pageName: '', text: 'אתר כוורת' }}
-                            navigate={this.props.navigation.navigate} />
+                            <PageButton info={{ iconName: 'healing', iconType: 'MIIcon', pageName: 'Pharmacy', text: 'בית מרקחת', }}
+                                 />
+                            <PageButton info={{ iconName: 'hand-holding-heart', pageName: 'Moked6690', text: 'מוקד מ"קול הלב"' }}
+                                 />
+                            <PageButton info={{ iconName: 'clinic-medical', pageName: 'Harap', text: 'חר"פ - רופאים מומחים' }}
+                                 />
+                            <PageButton info={{ iconName: 'lab-flask', iconType: 'Entypo', pageName: 'LabServices', text: 'שירותי מעבדה' }}
+                             />
                         </View>
                 
             </CustomHeader>

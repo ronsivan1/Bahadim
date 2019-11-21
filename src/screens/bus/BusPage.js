@@ -21,7 +21,6 @@ export default class BusPage extends React.PureComponent {
         super(props);
         this.state = {
             interactionsComplete: false,
-            //search: '',
             //sundayTableData: [], thursdayTableData: [], fridayTableData: [],
             sundayTableData: sundayFullData,
             thursdayTableData: thursdayFullData,
@@ -29,12 +28,13 @@ export default class BusPage extends React.PureComponent {
             search: '',
         }
 
-        //this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-        //this.blurSearchBar = this.blurSearchBar.bind(this);
+        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
         this.updateSearch = this.updateSearch.bind(this);
 
         this.tableHead = ['עיר', 'מיקום', 'שעות'];
         this.tableHead2 = ['יעד', 'שעות'];
+
+
 
     }
 
@@ -57,16 +57,24 @@ export default class BusPage extends React.PureComponent {
         setTimeout(() => {
             this.setState({
                 interactionsComplete: true,
+                sundayTableData: sundayFullData,
+            thursdayTableData: thursdayFullData,
+            fridayTableData: fridayFullData,
             });
-        }, 0)
+        }, 300)
     }
 
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
     }
-    handleBackButtonClick = () => {
+    handleBackButtonClick() {
         if (this.state.search != "") {
-            this.updateSearch('')
+            this.setState({
+                sundayTableData: sundayFullData,
+                thursdayTableData: thursdayFullData,
+                fridayTableData: fridayFullData,
+                search: ''
+            })
             return true;
         }
         return false;
@@ -109,7 +117,8 @@ export default class BusPage extends React.PureComponent {
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                     <ActivityIndicator color={'#4b5320'}
                         size={Platform.OS == 'ios' ? 0 : 45} />
-                </View>);
+                </View>
+                );
         }
         else {
 
@@ -122,7 +131,7 @@ export default class BusPage extends React.PureComponent {
                         contentContainerStyle={{ paddingBottom: scale(40) }} >
 
                         <View style={{
-                            backgroundColor: '#e6e8ed', width:'100%',
+                            backgroundColor: '#e6e8ed', width: '100%',
                             height: scale(80),
                             flexDirection: 'row',
                             justifyContent: 'center',
@@ -130,18 +139,18 @@ export default class BusPage extends React.PureComponent {
                             paddingHorizontal: scale(10)
                         }} >
                             <View style={{
-                                height: scale(60), width: scale(40), 
+                                height: scale(50), width: scale(40),
                                 alignItems: 'center',
                                 justifyContent: 'center', backgroundColor: '#afb9c4',
                                 borderTopStartRadius: scale(10),
                                 borderBottomStartRadius: scale(10),
-                                
+
                             }} >
                                 <Icon name="ios-search" size={26} color='#788591'
                                     style={{ backgroundColor: '#afb9c4', }} />
                             </View>
                             <View style={{
-                                height: scale(60),
+                                height: scale(50),
                                 flex: 1,
                                 backgroundColor: '#afb9c4',
                                 borderTopEndRadius: scale(10),
@@ -193,6 +202,7 @@ export default class BusPage extends React.PureComponent {
                 </TouchableWithoutFeedback>
             );
         }
+        
     }
 }
 

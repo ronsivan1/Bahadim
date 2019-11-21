@@ -1,12 +1,17 @@
 import React, { Fragment } from 'react';
 import AppWrapper from './AppWrapper';
 import { I18nManager, SafeAreaView, StatusBar, View,
-  Platform } from 'react-native';
+  Platform, YellowBox } from 'react-native';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
-import { scale } from 'react-native-size-matters';
+//import { useScreens } from 'react-native-screens';
+//useScreens();
 
 I18nManager.allowRTL(true);
 I18nManager.forceRTL(true);
+
+YellowBox.ignoreWarnings([
+  'RCTRootView cancelTouches'
+  ]);
 
 class App extends React.Component {
   constructor(props) {
@@ -22,7 +27,6 @@ class App extends React.Component {
       ios:
         <StatusBar barStyle='light-content' showHideTransition='fade' />
     })
-  
   }
 
   render() {

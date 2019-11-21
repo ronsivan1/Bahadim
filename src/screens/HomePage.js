@@ -6,6 +6,8 @@ import {
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FAIcon from 'react-native-vector-icons/FontAwesome5';
 import { scale } from 'react-native-size-matters';
 import LinearGradient from 'react-native-linear-gradient';
 import { borderRadiusStyle } from '../utils';
@@ -30,7 +32,7 @@ export default class HomePage extends React.Component {
         return (
             <View style={{ flex: 1, alignItems: 'center' }}  >
                 <View style={{
-                    backgroundColor: '#eaeed3',//'#F5F5DC', // this View defines the height and width of the LG and it's background color.
+                    backgroundColor: '#fff',//'#F5F5DC', // this View defines the height and width of the LG and it's background color.
                     width: scale(475), height: '35%', 
                 }} >
                     <LinearGradient colors={[/*"#586125", */"#4b5320","#4b5320",]}
@@ -80,7 +82,7 @@ export default class HomePage extends React.Component {
                     </LinearGradient>
                 </View>
                 <SafeAreaView style={{
-                    width: '100%', justifyContent: 'center', backgroundColor: '#eaeed3',
+                    width: '100%', justifyContent: 'center', backgroundColor: '#fff',
                     //height: SCREEN_HEIGHT - (scale(250) + this.sbHeight),
                     height: '65%'
                 }} >
@@ -90,19 +92,19 @@ export default class HomePage extends React.Component {
                     }} >
                         <View style={styles.buttonsRow} >
                             <Button buttonInfo={{ name: 'ios-bus', text: 'שאטלים', pageName: 'BusPage' }} navigate={this.props.navigation.navigate} />
-                            <Button buttonInfo={{ name: 'md-pizza', text: 'אוכל', pageName: 'FoodPage' }} navigate={this.props.navigation.navigate} />
+                            <Button buttonInfo={{ name: 'hamburger', text: 'שק\"ם', pageName: 'FoodPage' }} navigate={this.props.navigation.navigate} />
                             <Button buttonInfo={{ name: 'ios-business', text: 'מתקנים קריתיים', pageName: 'FacilitiesPage' }} navigate={this.props.navigation.navigate} />
 
                         </View>
                         <View style={styles.buttonsRow} >
                             <Button buttonInfo={{ name: 'md-images', text: 'גלריה', pageName: 'GalleryPage' }} navigate={this.props.navigation.navigate} />
-                            <Button buttonInfo={{ name: 'ios-call', text: 'טלפונים', pageName: 'PhonesPage' }} navigate={this.props.navigation.navigate} />
+                            <Button buttonInfo={{ name: 'md-call', text: 'טלפונים', pageName: 'PhonesPage' }} navigate={this.props.navigation.navigate} />
                             <Button buttonInfo={{ name: 'md-medkit', text: 'רפואה', pageName: 'MedicalPage' }} navigate={this.props.navigation.navigate} />
 
                         </View>
                         <View style={styles.buttonsRow} >
                             <Button buttonInfo={{ name: 'ios-partly-sunny', text: 'מזג אוויר', pageName: 'WeatherPage' }} navigate={this.props.navigation.navigate} />
-                            <Button buttonInfo={{ name: 'ios-mail', text: 'פנייה למפקד', pageName: '' }} navigate={this.props.navigation.navigate} />              
+                            <Button buttonInfo={{ name: 'truck-fast', text: 'משלוחי אוכל', pageName: '', pageName: 'FoodDelivery' }} navigate={this.props.navigation.navigate} />              
                             <Button buttonInfo={{ name: 'ios-information-circle', text: 'מידע נוסף', pageName: 'InfoPage' }} navigate={this.props.navigation.navigate} />
                          </View>
                     </View>
@@ -124,12 +126,13 @@ const Button = (props) => {
         <View style={styles.btnWrapper} >
             {Platform.select({
                 'android':
-                    <TouchableNativeFeedback onPress={onButtonPress.bind(null, buttonInfo.pageName, props.navigate)}
-                        background={TouchableNativeFeedback.Ripple('#98a841', false)}
-                        style={styles.btn} delayPressIn={0}  >
-                        <ButtonImageBackground buttonInfo={{ name: buttonInfo.name, pageName: buttonInfo.pageName, text: buttonInfo.text }} />
-                    </TouchableNativeFeedback>,
-                'ios': <TouchableOpacity onPress={onButtonPress.bind(null, buttonInfo.pageName, props.navigate)}
+                <TouchableNativeFeedback onPress={onButtonPress.bind(null, buttonInfo.pageName, props.navigate)}
+                    background={TouchableNativeFeedback.Ripple('#98a841', false)}
+                    style={styles.btn} delayPressIn={0}  >
+                    <ButtonImageBackground buttonInfo={{ name: buttonInfo.name, pageName: buttonInfo.pageName, text: buttonInfo.text }} />
+                </TouchableNativeFeedback>,
+                'ios': 
+                <TouchableOpacity onPress={onButtonPress.bind(null, buttonInfo.pageName, props.navigate)}
                     style={styles.btn} activeOpacity={0.45} delayPressIn={0}  >
                     <ButtonImageBackground buttonInfo={{ name: buttonInfo.name, pageName: buttonInfo.pageName, text: buttonInfo.text }} />
                 </TouchableOpacity>
@@ -141,9 +144,14 @@ const Button = (props) => {
 
 const ButtonImageBackground = ({ buttonInfo }) => (
     <ImageBackground style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}
-        source={{ uri: 'https://i.pinimg.com/originals/2b/dc/19/2bdc1957378e4fb9be6f47800b49b045.gif' }}>
-        <Icon name={buttonInfo.name} size={50} color='white' />
-        <Text style={{ color: 'white', fontSize: buttonInfo.pageName == 'FacilitiesPage' ? scale(12) : scale(14), }} >{buttonInfo.text}</Text>
+        source={require('../images/homePageBtnBackground.jpg')}>
+        {buttonInfo.name == 'hamburger' ?
+            <FAIcon name={buttonInfo.name} size={50} color='white' style={ Platform.OS == 'ios' ? { paddingBottom: scale(6) } : {   /** backgroundColor: 'blue' */ }} />
+            : buttonInfo.name.includes('truck' ) ? 
+                <MCIcon name={buttonInfo.name} size={50} color='white' style={{ /** backgroundColor: 'blue' */ }}  />
+                    : <Icon name={buttonInfo.name} size={50} color='white' style={{ /** backgroundColor: 'blue' */ }} />}
+        <Text style={{ color: 'white', fontSize: buttonInfo.pageName == 'FacilitiesPage' ? scale(12) : scale(14), 
+         }} >{buttonInfo.text}</Text>
 
     </ImageBackground>
 );

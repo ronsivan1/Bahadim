@@ -1,6 +1,5 @@
-/**
- * @format
- */
+
+import 'react-native-gesture-handler' // navigation between pages won't work without this line
 
 import {AppRegistry} from 'react-native';
 import App from './App';

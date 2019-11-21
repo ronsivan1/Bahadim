@@ -7,7 +7,7 @@ import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import FAIcon from 'react-native-vector-icons/FontAwesome5';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { scale } from 'react-native-size-matters';
-import { borderRadiusStyle, callNumber, RTLText, Paragraph } from '../../utils';
+import { borderRadiusStyle, callNumber, RTLText, Bullet } from '../../utils';
 
 class BarberPage extends React.Component {
     constructor(props) {
@@ -47,8 +47,8 @@ class BarberPage extends React.Component {
                 
                 <View >
                     <Text style={[styles.title, { alignSelf: 'center' }]} >שעות פעילות:</Text>
-                    <Paragraph text={`א'-ה' 08:00-18:00\n(הפסקה בין 12:00-13:00)`} />
-                    <Paragraph text={`ו', ערבי חג - סגור`} />
+                    <Bullet text={`א'-ה' 08:00-18:00\n(הפסקה בין 12:00-13:00)`} />
+                    <Bullet text={`ו', ערבי חג - סגור`} />
                 </View>
 
             </ScrollView>

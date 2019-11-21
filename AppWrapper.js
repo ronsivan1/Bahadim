@@ -2,24 +2,31 @@ import React from 'react';
 import {
   StyleSheet, View, Text,
   ScrollView, Animated, Platform, Dimensions,
-   Image, SafeAreaView, Easing,
+  Image, SafeAreaView, Easing,
 } from 'react-native';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
-import LinearGradient from 'react-native-linear-gradient';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import StackViewStyleInterpolator from 'react-navigation-stack/lib/module/views/StackView/StackViewStyleInterpolator.js';
 import { scale } from 'react-native-size-matters';
+import { enableScreens } from 'react-native-screens';
 import {
   HomePage, BusPage,
-  MedicalPage, PhonesPage, GalleryPage, WeatherPage,
+  MedicalPage, Pharmacy, Moked6690, Harap, LabServices,
+  PhonesPage, GeneralPhones, BahadPhones, MorePhones,
+  GalleryPage, WeatherPage,
   InnerBusPage, DiningRoomPage, ShekemPage, PitiaPage,
   FacilitiesPage, SportPage, LaundryPage, BarberPage, OtherFacilitiesPage,
-  InfoPage
+  InfoPage, RookieRights,
+  JewishPage, PrayTimes, Lessons, Contact,
+  TashPage, Procedures, Yohalam, SoldierRights,
+  FoodDelivery
 } from './src/screens';
+
+enableScreens();
+
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
 //const sbHeight = getStatusBarHeight();
 
@@ -40,14 +47,64 @@ class AppWrapper extends React.Component {
 const mainStackNavConfig = {
   //initialRouteName: 'FacilitiesPage',
   defaultNavigationOptions: {
-    headerStyle: { backgroundColor: '#4b5320', height: scale(50) },
+    headerStyle: { backgroundColor: '#4b5320', height: scale(55),
+      elevation: 0,
+      shadowOpacity: 0,
+      borderBottomWidth: 0,
+      //backgroundColor: '#4b5320'
+     },
     headerForceInset: { top: 'never', bottom: 'never' }, // this removes the SafeArea paddingTop on iOS
     headerLeftContainerStyle: { paddingLeft: scale(6), color: '#fff', },
     headerTintColor: 'white',
+    gesturesEnabled: 'true'
+    //headerMode: 'screen',
+    //headerTransitionPreset: 'uikit'
+  },
+  transitionConfig: () => ({
+    screenInterpolator: StackViewStyleInterpolator.forHorizontal,
+    transitionSpec: {
+      useNativeDriver: true,
+      duration: 300,
+      timing: Animated.timing,
+      easing: Easing.inOut(Easing.ease),
+      gesturesEnabled: 'false'
+    },
+  })
+  
+}
+const bottomNavConfig = {
+  //initialRouteName: 'BusPage',
+  tabBarOptions: {
+    style: {
+      backgroundColor: '#eaeed3',
+      transform: [{ translateY: scale(1) }], shadowColor: 'transparent', elevation: 0
+    }, // these styles are to hide the borderBottom
+    labelStyle: {
+      fontSize: scale(14),
+      fontWeight: 'bold',
+      //marginBottom: scale(15),
+    },
+    inactiveTintColor: '#6b6b6b',
+    activeTintColor: '#4169E1',
+    indicatorStyle: { backgroundColor: '#4b5320' },
+    pressColor: '#5b5b5b',
+    //scrollEnabled: true // it's working with hebrew in react-navigation 4 !!!
+  },
+
+  tabBarPosition: 'bottom'
+}
+const secondaryStackConfig = {
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#4b5320', height: scale(50)
+    },
+    headerLeftContainerStyle: { paddingLeft: scale(6), color: '#fff', },
+    headerForceInset: { top: 'never', bottom: 'never' }, // this removes the SafeArea paddingTop on iOS
+    headerTintColor: 'white',
+    
   },
 
   transitionConfig: () => ({
-
     screenInterpolator: StackViewStyleInterpolator.forHorizontal,
     transitionSpec: {
       useNativeDriver: true,
@@ -56,27 +113,7 @@ const mainStackNavConfig = {
       easing: Easing.inOut(Easing.ease),
 
     },
-
-  }),
-}
-const bottomNavConfig = {
-  //initialRouteName: 'BusPage',
-  tabBarOptions: {
-    style: { backgroundColor: '#eaeed3', 
-    transform:[{translateY: scale(1)}], shadowColor: 'transparent', elevation: 0 }, // these styles are to hide the borderBottom
-    labelStyle: {
-      fontSize: scale(14),
-      fontWeight: 'bold',
-      //marginBottom: scale(15),
-    },
-    inactiveTintColor: '#6b6b6b',
-    activeTintColor: '#4169E1',
-    indicatorStyle: { backgroundColor: 'lightskyblue' },
-    pressColor: '#5b5b5b',
-    //scrollEnabled: true // it's working with hebrew in react-navigation 4 !!!
-  },
-  
-  tabBarPosition: 'bottom'
+  })
 }
 const BusBottomNav = createMaterialTopTabNavigator({
   BusPage: {
@@ -124,43 +161,19 @@ const FoodBottomNav = createMaterialTopTabNavigator({
   },
 }, bottomNavConfig)
 
-const FacilitiesStackNav = createStackNavigator({
-  
-  FacilitiesPage: { screen: FacilitiesPage,
+/*const FacilitiesStackNav = createStackNavigator({
+
+  FacilitiesPage: {
+    screen: FacilitiesPage,
     navigationOptions: ({ navigation }) => {
       return {
         header: null,
-        headerBackTitle: 'מתקנים'
         //header: (headerProps) => <CustomHeader props={{headerTitle: 'מתקנים קריתיים', navigation}} />
       };
     }
   },
-  SportPage: { screen: SportPage, navigationOptions: {headerTitle: 'מרכז הספורט'} },
-  LaundryPage: { screen: LaundryPage, navigationOptions: {headerTitle: 'מכבסה'} },
-  BarberPage: { screen: BarberPage, navigationOptions: {headerTitle: 'מספרה'} },
-  OtherFacilitiesPage: { screen: OtherFacilitiesPage, navigationOptions: {headerTitle: 'מתקנים נוספים'} }
-}, {
-  //initialRouteName: 'LaundryPage',
-  defaultNavigationOptions: {
-    headerStyle: {
-      backgroundColor: '#4b5320', height: scale(50)
-    },
-    headerLeftContainerStyle: { paddingLeft: scale(6), color: '#fff', },
-    headerForceInset: { top: 'never', bottom: 'never' }, // this removes the SafeArea paddingTop on iOS
-    headerTintColor: 'white',
-  },
-
-  transitionConfig: () => ({
-    screenInterpolator: StackViewStyleInterpolator.forHorizontal,
-    transitionSpec: {
-      useNativeDriver: true,
-      duration: 300,
-      timing: Animated.timing,
-      easing: Easing.inOut(Easing.ease),
-
-    },
-  })
-})
+  
+  }, secondaryStackConfig)*/
 
 //let transitionNum = -1;
 const HomePageStackNavigator = createStackNavigator({
@@ -196,27 +209,32 @@ const HomePageStackNavigator = createStackNavigator({
     },
 
   },
-  FacilitiesPage: {
-    screen: FacilitiesStackNav,
-    navigationOptions: {
-      header: null
-    }
-  },
+  
   MedicalPage: {
-    screen: MedicalPage, navigationOptions: { headerTitle: 'רפואה' }
+    screen: MedicalPage, navigationOptions: { headerTitle: 'רפואה', headerTitleStyle: {opacity: 0} }
   },
+  Pharmacy: { screen: Pharmacy, navigationOptions: { headerTitle: 'בית מרקחת' } },
+  Moked6690: { screen: Moked6690, navigationOptions: { headerTitle: 'מוקד מ"קול הלב"' } },
+  Harap: { screen: Harap, navigationOptions: { headerTitle: 'חר"פ' } },
+  LabServices: { screen: LabServices, navigationOptions: { headerTitle: 'שירותי מעבדה' } },
+
+
   PhonesPage: {
     screen: PhonesPage, navigationOptions: { headerTitle: 'טלפונים חשובים' }
   },
+  BahadPhones: { screen: BahadPhones, navigationOptions: { headerTitle: 'לשכות' } },
+  GeneralPhones: { screen: GeneralPhones, navigationOptions: { headerTitle: 'כללי' } },
+  MorePhones: { screen: MorePhones, navigationOptions: { headerTitle: 'טלפונים נוספים' } },
+
   GalleryPage: {
     screen: GalleryPage,
     navigationOptions: () => {
       return {
-        headerTitle: 'גלריה'
+        headerTitle: 'גלריה',
       };
     }
   },
-  InfoPage: { screen: InfoPage, navigationOptions: { header: null } },
+  
   WeatherPage: {
     screen: WeatherPage,
     navigationOptions: () => {
@@ -224,74 +242,135 @@ const HomePageStackNavigator = createStackNavigator({
         headerTitle: 'מזג אוויר'
       };
     }
-  }
-}, mainStackNavConfig)
+  },
+  FacilitiesPage: {
+    screen: FacilitiesPage,
+    navigationOptions: {
+      headerTitle: 'מתקנים',
+      headerTitleStyle: {opacity: 0}, // this hides the headerTitle since we don't want it to display twice
+      
+    }
+  },
+  SportPage: { screen: SportPage, navigationOptions: { headerTitle: 'מרכז הספורט',} },
+  LaundryPage: { screen: LaundryPage, navigationOptions: { headerTitle: 'מכבסה' } },
+  BarberPage: { screen: BarberPage, navigationOptions: { headerTitle: 'מספרה' } },
+  OtherFacilitiesPage: { screen: OtherFacilitiesPage, navigationOptions: { headerTitle: 'מתקנים נוספים' } },
 
-  const CustomHeader = ({props}) => {
-    const goBackIconName = Platform.OS == 'ios' ? 'ios-arrow-forward' : 'md-arrow-forward';
-    //console.log(props.navigation.actions.goBack());
-    return (
-      <View style={{
-        //backgroundColor: 'transparent',//'#F5F5DC', // this View defines the height and width of the LG and it's background color.
-        alignItems: 'center'
-      }} >
-        <LinearGradient colors={["#586125", "#4b5320",]}
-          style={{
-            width: '130%', height: scale(200), alignSelf: 'center',
-            borderBottomRightRadius: scale(180), borderBottomLeftRadius: scale(180),
-            
-          }} >
+  InfoPage: {
+    screen: InfoPage, navigationOptions: {
+      headerTitle: 'מידע נוסף',
+      headerTitleStyle: {opacity: 0}
+    }
+  },
+  RookieRights: { screen: RookieRights, navigationOptions: { headerTitle: 'טירונות ורובאות' } },
+  
+
+  JewishPage: { screen: JewishPage, navigationOptions: { headerTitle: 'יהדות', headerTitleStyle: {opacity: 0} } },
+  PrayTimes: { screen: PrayTimes, navigationOptions: { headerTitle: 'זמני תפילות' } },
+  Lessons: { screen: Lessons, navigationOptions: { headerTitle: 'לוח שיעורים' } },
+  Contact: { screen: Contact, navigationOptions: { headerTitle: 'צור קשר' } },
+
+  TashPage: { screen: TashPage, navigationOptions: { headerTitle: 'פרט ות"ש', headerTitleStyle: {opacity: 0} } },
+  Procedures: { screen: Procedures, navigationOptions: { headerTitle: 'נהלים' } },
+  Yohalam: { screen: Yohalam, navigationOptions: { headerTitle: 'פנייה ליוהל\"ם' } },
+  SoldierRights: { screen: SoldierRights, navigationOptions: { headerTitle: 'זכויות החייל' } },
+
+  FoodDelivery: { screen: FoodDelivery, navigationOptions: { headerTitle: 'משלוחי אוכל' } },
+
+}, {
+  defaultNavigationOptions: {
+    headerStyle: { backgroundColor: '#4b5320', height: scale(55),
+      elevation: 0,
+      shadowOpacity: 0,
+      borderBottomWidth: 0,
+      //backgroundColor: '#4b5320'
+     },
+    headerForceInset: { top: 'never', bottom: 'never' }, // this removes the SafeArea paddingTop on iOS
+    headerLeftContainerStyle: { paddingLeft: scale(6), color: '#fff', },
+    headerTintColor: 'white',
+    gesturesEnabled: true,
+    gestureDirection: 'inverted'
+    //headerMode: 'screen',
+    //headerTransitionPreset: 'uikit'
+  },
+  transitionConfig: () => ({
+    screenInterpolator: StackViewStyleInterpolator.forHorizontal,
+    transitionSpec: {
+      useNativeDriver: true,
+      duration: 300,
+      timing: Animated.timing,
+      easing: Easing.inOut(Easing.ease),
+      
+    },
+  })
+})
+
+/*const CustomHeader = ({ props }) => {
+  const goBackIconName = Platform.OS == 'ios' ? 'ios-arrow-forward' : 'md-arrow-forward';
+  //console.log(props.navigation.actions.goBack());
+  return (
+    <View style={{
+      //backgroundColor: 'transparent',//'#F5F5DC', // this View defines the height and width of the LG and it's background color.
+      alignItems: 'center'
+    }} >
+      <LinearGradient colors={["#586125", "#4b5320",]}
+        style={{
+          width: '130%', height: scale(200), alignSelf: 'center',
+          borderBottomRightRadius: scale(180), borderBottomLeftRadius: scale(180),
+
+        }} >
+        <View style={{
+          height: scale(60), width: '80%',
+          alignSelf: 'center', justifyContent: 'center',
+          //backgroundColor: 'blue',
+        }} >
+
           <View style={{
-             height: scale(60), width: '80%',
-            alignSelf: 'center', justifyContent: 'center',
-            //backgroundColor: 'blue',
+            borderRadius: scale(40), overflow: 'hidden',  //backgroundColor: 'green',
+            width: scale(40), height: scale(40), marginStart: scale(20)
           }} >
-  
-            <View style={{ borderRadius: scale(40), overflow: 'hidden',  //backgroundColor: 'green',
-              width: scale(40), height: scale(40), marginStart: scale(20) }} >
-              <TouchableNativeFeedback onPress={() => {props.navigation.goBack(null)} }
-                background={TouchableNativeFeedback.Ripple('#1b1b1b', false)}
-                style={{
-                  width: '100%', height: '100%',
-                  alignItems: 'center', justifyContent: 'center'
-                }}>
-                <Icon name={goBackIconName} size={26} color={'#fff'} />
-              </TouchableNativeFeedback>
-            </View>
-  
+            <TouchableNativeFeedback onPress={() => { props.navigation.goBack(null) }}
+              background={TouchableNativeFeedback.Ripple('#1b1b1b', false)}
+              style={{
+                width: '100%', height: '100%',
+                alignItems: 'center', justifyContent: 'center'
+              }}>
+              <Icon name={goBackIconName} size={26} color={'#fff'} />
+            </TouchableNativeFeedback>
           </View>
-  
-          <View style={{ alignSelf: 'center', alignItems: 'center' }} >
-              <Text style={styles.title} >{props.headerTitle}</Text>
-          </View>
-        </LinearGradient>
-      </View>
-    )
-  }
 
+        </View>
+
+        <View style={{ alignSelf: 'center', alignItems: 'center' }} >
+          <Text style={styles.title} >{props.headerTitle}</Text>
+        </View>
+      </LinearGradient>
+    </View>
+  )
+}*/
 
 
 const AppDrawerNavigator = createDrawerNavigator({
   HomePage: {
     screen: HomePageStackNavigator,
     navigationOptions: {
-        title: "דף הבית",
-        drawerIcon: () => <Icon name={'md-home'} size={30} />,
+      title: "דף הבית",
+      drawerIcon: () => <Icon name={'md-home'} size={30} />,
     }
   }
 }, {
-    drawerPosition: 'left',
-    //overlayColor: 'rgba(0, 0, 0, 0.8)',
-    contentOptions: {
-      iconContainerStyle: { alignSelf: 'center', /*transform: [{ translateX: scale(80) }]*/ },
-      labelStyle: { transform: [{ translateX: scale(20) }] },
+  drawerPosition: 'left',
+  //overlayColor: 'rgba(0, 0, 0, 0.8)',
+  contentOptions: {
+    iconContainerStyle: { alignSelf: 'center', /*transform: [{ translateX: scale(80) }]*/ },
+    labelStyle: { transform: [{ translateX: scale(20) }] },
 
-    },
-    edgeWidth: scale(20),
-    //hideStatusBar: true,
-    contentComponent: (props) =>
-      <CustomDrawerContentComponent {...props} />,
-  });
+  },
+  edgeWidth: scale(20),
+  //hideStatusBar: true,
+  contentComponent: (props) =>
+    <CustomDrawerContentComponent {...props} />,
+});
 
 const CustomDrawerContentComponent = props => (
   <ScrollView>
@@ -315,7 +394,8 @@ const Logo = () => (
     <View style={{
       width: scale(120), height: '90%', //backgroundColor: 'blue', 
     }} >
-      <Image style={{ flex: 1, width: null, height: null, resizeMode: 'contain',
+      <Image style={{
+        flex: 1, width: null, height: null, resizeMode: 'contain',
       }}
         source={require('./src/images/bahadimLogo.jpg')} />
     </View>

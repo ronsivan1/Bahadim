@@ -55,8 +55,13 @@ export default class ShekemPage extends React.Component {
                         phone: '052-348-1497', web: 'https://110burger.co.il' }} />
                         <Shop info={{ imageSource: require('../../images/coffeetime.png'), imageHeight: 70, resizeMode: 'contain', openingHours: `א'-ה' 6:00-23:00`,
                         phone: '09-7964499', web: 'http://coffeetime.co.il' }} />
+                        <Shop info={{ imageSource: require('../../images/freshop.png'), imageHeight: 70, resizeMode: 'contain', openingHours: `א'-ד' 9:00-22:00, ו' 8:00-14:00,\nמוצ\"ש - 23:00`,
+                         web: 'https://sahoot.co.il' }} />
+                        <Shop info={{ imageSource: require('../../images/gidron.jpg'), imageHeight: 70, resizeMode: 'contain', openingHours: `א'-ה' 6:30-20:00, ו' 6:30-14:30\n*הסגירה תלויה בכמות הסחורה בנאפות באותו יום.`,
+                         web: 'http://gidron.co.il' }} />
+                        
                         <Shop info={{ imageSource: require('../../images/shiftzurim.jpg'), imageHeight: 70, resizeMode: 'contain', openingHours: `א'-ד' 9:30-20:00, ה' 8:00-14:00`,
-                        phone: '09-7964499', web: 'https://www.facebook.com/shifzurim/' }} />
+                        phone: '??', web: 'https://www.facebook.com/shifzurim/' }} />
                         
 
                     </View>
@@ -86,8 +91,8 @@ const Shop = ({ info }) => {
         </View>
         <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'space-around', //backgroundColor: 'silver', 
                     width: '100%' }} >
-                {phone ? <PhoneComponent info={{ shouldContainText: false, phone: phone, bcolor: '#25d366', iconName: 'phone', width: 120, fontSize: 13 }} /> :null}
-                <PhoneComponent info={{ shouldContainText: false, phone: web, bcolor: '#0080ff', iconName: 'web', width: 160, fontSize: 11 }} />
+                {phone ? <PhoneComponent info={{ shouldIncludeText: false, isFullWidth: false, phone: phone, bcolor: '#25d366', iconName: 'phone', width: 120, fontSize: 13 }} /> :null}
+                <PhoneComponent info={{ shouldIncludeText: false, isFullWidth: false, phone: web, bcolor: '#0080ff', iconName: 'web', width: 160, fontSize: 11 }} />
             </View>
     </View>)
 
