@@ -87,8 +87,9 @@ export default class HomePage extends React.Component {
                     height: '65%'
                 }} >
                     <View style={{
-                        width: '100%', height: scale(375),
-                        justifyContent: 'space-around',// backgroundColor: 'green'
+                        width: '100%', height: '100%', // height: scale(375)
+                        /*justifyContent: 'space-around', backgroundColor: 'green',*/
+                        justifyContent: 'space-evenly',
                     }} >
                         <View style={styles.buttonsRow} >
                             <Button buttonInfo={{ name: 'ios-bus', text: 'שאטלים', pageName: 'BusPage' }} navigate={this.props.navigation.navigate} />
