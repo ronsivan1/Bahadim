@@ -5,7 +5,7 @@ import {
     Platform, Image
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 import FAIcon from 'react-native-vector-icons/FontAwesome5';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MIIcon from 'react-native-vector-icons/MaterialIcons';
@@ -14,43 +14,40 @@ import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { scale } from 'react-native-size-matters';
-import { borderRadiusStyle, RTLText } from './components';
+import { borderRadiusStyle, RTLText, callNumber } from './components';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-class PageButton extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-    render() {
-        const { info, navigation } = this.props;
-        return (
-            <View style={styles.btnWrapper} >
-                {Platform.select({
-                    'android':
-                        <TouchableNativeFeedback 
-                            onPress={onButtonPress.bind(null, info.pageName, info.pageProps, navigation)}
-                            background={TouchableNativeFeedback.Ripple('#98a841', false)}
-                            style={styles.btn} delayPressIn={0}  >
-                            <ButtonImageBackground {...info} />
-                        </TouchableNativeFeedback>,
-                    'ios': 
-                        <TouchableOpacity 
-                            onPress={onButtonPress.bind(null, info.pageName, info.pageProps, navigation)}
-                            style={styles.btn} activeOpacity={0.45} delayPressIn={0}  >
+function  PageButton({info}) {
+    //const { info } = this.props;
+    const navigation = useNavigation();
+    
+    return (
+        <View style={styles.btnWrapper} >
+            {Platform.select({
+                'android':
+                    <TouchableNativeFeedback 
+                        onPress={onButtonPress.bind(null, info.pageName, info.pageProps, navigation)}
+                        background={TouchableNativeFeedback.Ripple('#98a841', false)}
+                        style={styles.btn} delayPressIn={0}  >
                         <ButtonImageBackground {...info} />
-                    </TouchableOpacity>
-                })}
-            </View>
-        )
-    }
-}
-const onButtonPress = (pageName, pageProps, navigation) => {
-    navigation.navigate(pageName, pageProps);
+                    </TouchableNativeFeedback>,
+                'ios': 
+                    <TouchableOpacity 
+                        onPress={onButtonPress.bind(null, info.pageName, info.pageProps, navigation)}
+                        style={styles.btn} activeOpacity={0.45} delayPressIn={0}  >
+                    <ButtonImageBackground {...info} />
+                </TouchableOpacity>
+            })}
+        </View>
+    )
 }
 
-export default withNavigation(PageButton);
+const onButtonPress = (pageName, pageProps, navigation) => {
+    pageName != 'caveret' ? navigation.navigate(pageName, pageProps) : callNumber("https://www.caveret.org/")
+}
+
+export default PageButton;
 
 const ButtonImageBackground = (info) => {
     //const goodImageBackground = 'https://cdn.pixabay.com/photo/2013/07/13/12/05/army-159125_960_720.png'

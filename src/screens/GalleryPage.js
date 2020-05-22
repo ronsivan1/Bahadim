@@ -5,9 +5,7 @@ import {
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { createAppContainer, createDrawerNavigator } from 'react-navigation';
 import { scale } from 'react-native-size-matters';
-import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 
 export default class GalleryPage extends React.Component {
     constructor(props) {

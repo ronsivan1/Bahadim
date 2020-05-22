@@ -23,7 +23,7 @@ export default class MedicalPage extends React.Component {
         return (
             <CustomHeader {...this.props} headerTitle='רפואה' >
 
-                        <View style={styles.pageContainer} >
+                        <View style={styles.pageContainer}  >
                             <PageButton info={{ iconName: 'healing', iconType: 'MIIcon', pageName: 'Pharmacy', text: 'בית מרקחת', }}
                                  />
                             <PageButton info={{ iconName: 'hand-holding-heart', pageName: 'Moked6690', text: 'מוקד מ"קול הלב"' }}
@@ -42,7 +42,7 @@ export default class MedicalPage extends React.Component {
 const styles = StyleSheet.create({
     pageContainer: {
         width: '90%', marginBottom: scale(30),
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
     },
 
 })

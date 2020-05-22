@@ -30,7 +30,7 @@ export default class InfoPage extends React.Component {
                                 navigate={this.props.navigation.navigate} />
                             <PageButton info={{ iconName: 'pistol', iconType: 'MCIcon', pageName: 'RookieRights', text: 'טירונות ורובאות' }}
                                 navigate={this.props.navigation.navigate} />
-                            <PageButton info={{ iconName: 'caveret', pageName: '', text: 'אתר כוורת' }}
+                            <PageButton info={{ iconName: 'caveret', pageName: 'caveret', text: 'אתר כוורת' }}
                             navigate={this.props.navigation.navigate} />
                         </View>
                 

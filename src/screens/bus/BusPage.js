@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { createAppContainer, createDrawerNavigator } from 'react-navigation';
 import { scale } from 'react-native-size-matters';
 import LinearGradient from 'react-native-linear-gradient';
 //import { SearchBar } from 'react-native-elements';
@@ -128,7 +127,8 @@ export default class BusPage extends React.PureComponent {
             return (
                 <TouchableWithoutFeedback onPress={this.blurSearchBar}  >
                     <ScrollView style={{ flex: 1, /*backgroundColor: '#eaeed3'*/ }}
-                        contentContainerStyle={{ paddingBottom: scale(40) }} >
+                        contentContainerStyle={{ paddingBottom: scale(40) }}
+                        keyboardDismissMode='on-drag' >
 
                         <View style={{
                             backgroundColor: '#e6e8ed', width: '100%',
@@ -144,7 +144,6 @@ export default class BusPage extends React.PureComponent {
                                 justifyContent: 'center', backgroundColor: '#afb9c4',
                                 borderTopStartRadius: scale(10),
                                 borderBottomStartRadius: scale(10),
-
                             }} >
                                 <Icon name="ios-search" size={26} color='#788591'
                                     style={{ backgroundColor: '#afb9c4', }} />

@@ -5,11 +5,11 @@ import {
   Image, SafeAreaView, Easing,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { createAppContainer } from 'react-navigation';
-import { createDrawerNavigator, DrawerNavigatorItems } from 'react-navigation-drawer';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import StackViewStyleInterpolator from 'react-navigation-stack/lib/module/views/StackView/StackViewStyleInterpolator.js';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+//import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { scale } from 'react-native-size-matters';
 import { enableScreens } from 'react-native-screens';
 import {
@@ -27,10 +27,10 @@ import {
 
 enableScreens();
 
-//import { getStatusBarHeight } from 'react-native-status-bar-height';
-//const sbHeight = getStatusBarHeight();
-
 const SCREEN_WIDTH = Dimensions.get('window').width;
+const Drawer = createDrawerNavigator()
+const Stack = createStackNavigator()
+const BottomTab = createBottomTabNavigator()
 
 class AppWrapper extends React.Component {
   constructor(props) {
@@ -40,11 +40,82 @@ class AppWrapper extends React.Component {
 
   render() {
     return (
-      <AppNavigationContainer />
+      <NavigationContainer>
+        <Drawer.Navigator initialRouteName="HomePageNewStack" edgeWidth={scale(20)} drawerContent = {CustomDrawerContentComponent} drawerPosition='left' >
+            <Drawer.Screen name="HomePageNewStack" component={HomePageNewStack} options={{ drawerLabel: "דף הבית",
+        drawerIcon: () => <Icon name={'md-home'} size={30} /> }} />
+        </Drawer.Navigator>
+      </NavigationContainer>
     );
   }
 }
-const mainStackNavConfig = {
+
+const HomePageNewStack = () => (
+  <Stack.Navigator screenOptions={homePageScreenOptions}>
+    <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false, headerBackTitle: 'דף הבית' }} />
+
+    <Stack.Screen name="MedicalPage" component={MedicalPage} options={{ headerTitle: 'רפואה', headerTitleStyle: {opacity: 0} }} />
+    <Stack.Screen name="Pharmacy" component={Pharmacy} options={{ headerTitle: 'בית מרקחת' }} />
+    <Stack.Screen name="Moked6690" component={Moked6690} options={{ headerTitle: 'מוקד מ"קול הלב"' }} />
+    <Stack.Screen name="Harap" component={Harap} options={{ headerTitle: 'חר"פ' }} />
+    <Stack.Screen name="LabServices" component={LabServices} options={{ headerTitle: 'שירותי מעבדה' }} />
+
+    <Stack.Screen name="FacilitiesPage" component={FacilitiesPage} options={{ headerTitle: 'מתקנים', headerTitleStyle: {opacity: 0}, /* this hides the headerTitle since we don't want it to display twice*/ }} />
+    <Stack.Screen name="SportPage" component={SportPage} options={{ headerTitle: 'מרכז הספורט' }} />
+    <Stack.Screen name="LaundryPage" component={LaundryPage} options={{ headerTitle: 'מרכז הספורט' }} />
+    <Stack.Screen name="BarberPage" component={BarberPage} options={{ headerTitle: 'מספרה' }} />
+    <Stack.Screen name="OtherFacilitiesPage" component={OtherFacilitiesPage} options={{ headerTitle: 'מתקנים נוספים' }} />
+
+
+    <Stack.Screen name="InfoPage" component={InfoPage} options={{ headerTitle: 'מידע נוסף', headerTitleStyle: {opacity: 0}, /* this hides the headerTitle since we don't want it to display twice*/ }} />
+    <Stack.Screen name="RookieRights" component={RookieRights} options={{ headerTitle: 'טירונות ורובאות' }} />
+    <Stack.Screen name="JewishPage" component={JewishPage} options={{ headerTitle: 'יהדות', headerTitleStyle: {opacity: 0} }} />
+    <Stack.Screen name="PrayTimes" component={PrayTimes} options={{ headerTitle: 'זמני תפילות' }} />
+    <Stack.Screen name="Lessons" component={Lessons} options={{ headerTitle: 'לוח שיעורים' }} />
+    <Stack.Screen name="Contact" component={Contact} options={{ headerTitle: 'צור קשר' }} />
+
+    <Stack.Screen name="TashPage" component={TashPage} options={{ headerTitle: 'פרט ות"ש', headerTitleStyle: {opacity: 0} }} />
+    <Stack.Screen name="Procedures" component={Procedures} options={{ headerTitle: 'נהלים' }} />
+    <Stack.Screen name="Yohalam" component={Yohalam} options={{ headerTitle: 'פנייה ליוהל\"ם' }} />
+    <Stack.Screen name="SoldierRights" component={SoldierRights} options={{ headerTitle: 'זכויות החייל' }} />
+
+    <Stack.Screen name="PhonesPage" component={PhonesPage} options={{ headerTitle: 'טלפונים חשובים' }} />
+    <Stack.Screen name="BahadPhones" component={BahadPhones} options={{ headerTitle: 'לשכות' }} />
+    <Stack.Screen name="GeneralPhones" component={GeneralPhones} options={{ headerTitle: 'כללי' }} />
+    <Stack.Screen name="MorePhones" component={MorePhones} options={{ headerTitle: 'טלפונים נוספים' }} />
+
+    <Stack.Screen name="GalleryPage" component={GalleryPage} options={{ headerTitle: 'גלריה' }} />
+
+    <Stack.Screen name="WeatherPage" component={WeatherPage} options={{ headerTitle: 'מזג אוויר' }} />
+
+    <Stack.Screen name="FoodDelivery" component={FoodDelivery} options={{ headerTitle: 'משלוחי אוכל' }} />
+    <Stack.Screen name="BusPage" component={BusBottomNav} options={{headerTitle: ''}} />
+  
+    <Stack.Screen name="FoodPage" component={FoodBottomNav} options={{headerTitle: ''}} />
+
+  </Stack.Navigator>
+)
+
+
+const homePageScreenOptions = { 
+  headerStyle: { 
+    backgroundColor: '#4b5320', height: scale(55),
+    elevation: 0,
+    shadowOpacity: 0,
+    borderBottomWidth: 0,
+    //backgroundColor: '#4b5320'
+  },
+
+  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+  cardShadowEnabled: false,
+  headerForceInset: { top: 'never', bottom: 'never' }, // this removes the SafeArea paddingTop on iOS
+  headerLeftContainerStyle: { paddingLeft: scale(6), color: '#fff', },
+  headerTintColor: 'white',
+  gesturesEnabled: true,
+  gestureDirection: 'horizontal',
+}
+
+/*const mainStackNavConfig = {
   //initialRouteName: 'FacilitiesPage',
   defaultNavigationOptions: {
     headerStyle: { backgroundColor: '#4b5320', height: scale(55),
@@ -71,112 +142,76 @@ const mainStackNavConfig = {
     },
   })
   
-}
-const bottomNavConfig = {
-  //initialRouteName: 'BusPage',
-  tabBarOptions: {
-    style: {
-      backgroundColor: '#eaeed3',
-      transform: [{ translateY: scale(1) }], shadowColor: 'transparent', elevation: 0
-    }, // these styles are to hide the borderBottom
-    labelStyle: {
-      fontSize: scale(14),
-      fontWeight: 'bold',
-      //marginBottom: scale(15),
-    },
-    inactiveTintColor: '#6b6b6b',
-    activeTintColor: '#4169E1',
-    indicatorStyle: { backgroundColor: '#4b5320' },
-    pressColor: '#5b5b5b',
-    //scrollEnabled: true // it's working with hebrew in react-navigation 4 !!!
-  },
+}*/
 
-  tabBarPosition: 'bottom'
+function BusBottomNav({ navigation, route }) {
+  return (
+    <BottomTab.Navigator backBehavior='none' tabBarOptions={bottomBarOptions}>
+      <BottomTab.Screen name="BusPage" component={BusPage} options={{ tabBarLabel: 'שאטלים' }} />
+      <BottomTab.Screen name="InnerBusPage" component={InnerBusPage} options={{ tabBarLabel: 'שאטלים פנימיים'}} />
+    </BottomTab.Navigator>
+  )
+}
+
+const FoodBottomNav = () => (
+  <BottomTab.Navigator backBehavior='none'  tabBarOptions={bottomBarOptions}>
+    <BottomTab.Screen name="ShekemPage" component={ShekemPage} options={{tabBarLabel: 'שק"ם'}} />
+    <BottomTab.Screen name="DiningRoomPage" component={DiningRoomPage} options={{tabBarLabel: 'חדר אוכל'}} />
+    <BottomTab.Screen name="PitiaPage" component={PitiaPage} options={{tabBarLabel: 'פיתייה'}} />
+  </BottomTab.Navigator>
+)
+
+const bottomBarOptions = {
+  //initialRouteName: 'BusPage',
+  style: {
+    backgroundColor: '#eaeed3',
+    //transform: [{ translateY: scale(1) }], shadowColor: 'transparent', elevation: 0
+  }, // these styles are to hide the borderBottom
+  labelStyle: {
+    fontSize: scale(14),
+    fontWeight: 'bold',
+    marginBottom: scale(15),
+  },
+  inactiveTintColor: '#6b6b6b',
+  activeTintColor: '#4169E1',
+  
+  //indicatorStyle: { backgroundColor: '#4b5320' },
+  //pressColor: '#5b5b5b',
+  //scrollEnabled: true // it's working with hebrew in react-navigation 4 !!!
+
+  //tabBarPosition: 'bottom'
 }
 const secondaryStackConfig = {
-  defaultNavigationOptions: {
-    headerStyle: {
-      backgroundColor: '#4b5320', height: scale(50)
-    },
-    headerLeftContainerStyle: { paddingLeft: scale(6), color: '#fff', },
-    headerForceInset: { top: 'never', bottom: 'never' }, // this removes the SafeArea paddingTop on iOS
-    headerTintColor: 'white',
-    
+  headerStyle: {
+    backgroundColor: '#4b5320', height: scale(50)
   },
-
-  transitionConfig: () => ({
-    screenInterpolator: StackViewStyleInterpolator.forHorizontal,
-    transitionSpec: {
-      useNativeDriver: true,
-      duration: 300,
-      timing: Animated.timing,
-      easing: Easing.inOut(Easing.ease),
-
-    },
-  })
+  headerLeftContainerStyle: { paddingLeft: scale(6), color: '#fff', },
+  headerForceInset: { top: 'never', bottom: 'never' }, // this removes the SafeArea paddingTop on iOS
+  headerTintColor: 'white',
 }
-const BusBottomNav = createMaterialTopTabNavigator({
-  BusPage: {
-    screen: BusPage,
-    navigationOptions: {
-      tabBarLabel: 'שאטלים תופסים קו'
-    }
-  },
-  InnerBusPage: {
-    screen: InnerBusPage,
-    navigationOptions: {
-      tabBarLabel: 'שאטלים פנימיים'
-    }
-  },
 
+const MainStackNavigator = () => (
+  <MainStack.Navigator screenOptions={{ gestureEnabled: true }} >
+    <MainStack.Screen name="MainPage" component={MainPage} options={({navigation}) => { 
+    const imageUri = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXn4GLwVDAS1PMmZG6nGTykQ_f499BjO1JHNoLZ7AcYSlcHqRG';
+    return {
+      headerLeft: () => <HeaderMenu navigation={navigation} />,
+      headerRight: () => <Image style={styles.imageContainer} source={{ uri: imageUri }} />,
+      headerTitle: null
+    };}} />
+    <MainStack.Screen name="ArticlePage" component={ArticlePage} />
+  </MainStack.Navigator>
+);
 
-}, bottomNavConfig);
-
-const FoodBottomNav = createMaterialTopTabNavigator({
-  ShekemPage: {
-    screen: ShekemPage,
-    navigationOptions: ({ navigation }) => {
-
-      return {
-        title: 'שק"ם',
-      };
-    },
-  },
-  DiningRoomPage: {
-    screen: DiningRoomPage,
-    navigationOptions: ({ navigation }) => {
-      //console.log(navigation.dangerouslyGetParent().dangerouslyGetParent())
-      return {
-        title: 'חדר אוכל',
-      };
-    },
-  },
-  PitiaPage: {
-    screen: PitiaPage,
-    navigationOptions: ({ navigation }) => {
-      return {
-        title: 'פיתייה',
-      };
-    },
-  },
-}, bottomNavConfig)
-
-/*const FacilitiesStackNav = createStackNavigator({
-
-  FacilitiesPage: {
-    screen: FacilitiesPage,
-    navigationOptions: ({ navigation }) => {
-      return {
-        header: null,
-        //header: (headerProps) => <CustomHeader props={{headerTitle: 'מתקנים קריתיים', navigation}} />
-      };
-    }
-  },
-  
-  }, secondaryStackConfig)*/
+const FacilitiesStack = () => (
+  <Stack.Navigator screenOptions={secondaryStackConfig} >
+    <Stack.Screen name="FacilitiesPage" component={FacilitiesPage} options={{ headerShown: false }} />
+  </Stack.Navigator>
+)
 
 //let transitionNum = -1;
-const HomePageStackNavigator = createStackNavigator({
+
+/*const HomePageStackNavigator = createStackNavigator({
   HomePage: {
     screen: HomePage,
     navigationOptions: ({ navigation }) => {
@@ -303,7 +338,8 @@ const HomePageStackNavigator = createStackNavigator({
       
     },
   })
-})
+})*/
+
 
 /*const CustomHeader = ({ props }) => {
   const goBackIconName = Platform.OS == 'ios' ? 'ios-arrow-forward' : 'md-arrow-forward';
@@ -347,7 +383,7 @@ const HomePageStackNavigator = createStackNavigator({
       </LinearGradient>
     </View>
   )
-}*/
+}
 
 
 const AppDrawerNavigator = createDrawerNavigator({
@@ -362,7 +398,7 @@ const AppDrawerNavigator = createDrawerNavigator({
   drawerPosition: 'left',
   //overlayColor: 'rgba(0, 0, 0, 0.8)',
   contentOptions: {
-    iconContainerStyle: { alignSelf: 'center', /*transform: [{ translateX: scale(80) }]*/ },
+    iconContainerStyle: { alignSelf: 'center',  },  //transform: [{ translateX: scale(80) }]
     labelStyle: { transform: [{ translateX: scale(20) }] },
 
   },
@@ -371,13 +407,13 @@ const AppDrawerNavigator = createDrawerNavigator({
   contentComponent: (props) =>
     <CustomDrawerContentComponent {...props} />,
 });
-
+*/
 const CustomDrawerContentComponent = props => (
   <ScrollView>
     <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
 
       <Logo />
-      <DrawerNavigatorItems {...props} />
+      <DrawerItemList {...props} />
 
     </SafeAreaView>
   </ScrollView>
@@ -403,7 +439,7 @@ const Logo = () => (
 )
 
 
-const AppNavigationContainer = createAppContainer(AppDrawerNavigator);
+//const AppNavigationContainer = createAppContainer(AppDrawerNavigator);
 
 export default AppWrapper;
 

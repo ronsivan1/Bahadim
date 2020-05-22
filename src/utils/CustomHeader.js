@@ -13,7 +13,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default CustomHeader = (props) => {
     const goBackIconName = Platform.OS == 'ios' ? 'ios-arrow-forward' : 'md-arrow-forward'
-    return <View style={{ flex: 1, alignItems: 'center', overflow: 'hidden', }}>
+    return <View style={{ flex: 1, alignItems: 'center', overflow: 'hidden' }}>
 
         <View style={{ width: scale(475), height: scale(220), 
              position: 'absolute', top: -70 }} >

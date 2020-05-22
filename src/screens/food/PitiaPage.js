@@ -48,15 +48,7 @@ export default class PitiaPage extends React.Component {
         const flexArr = [2, 3, 3, 3, 3, 3]
         return (
             <View style={styles.container} >
-                <Table style={{ width: '92%', marginTop: scale(15) }} borderStyle={{ borderWidth: 0.5, borderColor: 'lightskyblue' }}>
-                    <Row data={this.tableHead} flexArr={[ 2, 5 ]} style={styles.head} textStyle={styles.text} />
-                    <Row data={this.armoryRow} flexArr={[ 2, 5 ]} style={{ height: scale(120) }} textStyle={styles.text} />
-                    <Row data={this.libraryRow} flexArr={[ 2, 5 ]} style={{ height: scale(105) }} textStyle={styles.text} />
-                    <Row data={this.gameClubRow} flexArr={[ 2, 5 ]} style={{ height: scale(75) }} textStyle={styles.text} />
-                    
-                    <Rows data={this.tableData} flexArr={[ 2, 5 ]} style={styles.row} textStyle={styles.text} />
-                    
-                </Table>
+                
             </View>
 
         );
