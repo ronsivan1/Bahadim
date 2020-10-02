@@ -21,19 +21,19 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 function  PageButton({info}) {
     //const { info } = this.props;
     const navigation = useNavigation();
-    
+
     return (
         <View style={styles.btnWrapper} >
             {Platform.select({
                 'android':
-                    <TouchableNativeFeedback 
+                    <TouchableNativeFeedback
                         onPress={onButtonPress.bind(null, info.pageName, info.pageProps, navigation)}
                         background={TouchableNativeFeedback.Ripple('#98a841', false)}
                         style={styles.btn} delayPressIn={0}  >
                         <ButtonImageBackground {...info} />
                     </TouchableNativeFeedback>,
-                'ios': 
-                    <TouchableOpacity 
+                'ios':
+                    <TouchableOpacity
                         onPress={onButtonPress.bind(null, info.pageName, info.pageProps, navigation)}
                         style={styles.btn} activeOpacity={0.45} delayPressIn={0}  >
                     <ButtonImageBackground {...info} />
@@ -64,7 +64,7 @@ const ButtonImageBackground = (info) => {
                 : info.iconName == 'bahadimTag' ? <Image source={require('../images/bahadimTag.png')} style={{ height: scale(70), width: scale(50), resizeMode: 'contain' }} />
                 : info.iconName == 'weirdBahadimLogo' ? <Image source={require('../images/weirdBahadimLogo.png')} style={{ transform:[{translateX: scale(-10)}], height: scale(70), width: scale(70), resizeMode: 'stretch' }} />
                 : info.iconName == 'ahshamLogo' ? <Image source={require('../images/ahshamLogo.png')} style={{ height: scale(55), width: scale(55), resizeMode: 'contain' }} />
-                    
+
 
                         : info.text == 'מכבסה' ? <MIIcon name={info.iconName} size={50} color='white' />
                             : info.iconType == 'MIIcon' ? <MIIcon name={info.iconName} size={50} color='white' />
