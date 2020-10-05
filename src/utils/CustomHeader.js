@@ -1,35 +1,30 @@
 import React from 'react';
 import {
     View, Text, Platform,
-    StyleSheet, Dimensions, TouchableOpacity
+    StyleSheet, Dimensions, ScrollView
 } from 'react-native';
-import { TouchableNativeFeedback, ScrollView } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { scale } from 'react-native-size-matters';
-import LinearGradient from 'react-native-linear-gradient';
 
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SCREEN_WIDTH = Dimensions.get('window').width;
+export default function CustomHeader(props) {
+    //const goBackIconName = Platform.OS === 'ios' ? 'ios-arrow-forward' : 'md-arrow-forward'
+    return <View style={{ flex: 1, alignItems: 'center', overflow: 'hidden'}}>
 
-export default CustomHeader = (props) => {
-    const goBackIconName = Platform.OS == 'ios' ? 'ios-arrow-forward' : 'md-arrow-forward'
-    return <View style={{ flex: 1, alignItems: 'center', overflow: 'hidden' }}>
-
-        <View style={{ width: scale(475), height: scale(220), 
+        <View style={{ width: scale(475), height: scale(220),
              position: 'absolute', top: -70 }} >
-            <LinearGradient colors={["#4b5320", "#4b5320"]}
+            <View //LinearGradient colors={["#4b5320", "#4b5320"]}
                 style={{
                     borderBottomRightRadius: scale(500), borderBottomLeftRadius: scale(500),
-                    width: '100%', height: '100%', alignSelf: 'center'
+                    width: '100%', height: '100%', alignSelf: 'center',
+                    backgroundColor: '#4b5320'
                 }} >
 
-            </LinearGradient>
+            </View>
         </View>
 
         <ScrollView style={{ width: '100%' }} overScrollMode='never'
-            contentContainerStyle={{ alignItems: 'center' }} >
+            contentContainerStyle={{ alignItems: 'center', }} >
             <View style={{
-                height: scale(150), 
+                height: scale(150),
                 paddingTop: scale(20),
                 //backgroundColor: 'blue'
             }} >
@@ -82,7 +77,7 @@ export default CustomHeader = (props) => {
                         width: '100%', height: '100%', alignSelf: 'center',
                         justifyContent:'center'
                     }} >
-                    
+
 
                     <View style={{ alignSelf: 'center', paddingBottom: scale(60)  }} >
                         <Text style={styles.title} >{props.headerTitle}</Text>

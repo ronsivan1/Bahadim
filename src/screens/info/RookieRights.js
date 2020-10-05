@@ -14,21 +14,26 @@ export default class RookieRights extends React.Component {
 
         this.flexArr = [1, 1]
     }
-    
+
     render() {
         return (
-            <ScrollView style={{ flex: 1, }} contentContainerStyle={{ alignItems: 'center' }} >
-                <View style={{
-                    width: '85%', marginVertical: scale(15),
-                    alignItems: 'center'
-                }} >
-
-                    
-
-                </View>
-            </ScrollView>
+            <View style={styles.container} >
+                <Image style={styles.imgWorkInProgress}
+                       source={require('../../images/workInProgress.gif')} />
+            </View>
         );
     }
 }
 
-
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#fff'
+    },
+    imgWorkInProgress: {
+        width: '100%',
+        resizeMode: 'cover'
+    }
+})

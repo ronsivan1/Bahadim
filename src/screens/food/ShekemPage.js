@@ -33,14 +33,14 @@ export default class ShekemPage extends React.Component {
             return (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                     <ActivityIndicator color={'#4b5320'}
-                    size={Platform.OS == 'ios' ? 0 : 45} />
+                    size={Platform.OS === 'ios' ? 0 : 45} />
                 </View>);
         }
         else {
             const bistopHours = `א'-ד' 7:00-22:00, ה' 7:00-20:30,` + '\n' + `ו' 7:00-13:00`;
             const burger110Hours =  `א'-ד' 21:30-11:00, ה' 18:00-11:00`;
             return (
-                
+
                 <ScrollView style={{ flex: 1 }} contentContainerStyle={{ alignItems: 'center' }} >
                     <View style={styles.pageContainer} >
                         <Text style={styles.title} >המרכז המסחרי</Text>
@@ -57,12 +57,12 @@ export default class ShekemPage extends React.Component {
                         phone: '09-7964499', web: 'http://coffeetime.co.il' }} />
                         <Shop info={{ imageSource: require('../../images/freshop.png'), imageHeight: 70, resizeMode: 'contain', openingHours: `א'-ד' 9:00-22:00, ו' 8:00-14:00,\nמוצ\"ש - 23:00`,
                          web: 'https://sahoot.co.il' }} />
-                        <Shop info={{ imageSource: require('../../images/gidron.jpg'), imageHeight: 70, resizeMode: 'contain', openingHours: `א'-ה' 6:30-20:00, ו' 6:30-14:30\n*הסגירה תלויה בכמות הסחורה בנאפות באותו יום.`,
+                        <Shop info={{ imageSource: require('../../images/gidron.jpg'), imageHeight: 70, resizeMode: 'contain', openingHours: `א'-ה' 6:30-20:00, ו' 6:30-14:30\n*הסגירה תלויה בכמות הסחורה הנאפת באותו יום.`,
                          web: 'http://gidron.co.il' }} />
-                        
+
                         <Shop info={{ imageSource: require('../../images/shiftzurim.jpg'), imageHeight: 70, resizeMode: 'contain', openingHours: `א'-ד' 9:30-20:00, ה' 8:00-14:00`,
-                        phone: '??', web: 'https://www.facebook.com/shifzurim/' }} />
-                        
+                        web: 'facebook.com/shifzurim' }} />
+
 
                     </View>
                 </ScrollView>
@@ -82,14 +82,13 @@ const Shop = ({ info }) => {
             }}
                 source={imageSource} />
             <View style={{ marginStart: scale(10), justifyContent: 'center', width: '70%', overflow: 'hidden' }} >
-                <View style={{}} >
-                    <Text style={{ textDecorationLine: 'underline', textAlign: 'left' }} >שעות פתיחה:</Text>
-                    <Text style={{ textAlign: 'left' }} >{openingHours} </Text>
+                <View>
+                    <Text style={[styles.iosRTLText, { textDecorationLine: 'underline',}]} >שעות פתיחה:</Text>
+                    <Text style={ styles.iosRTLText }>{openingHours} </Text>
                 </View>
-                
             </View>
         </View>
-        <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'space-around', //backgroundColor: 'silver', 
+        <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'space-around', //backgroundColor: 'silver',
                     width: '100%' }} >
                 {phone ? <PhoneComponent info={{ shouldIncludeText: false, isFullWidth: false, phone: phone, bcolor: '#25d366', iconName: 'phone', width: 120, fontSize: 13 }} /> :null}
                 <PhoneComponent info={{ shouldIncludeText: false, isFullWidth: false, phone: web, bcolor: '#0080ff', iconName: 'web', width: 160, fontSize: 11 }} />
@@ -103,7 +102,7 @@ const Paragraph = ({ text }) => {
         <View style={styles.paragraph} >
             <MCIcon name={'circle'} style={{ marginTop: scale(8), marginEnd: scale(8) }}
                 solid size={6} color={'black'} />
-            <Text style={{textAlign: 'left'}} >{text}</Text>
+            <Text style={styles.iosRTLText} >{text}</Text>
 
         </View>
     )
@@ -125,8 +124,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginVertical: scale(10)
     },
-    text: {
-        textAlign: 'right'
+    iosRTLText: {
+        writingDirection: 'rtl'
     },
 })
 

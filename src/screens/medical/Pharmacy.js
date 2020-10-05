@@ -26,7 +26,7 @@ export default class Pharmacy extends React.Component {
             <ScrollView style={styles.container} contentContainerStyle={{ alignItems: 'center' }}  >
                 <View style={styles.pageContainer} >
 
-                    <Table style={{ width: '100%', }} borderStyle={{ borderWidth: 0, borderColor: 'lightskyblue' }}>
+                    <Table style={{ width: '100%', }} borderStyle={{ borderWidth: 0.5, borderColor: 'lightskyblue' }}>
                         <Row data={['יום', 'שעות פעילות']} flexArr={this.flexArr} style={globalStyles.head} textStyle={globalStyles.textAlignCenter} />
                         <Rows data={this.tableData} flexArr={this.flexArr} style={globalStyles.row} textStyle={globalStyles.textAlignCenter} />
                     </Table>

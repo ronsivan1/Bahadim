@@ -11,7 +11,7 @@ import _ from 'lodash';
 import { Table, Row, Rows } from 'react-native-table-component';
 import { data } from '../../utils';
 
-const { sundayFullData, midWeekFullData, thursdayFullData } = data.bus.innerBuses
+const { jsonData } = data.bus.innerBuses
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default class InnerBusPage extends React.PureComponent {
@@ -19,24 +19,20 @@ export default class InnerBusPage extends React.PureComponent {
         super(props);
         this.state = {
             interactionsComplete: false,
-            //sundayTableData: [], thursdayTableData: [], fridayTableData: [],
-            sundayTableData: sundayFullData,
-            midWeekTableData: midWeekFullData,
-            thursdayTableData: thursdayFullData,
+            jsonData: jsonData,
             search: '',
         }
 
         this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-        this.updateSearch = this.updateSearch.bind(this);
 
         this.tableHead = ['יום', 'שעות'];
-        
+
 
 
     }
 
     /*shouldComponentUpdate(nextState, nextProps) {
-        return nextState.sundayTableData != this.state.sundayTableData
+        return nextState.jsonData != this.state.jsonData
             || nextState.search != this.state.search
     }*/
 
@@ -53,10 +49,7 @@ export default class InnerBusPage extends React.PureComponent {
 
         setTimeout(() => {
             this.setState({
-                interactionsComplete: true,
-                //sundayTableData: sundayFullData,
-                //thursdayTableData: thursdayFullData,
-                //fridayTableData: fridayFullData,
+                interactionsComplete: true
             });
         }, 300)
     }
@@ -67,9 +60,7 @@ export default class InnerBusPage extends React.PureComponent {
     handleBackButtonClick() {
         if (this.state.search != "") {
             this.setState({
-                sundayTableData: sundayFullData,
-                thursdayTableData: thursdayFullData,
-                midWeekTableData: midWeekFullData,
+                jsonData: jsonData,
                 search: ''
             })
             return true;
@@ -77,39 +68,13 @@ export default class InnerBusPage extends React.PureComponent {
         return false;
     }
 
-    updateSearch(text) {
-        const formatQuery = text.toLowerCase();
-        const sundayData = _.filter(sundayFullData, row => {
-            return doesExistInRow = row.some((cellText) => { // this function checks if there is at least 1 cell that the query exists in, if so it returns true otherwise false
-                if (cellText.includes(formatQuery))
-                    return true;
-            })
-        });
-        const midWeekData = _.filter(midWeekFullData, row => {
-            return doesExistInRow = row.some((cellText) => { // this function checks if there is at least 1 cell that the query exists in, if so it returns true otherwise false
-                if (cellText.includes(formatQuery))
-                    return true;
-            })
-        });
-        const thursdayData = _.filter(thursdayFullData, row => {
-            return doesExistInRow = row.some((cellText) => { // this function checks if there is at least 1 cell that the query exists in, if so it returns true otherwise false
-                if (cellText.includes(formatQuery))
-                    return true;
-            })
-        });
-        this.setState({
-            search: text, sundayTableData: sundayData,
-            thursdayTableData: thursdayData, midWeekTableData: midWeekData
-        });
-    };
-
     render() {
         //console.log('rendered InnerBusPage')
         if (!this.state.interactionsComplete) {
             return (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                     <ActivityIndicator color={'#4b5320'}
-                        size={Platform.OS == 'ios' ? 0 : 45} />
+                        size={Platform.OS === 'ios' ? 0 : 45} />
                 </View>
                 );
         }
@@ -123,7 +88,7 @@ export default class InnerBusPage extends React.PureComponent {
                     <ScrollView style={{ flex: 1, /*backgroundColor: '#eaeed3'*/ }}
                         contentContainerStyle={{ paddingBottom: scale(40) }} >
 
-                        
+
 
                         {/*<SearchBar placeholder='חפש...' lightTheme round ref={search => this.search = search}
                             containerStyle={{ transform: [{ scaleX: -1 }] }} inputStyle={{ transform: [{ scaleX: -1 }] }} //these props meant to flip everything to rtl, consider removing this if forceRtl(true)
@@ -133,18 +98,18 @@ export default class InnerBusPage extends React.PureComponent {
                             <Text style={styles.tableTitle} >השעות המוצגות הן השעות שבהן השאטל יוצא מהתחנה הראשונה (מפקדה, בה"ד 10)</Text>
                             <Table style={{ width: '92%', }} borderStyle={{ borderWidth: 0, borderColor: 'lightskyblue' }}>
                                 <Row data={this.tableHead} flexArr={flexArr} style={styles.head} textStyle={styles.text} />
-                                
-                                <Row data={state.sundayTableData[0]} flexArr={flexArr} style={styles.row} textStyle={styles.text} />
-                                <Row data={state.sundayTableData[1]} flexArr={flexArr} style={{ height: scale(350) }} textStyle={styles.text} />
-                                <Row data={state.sundayTableData[2]} flexArr={flexArr} style={styles.row} textStyle={styles.text} />
+
+                                <Row data={state.jsonData[0]} flexArr={flexArr} style={styles.row} textStyle={styles.text} />
+                                <Row data={state.jsonData[1]} flexArr={flexArr} style={{ height: scale(350) }} textStyle={styles.text} />
+                                <Row data={state.jsonData[2]} flexArr={flexArr} style={styles.row} textStyle={styles.text} />
                             </Table>
-                            
+
                         </View>
                     </ScrollView>
                 </TouchableWithoutFeedback>
             );
         }
-        
+
     }
 }
 

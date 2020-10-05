@@ -4,23 +4,28 @@ import {
 } from 'react-native';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { scale } from 'react-native-size-matters';
-import { borderRadiusStyle, Bullet, RTLText } from '../../utils';
+import { Bullet, RTLText } from '../../utils';
+import {Covid19TextInfo} from "../../utils/components";
 
 export default class SportPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {  }
     }
-    render() { 
-        return ( 
+    render() {
+        return (
             <ScrollView style={{ flex: 1, }} contentContainerStyle={{alignItems: 'center'}} >
+                {/* Covid19 information text about sport center */}
+                <Covid19TextInfo text={'עקב המצב, הוגבלה הגישה לבריכת השחיה ולמרכז הספורט, פנו למפקדכם למידע נוסף'} />
+
                 <View style={styles.pageContainer} >
+
                     <Text style={styles.title} >בריכת שחייה</Text>
                     <Bullet text={`שעות פתיחת הבריכה:\nא'-ה' 06:30-9:00, 17:00-21:00`} />
                     <Bullet text={`ימים מגדריים בנים: ב' 20:00-21:00, ד' 7:30-9:00`} />
                     <Bullet text={`ימים מגדריים בנות: ב' 6:30-8:00, ד' 20:00-21:00`} />
                     <RTLText style={{ fontSize: scale(20), color: '#4b5320',
-                     textDecorationLine: 'underline', fontWeight: 'bold', 
+                     textDecorationLine: 'underline', fontWeight: 'bold',
                      marginBottom: scale(10) }} >דברים שחשוב לדעת: </RTLText>
                     <ImportantInfoBullet text='הרחצה מותנית באישור רפואי חתום.' />
                     <ImportantInfoBullet text='ההגעה לבריכת השחייה מחויבת במד"ס מלא ותקני.' />
@@ -35,7 +40,7 @@ export default class SportPage extends React.Component {
                     <Bullet text={`ימים מגדריים בנים: ב' 20:00-22:00, ד' 8:00-10:00`} />
                     <Bullet text={`ימים מגדריים בנות: ב' 6:00-7:30, ד' 20:00-22:00`} />
                     <RTLText style={{ fontSize: scale(20), color: '#4b5320',
-                     textDecorationLine: 'underline', fontWeight: 'bold', 
+                     textDecorationLine: 'underline', fontWeight: 'bold',
                      marginBottom: scale(10) }} >דברים שחשוב לדעת: </RTLText>
                     <ImportantInfoBullet text='הכניסה לחד"כ בליווי מנוי וחוגר יחד בלבד, אין להגיע ללא חוגר או מנוי לחדר כושר. מי שמגיע עם מנוי מזויף תשלל ממנו הזכות להתאמן בחדר הכושר.' />
                     <ImportantInfoBullet text='ההגעה לחד"כ מחוייבת בהבאת מגבת אישית לכל מתאמן. חייל אשר לא יביא מגבת אישית לא יורשה להתאמן!' />

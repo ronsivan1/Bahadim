@@ -1,17 +1,16 @@
 import React from 'react';
 import {
     View, Text, ScrollView, TextInput, StyleSheet, BackHandler,
-    Dimensions, TouchableOpacity, Image, TouchableWithoutFeedback,
-    InteractionManager, ActivityIndicator, Platform
+    Dimensions, TouchableWithoutFeedback,
+    ActivityIndicator, Platform
 } from 'react-native';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { scale } from 'react-native-size-matters';
-import LinearGradient from 'react-native-linear-gradient';
 //import { SearchBar } from 'react-native-elements';
 import _ from 'lodash';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
 import { sundayFullData, thursdayFullData, fridayFullData } from '../../utils/index';
+import {Covid19TextInfo} from "../../utils/components";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -82,19 +81,19 @@ export default class BusPage extends React.PureComponent {
     updateSearch(text) {
         const formatQuery = text.toLowerCase();
         const sundayData = _.filter(sundayFullData, row => {
-            return doesExistInRow = row.some((cellText) => { // this function checks if there is at least 1 cell that the query exists in, if so it returns true otherwise false
+            return row.some((cellText) => { // this function checks if there is at least 1 cell that the query exists in, if so it returns true otherwise false
                 if (cellText.includes(formatQuery))
                     return true;
             })
         });
         const thursdayData = _.filter(thursdayFullData, row => {
-            return doesExistInRow = row.some((cellText) => { // this function checks if there is at least 1 cell that the query exists in, if so it returns true otherwise false
+            return row.some((cellText) => { // this function checks if there is at least 1 cell that the query exists in, if so it returns true otherwise false
                 if (cellText.includes(formatQuery))
                     return true;
             })
         });
         const fridayData = _.filter(fridayFullData, row => {
-            return doesExistInRow = row.some((cellText) => { // this function checks if there is at least 1 cell that the query exists in, if so it returns true otherwise false
+            return row.some((cellText) => { // this function checks if there is at least 1 cell that the query exists in, if so it returns true otherwise false
                 if (cellText.includes(formatQuery))
                     return true;
             })
@@ -116,8 +115,7 @@ export default class BusPage extends React.PureComponent {
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                     <ActivityIndicator color={'#4b5320'}
                         size={Platform.OS == 'ios' ? 0 : 45} />
-                </View>
-                );
+                </View> );
         }
         else {
 
@@ -129,6 +127,9 @@ export default class BusPage extends React.PureComponent {
                     <ScrollView style={{ flex: 1, /*backgroundColor: '#eaeed3'*/ }}
                         contentContainerStyle={{ paddingBottom: scale(40) }}
                         keyboardDismissMode='on-drag' >
+
+                        {/* Covid19 information text about buses */}
+                        <Covid19TextInfo text={'עקב המצב, שעות האוטובוסים השתנו והתחלקו לקפסולות לפי בה״דים, פנו למפקדכם לקבלת שעות מעודכנות'} />
 
                         <View style={{
                             backgroundColor: '#e6e8ed', width: '100%',
@@ -201,7 +202,7 @@ export default class BusPage extends React.PureComponent {
                 </TouchableWithoutFeedback>
             );
         }
-        
+
     }
 }
 

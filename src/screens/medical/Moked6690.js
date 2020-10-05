@@ -43,10 +43,8 @@ export default class Moked6690 extends React.Component {
 
                         <PhoneComponent style={{justifyContent: 'space-evenly'}} info={{ text: 'אזרחי', phone: '03-9489999', bcolor: '#25d366', iconName: 'phone' }} />
                         <PhoneComponent style={{justifyContent: 'space-evenly'}} info={{ text: 'מטכלי', phone: '03-39999', bcolor: '#4b5320', iconName: 'deskphone' }} />
-                        <PhoneComponent style={{justifyContent: 'space-evenly'}} info={{ text: 'אפשר גם', phone: '6690*', bcolor: '#F20000', iconName: 'heart' }} />
+                        <PhoneComponent style={{justifyContent: 'space-evenly'}} info={{ text: 'אפשר גם', phone: '*6690', bcolor: '#F20000', iconName: 'heart' }} />
                         <PhoneComponent style={{justifyContent: 'space-evenly'}} info={{ text: 'מייל אזרחי', phone: 'moked6690@idf.gov.il', bcolor: '#4798cc', iconName: 'email' }} />
-
-                    
 
                 </View>
             </ScrollView>

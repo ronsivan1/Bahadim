@@ -22,13 +22,15 @@ import { TashPage, Procedures, Yohalam, SoldierRights } from './info/tash';
 
 import FoodDelivery from './FoodDelivery';
 
+import AboutPage from "./AboutPage";
+
 
 export {
     HomePage,
-    
+
     BusPage,
     InnerBusPage,
-    
+
     MedicalPage,Pharmacy, Moked6690, Harap, LabServices,
     PhonesPage, GeneralPhones, BahadPhones, MorePhones,
     GalleryPage,
@@ -39,10 +41,12 @@ export {
     FacilitiesPage, SportPage, LaundryPage, BarberPage, OtherFacilitiesPage,
 
     InfoPage, RookieRights,
-    
+
     JewishPage, PrayTimes, Lessons, Contact,
 
     TashPage, Procedures, Yohalam, SoldierRights,
-    
-    FoodDelivery
+
+    FoodDelivery,
+
+    AboutPage,
 }

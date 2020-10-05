@@ -7,18 +7,22 @@ import {
 import { scale } from 'react-native-size-matters';
 import { data, globalStyles } from '../../../utils';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
+import {Covid19TextInfo} from "../../../utils/components";
 
 export default class Lessons extends React.Component {
     constructor(props) {
         super(props);
         this.state = {}
-        
+
     }
 
     render() {
         return (
             <ScrollView style={{ flex: 1, }} contentContainerStyle={{ alignItems: 'center' }} >
-                <View style={{ width: '92%', marginVertical: scale(15), 
+
+                <Covid19TextInfo text={'בעקבות המצב, לא מתאפשרת כניסת אזרחים לבסיס ולכן לצערנו לא יתקיימו שיעורים עד לירידה בתחלואה. ניתן להתעדכן בשינויים עם רבנות קריית ההדרכה.'} />
+
+                <View style={{ width: '92%', marginVertical: scale(15),
                     alignItems: 'center' }} >
 
                     <Table style={{ width: '100%', }} borderStyle={{ borderWidth: 0, borderColor: 'lightskyblue' }}>
@@ -26,7 +30,7 @@ export default class Lessons extends React.Component {
                         <Rows data={data.jewish.lessons.tableData} flexArr={data.jewish.lessons.flexArr} style={styles.row} textStyle={styles.text} />
 
                     </Table>
-                    
+
                     <Text style={[globalStyles.title, { textDecorationLine:'none', fontWeight: 'bold' }]} >כל השיעורים מתקיימים עם המון מצב רוח וכיבוד בבית כנסת "אור עולם" (מבנה 209)</Text>
 
                 </View>

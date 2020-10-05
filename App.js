@@ -1,20 +1,18 @@
 import React, {Fragment} from 'react';
 import AppWrapper from './AppWrapper';
 import {
+  StyleSheet,
   I18nManager,
   SafeAreaView,
   StatusBar,
   Platform,
-  YellowBox,
+  LogBox,
 } from 'react-native';
-import changeNavigationBarColor from 'react-native-navigation-bar-color';
-//import { useScreens } from 'react-native-screens';
-//useScreens();
+//import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import { enableScreens } from 'react-native-screens';
+enableScreens();
 
-I18nManager.allowRTL(true);
-I18nManager.forceRTL(true);
-
-YellowBox.ignoreWarnings(['RCTRootView cancelTouches']);
+LogBox.ignoreLogs(['RCTRootView cancelTouches']);
 
 class App extends React.Component {
   constructor(props) {
@@ -23,7 +21,7 @@ class App extends React.Component {
   }
 
   renderNavigationBars = () => {
-    changeNavigationBarColor('#eaeed3', true);
+    //changeNavigationBarColor('#eaeed3', true);
     return Platform.select({
       android: <StatusBar backgroundColor="#4b5320" animated />,
       ios: <StatusBar barStyle="light-content" showHideTransition="fade" />,
@@ -33,8 +31,8 @@ class App extends React.Component {
   render() {
     return (
       <Fragment>
-        <SafeAreaView style={{flex: 0, backgroundColor: '#4b5320'}} />
-        <SafeAreaView style={{flex: 1, backgroundColor: '#eaeed3'}}>
+        <SafeAreaView style={styles.topNavBarIOS}  />
+        <SafeAreaView style={styles.bottomNavBar}>
           {this.renderNavigationBars()}
           <AppWrapper />
         </SafeAreaView>
@@ -44,3 +42,14 @@ class App extends React.Component {
 }
 
 export default App;
+
+const styles = StyleSheet.create({
+  topNavBarIOS: {
+    flex: 0,
+    backgroundColor: '#4b5320'
+  },
+  bottomNavBar: {
+    flex: 1,
+    //backgroundColor: '#eaeed3' // this changes IOS bottom nav color, for Android, react-native-navigation-bar-color is needed
+  }
+})

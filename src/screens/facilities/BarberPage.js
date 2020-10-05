@@ -19,14 +19,14 @@ class BarberPage extends React.Component {
         callNumber(number);
     }
 
-    render() { 
-        return ( 
+    render() {
+        return (
             <ScrollView style={{ flex: 1, alignSelf: 'center',
             width: '85%', }} contentContainerStyle={{
                  marginVertical: scale(15), //backgroundColor: 'blue',
-                alignItems: 'center', 
+                alignItems: 'center',
             }} >
-                
+
                 <View style={{
                         height: scale(180), width: scale(180),
                         borderRadius: scale(60), overflow: 'hidden' }} >
@@ -44,7 +44,7 @@ class BarberPage extends React.Component {
                                 </TouchableOpacity>
                         })}
                 </View>
-                
+
                 <View >
                     <Text style={[styles.title, { alignSelf: 'center' }]} >שעות פעילות:</Text>
                     <Bullet text={`א'-ה' 08:00-18:00\n(הפסקה בין 12:00-13:00)`} />
@@ -57,12 +57,17 @@ class BarberPage extends React.Component {
 }
 
 const MainButtonContent = () => (
-    <View style={{ alignItems: 'center', justifyContent: 'center', /*backgroundColor: 'blue,'*/  }} >
-        <MCIcon name={'content-cut'} size={scale(110)} color="white" />
-        <RTLText style={{ fontSize: scale(20), color: 'white', fontWeight: 'bold' }} >מספרה</RTLText>
+    <View style={{ alignItems: 'center', }}  >
+        <MCIcon name={'phone'} size={scale(110)} color="white" />
+        <View style={{ alignItems: 'center', flexDirection: 'row'  }} >
+            <RTLText style={{ fontSize: scale(20), color: 'white', fontWeight: 'bold', paddingLeft: scale(5) }} >מספרה</RTLText>
+            <MCIcon name={'content-cut'} size={scale(20)} color="white" />
+
+        </View>
     </View>
+
 )
- 
+
 export default BarberPage;
 
 const styles = StyleSheet.create({
@@ -71,7 +76,7 @@ const styles = StyleSheet.create({
         height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center',
     },
     title: {
-        textDecorationLine: 'underline', 
+        textDecorationLine: 'underline',
         fontSize: scale(24), color: '#4b5320',
         marginVertical: scale(20)
 

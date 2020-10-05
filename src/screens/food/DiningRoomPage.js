@@ -1,13 +1,8 @@
 import React from 'react';
 import {
-    View, Text, ScrollView, TextInput, StyleSheet, BackHandler,
-    Dimensions, TouchableOpacity, Image, TouchableWithoutFeedback,
-    InteractionManager, ActivityIndicator, Platform
+    View, ScrollView, StyleSheet, Dimensions
 } from 'react-native';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { scale } from 'react-native-size-matters';
-import LinearGradient from 'react-native-linear-gradient';
 //import { SearchBar } from 'react-native-elements';
 import _ from 'lodash';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
@@ -20,7 +15,7 @@ export default class DiningRoomPage extends React.PureComponent {
         super(props);
         this.state = {
             interactionsComplete: false,
-            
+
         }
 
         this.tableHead = [ '', 'יום א', 'יום ב', 'יום ג', 'יום ד', 'יום ה' ];
@@ -56,12 +51,12 @@ export default class DiningRoomPage extends React.PureComponent {
                                 <Rows data={data.food.pitiaTable} flexArr={flexArr} style={styles.row} textStyle={styles.text} />
 
                             </Table>
-                            
+
                         </View>
                     </ScrollView>
             );
         //}
-        
+
     }
 }
 

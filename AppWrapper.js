@@ -12,16 +12,16 @@ import {
   Easing,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import {NavigationContainer} from '@react-navigation/native';
 import {
-  createStackNavigator,
-  CardStyleInterpolators,
+    createStackNavigator,
+    CardStyleInterpolators, HeaderStyleInterpolators,
 } from '@react-navigation/stack';
-import {createDrawerNavigator, DrawerItemList} from '@react-navigation/drawer';
+import {createDrawerNavigator, DrawerItemList, DrawerItem} from '@react-navigation/drawer';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 //import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import {scale} from 'react-native-size-matters';
-import {enableScreens} from 'react-native-screens';
 import {
   HomePage,
   BusPage,
@@ -56,11 +56,10 @@ import {
   Yohalam,
   SoldierRights,
   FoodDelivery,
+  AboutPage,
 } from './src/screens';
+import {set} from "react-native-reanimated";
 
-enableScreens();
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -145,7 +144,7 @@ const HomePageNewStack = () => (
     <Stack.Screen
       name="LaundryPage"
       component={LaundryPage}
-      options={{headerTitle: 'מרכז הספורט'}}
+      options={{headerTitle: 'מכבסה'}}
     />
     <Stack.Screen
       name="BarberPage"
@@ -261,24 +260,28 @@ const HomePageNewStack = () => (
 
     <Stack.Screen
       name="FoodPage"
-      component={FoodBottomNav}
-      options={{headerTitle: ''}}
+      component={ShekemPage}
+      options={{headerTitle: 'שק״ם'}}
     />
+
+      <Stack.Screen
+          name="AboutPage"
+          component={AboutPage}
+          options={{headerTitle: 'אודות'}}
+      />
   </Stack.Navigator>
 );
 
 const homePageScreenOptions = {
   headerStyle: {
-    backgroundColor: '#4b5320',
+    backgroundColor: '#4b5322',
     height: scale(55),
     elevation: 0,
     shadowOpacity: 0,
     borderBottomWidth: 0,
-    //backgroundColor: '#4b5320'
   },
 
   cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-  cardShadowEnabled: false,
   headerForceInset: {top: 'never', bottom: 'never'}, // this removes the SafeArea paddingTop on iOS
   headerLeftContainerStyle: {paddingLeft: scale(6), color: '#fff'},
   headerTintColor: 'white',
@@ -339,7 +342,7 @@ const FoodBottomNav = () => (
       component={ShekemPage}
       options={{tabBarLabel: 'שק"ם'}}
     />
-    <BottomTab.Screen
+    {/*<BottomTab.Screen
       name="DiningRoomPage"
       component={DiningRoomPage}
       options={{tabBarLabel: 'חדר אוכל'}}
@@ -348,7 +351,7 @@ const FoodBottomNav = () => (
       name="PitiaPage"
       component={PitiaPage}
       options={{tabBarLabel: 'פיתייה'}}
-    />
+    />*/}
   </BottomTab.Navigator>
 );
 
@@ -611,14 +614,35 @@ const AppDrawerNavigator = createDrawerNavigator({
     <CustomDrawerContentComponent {...props} />,
 });
 */
-const CustomDrawerContentComponent = (props) => (
-  <ScrollView>
-    <SafeAreaView forceInset={{top: 'always', horizontal: 'never'}}>
-      <Logo />
-      <DrawerItemList {...props} />
-    </SafeAreaView>
-  </ScrollView>
-);
+const CustomDrawerContentComponent = (props) => {
+    const {routes, index: focusedIndex} = props.state; // index is always 0 since we only have HomePageNewStack in our Drawer
+    const focusedRoute = routes[focusedIndex] // HomePageNewStack
+    const isHomePageFocused = (focusedRoute.state === undefined || focusedRoute.state.index === 0) // check if currently HomePage is displayed in HomePageNewStack (focusedRoute.state is undefined if navigation hasn't been used yet) (and if index is 0 it must be homepage since it's the first screen in the app)
+    const isAboutPageFocused = focusedRoute.state && focusedRoute.state.routes[focusedRoute.state.routes.length-1].name ==="AboutPage"
+
+    return (
+        <ScrollView>
+            <SafeAreaView forceInset={{top: 'always', horizontal: 'never'}}>
+              <Logo />
+              <DrawerItem
+                  icon={({ focused, color, size }) =>
+                      <Icon color={'black'} size={size} name={focused ? 'home' : 'home-outline'} />}
+                  label="דף הבית"
+                  labelStyle={{ writingDirection: 'rtl' }}
+                  focused={isHomePageFocused}
+                  onPress={() => props.navigation.navigate("HomePage") }
+              />
+              <DrawerItem
+                  icon={({ focused, color, size }) =>
+                      <AntDesignIcon color={'black'} size={size} name={focused ? 'questioncircle' : 'questioncircleo'} />}
+                  label="אודות"
+                  labelStyle={{ writingDirection: 'rtl' }}
+                  focused={isAboutPageFocused}
+                  onPress={() => props.navigation.navigate("AboutPage") }
+              />
+            </SafeAreaView>
+        </ScrollView>
+)};
 
 const nicelogo =
   'http://rng.org.il/wp-content/uploads/2015/08/%D7%A2%D7%99%D7%A8-%D7%94%D7%91%D7%94%D7%93%D7%99%D7%9D-%D7%9C%D7%95%D7%92%D7%95.jpg';

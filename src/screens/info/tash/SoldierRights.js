@@ -16,28 +16,23 @@ export default class SoldierRights extends React.Component {
     }
     render() {
         return (
-            <ScrollView style={{ flex: 1, }} contentContainerStyle={{ alignItems: 'center' }} >
-                <View style={{
-                    width: '85%', marginVertical: scale(15),
-                    alignItems: 'center'
-                }} >
-
-                    <Text></Text>
-
-                </View>
-            </ScrollView>
+            <View style={styles.container} >
+                <Image style={styles.imgWorkInProgress}
+                       source={require('../../../images/workInProgress.gif')} />
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    head: { height: scale(40), backgroundColor: '#f1f8ff' },
-    title: {
-        textDecorationLine: 'underline',
-        fontSize: scale(24), color: '#4b5320',
-        marginVertical: scale(15),
-        alignSelf: 'center'
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#fff'
     },
-    row: { height: scale(60), },
-    text: { textAlign: 'center' }
+    imgWorkInProgress: {
+        width: '100%',
+        resizeMode: 'cover'
+    }
 })

@@ -1,12 +1,21 @@
 import React from 'react';
-import { View, Text, Linking, StyleSheet,
-TouchableOpacity} from 'react-native';
+import {
+    View, Text, Linking, StyleSheet,
+    TouchableOpacity, ScrollView
+} from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { scale } from 'react-native-size-matters';
 
+{/* Covid19 information text component */}
+export const Covid19TextInfo = ({ text }) => (
+    <View style={styles.covid19Container} >
+        <Text style={styles.covid19Text}>{text}</Text>
+    </View>
+);
+
 export const Bullet = ({ text, num }) => (
-    num ? 
+    num ?
     <View style={[globalStyles.paragraph]} >
         <Text style={{ fontSize: scale(17), marginEnd: scale(8), fontWeight: 'bold' }} >.{num}</Text>
         <Text style={globalStyles.text} >{text}</Text>
@@ -26,7 +35,7 @@ export const RTLText = ({ style, children }) => {
     );
 }
 
-const onPhonePress = (phone) => { 
+const onPhonePress = (phone) => {
 
     phone = phone.length == 4 ? '073377' + phone : phone;
     callNumber(phone);
@@ -44,25 +53,25 @@ export const PhoneComponent = ({info, style}) => {
             width: scale(100), // width: scale(85)
             //backgroundColor: 'blue'
             }} >{text} - </RTLText>: null}
-            
-                
+
+
                 {Platform.select({
-                    'android': 
+                    'android':
                         <View style={{ borderRadius: scale(7), overflow: 'hidden' }} >
                             <TouchableNativeFeedback style={[styles.btn, { width: scale(width) }]} onPress={onPhonePress.bind(null, phone)}
                             background={TouchableNativeFeedback.Ripple('#3b3b3b', false)} >
                                 <PhoneButtonContent info={{phone, iconName, bcolor, fontSize}} />
                             </TouchableNativeFeedback>
                         </View>,
-                    'ios': 
+                    'ios':
                         <TouchableOpacity style={[styles.btn, { width: scale(width) }]} onPress={onPhonePress.bind(null, phone)}
                         activeOpacity={0.5} >
                             <PhoneButtonContent info={{phone, iconName, bcolor, fontSize}} />
                         </TouchableOpacity>,
                 })}
 
-            
-            
+
+
         </View>
     )
 }
@@ -74,7 +83,7 @@ const PhoneButtonContent = ({info}) => {
             <MCIcon name={iconName} size={21} color="white"
                 style={{ marginEnd: scale(5) }}/>
             <RTLText style={{ color: 'white', fontSize: scale(fontSize) }} >{phone}</RTLText>
-            
+
         </View>
     );
 }
@@ -93,7 +102,9 @@ export const callNumber = (phone) => {
     }
     if(phoneNumber.includes('http'))
         phoneNumber = phone;
-    
+    if(phoneNumber.includes('facebook'))
+        phoneNumber = 'https://www.' + phone
+
     Linking.canOpenURL(phoneNumber)
         .then(supported => {
             if (!supported) {
@@ -102,20 +113,20 @@ export const callNumber = (phone) => {
                 return Linking.openURL(phoneNumber);
             }
         })
-        .catch(err => console.log(err));
+        //.catch(err => console.log(err));
 };
 
 const styles = StyleSheet.create({
     phoneWrapper: {
-        flexDirection: 'row', marginTop: scale(10), 
+        flexDirection: 'row', marginTop: scale(10),
         alignItems: 'center', justifyContent: 'space-between',
-       
+
     },
     fullWidthPhoneWrapper: {
-        flexDirection: 'row', marginTop: scale(15), 
+        flexDirection: 'row', marginTop: scale(15),
         alignItems: 'center', justifyContent: 'space-between',
-        width: '100%', 
-        
+        width: '100%',
+
     },
     btn: {
         justifyContent: 'center',
@@ -125,12 +136,21 @@ const styles = StyleSheet.create({
     phoneBtnContent: {
         alignItems: 'center', justifyContent: 'center', flexDirection: 'row',
         height: '100%', width: '100%' ,
-        
+
+    },
+    covid19Container: {
+        width: '100%', paddingVertical: scale(10), backgroundColor: '#e50000',
+        justifyContent: 'center', alignItems: 'center', borderColor: '#000',
+        borderWidth: scale(5)
+    },
+    covid19Text: {
+        textAlign: 'center', color: 'white', width: '90%',
+        fontSize: scale(15), fontWeight: 'bold'
     }
 })
 
 export function borderRadiusStyle(borderRadius, isCalledFromWrapper){
-    if(Platform.OS == 'ios' && isCalledFromWrapper) return; 
+    if(Platform.OS == 'ios' && isCalledFromWrapper) return;
     return {
         borderRadius: scale(borderRadius), overflow: 'hidden',
     };

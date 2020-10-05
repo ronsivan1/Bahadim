@@ -15,9 +15,9 @@ import {
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import FAIcon from 'react-native-vector-icons/FontAwesome5';
+import FontistoIcon from 'react-native-vector-icons/Fontisto'
 import {scale} from 'react-native-size-matters';
-import LinearGradient from 'react-native-linear-gradient';
+//import LinearGradient from 'react-native-linear-gradient';
 import {borderRadiusStyle} from '../utils';
 
 //import { getStatusBarHeight } from 'react-native-status-bar-height';
@@ -43,13 +43,14 @@ export default class HomePage extends React.Component {
             width: scale(475),
             height: '35%',
           }}>
-          <LinearGradient
-            colors={[/*"#586125", */ '#4b5320', '#4b5320']}
+          <View //LinearGradient
+                //colors={[/*"#586125", */ '#4b5320', '#4b5320']}
             style={{
               height: '100%',
               width: '100%',
               borderBottomRightRadius: scale(500),
               borderBottomLeftRadius: scale(500),
+              backgroundColor: '#4b5320'
             }}>
             <View
               style={{
@@ -76,7 +77,7 @@ export default class HomePage extends React.Component {
               </View>
 
               <View style={{borderRadius: scale(40), overflow: 'hidden'}}>
-                {Platform.OS == 'android' ? (
+                {Platform.OS === 'android' ? (
                   <TouchableNativeFeedback
                     onPress={() => this.props.navigation.openDrawer()}
                     background={TouchableNativeFeedback.Ripple(
@@ -91,7 +92,7 @@ export default class HomePage extends React.Component {
                     }}>
                     <Icon name="md-menu" size={30} color={'#fff'} />
                   </TouchableNativeFeedback>
-                ) : Platform.OS == 'ios' ? (
+                ) : Platform.OS === 'ios' ? (
                   <TouchableOpacity
                     onPress={() => this.props.navigation.openDrawer()}
                     style={{
@@ -107,12 +108,13 @@ export default class HomePage extends React.Component {
             </View>
 
             <View style={{alignSelf: 'center', alignItems: 'center'}}>
-              <Text style={styles.title}>קריית ההדרכה</Text>
-              <Text style={[styles.title, {fontSize: scale(16)}]}>
+              <Text style={[styles.title, { fontWeight: 'bold' }]}>קריית ההדרכה</Text>
+              <Text style={[styles.title, { fontSize: scale(14), paddingVertical: scale(2) }]} >עיר הבה״דים</Text>
+              <Text style={[styles.title, {fontSize: scale(17)}]}>
                 ע"ש האלוף אריאל שרון
               </Text>
             </View>
-          </LinearGradient>
+          </View>
         </View>
         <SafeAreaView
           style={{
@@ -140,7 +142,7 @@ export default class HomePage extends React.Component {
               />
               <Button
                 buttonInfo={{
-                  name: 'hamburger',
+                  name: 'shopping-store',
                   text: 'שק"ם',
                   pageName: 'FoodPage',
                 }}
@@ -277,10 +279,10 @@ const ButtonImageBackground = ({buttonInfo}) => (
     source={require('../images/homePageBtnBackground.jpg')}>
 
 
-    {buttonInfo.name === 'hamburger' ? (
-      <FAIcon
+    {buttonInfo.name === 'shopping-store' ? (
+      <FontistoIcon
         name={buttonInfo.name}
-        size={50}
+        size={scale(43)}
         color="white"
         style={
           Platform.OS === 'ios'
@@ -293,7 +295,7 @@ const ButtonImageBackground = ({buttonInfo}) => (
     ) : buttonInfo.name.includes('truck') ? (
       <MCIcon
         name={buttonInfo.name}
-        size={50}
+        size={scale(47)}
         color="white"
         style={
           {
@@ -304,7 +306,7 @@ const ButtonImageBackground = ({buttonInfo}) => (
     ) : (
       <Icon
         name={buttonInfo.name}
-        size={50}
+        size={scale(47)}
         color="white"
         style={
           {

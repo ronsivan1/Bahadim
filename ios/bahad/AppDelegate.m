@@ -4,6 +4,8 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+#import <React/RCTI18nUtil.h> //<== AmerllicA config
+
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -27,6 +29,10 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
+[[RCTI18nUtil sharedInstance] allowRTL:YES]; //<== AmerllicA config
+[[RCTI18nUtil sharedInstance] forceRTL:YES]; //<== AmerllicA config
+
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif

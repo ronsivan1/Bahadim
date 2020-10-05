@@ -2,17 +2,18 @@ import React from 'react';
 import {
     View, Text, ScrollView, StyleSheet,
     Dimensions, TouchableOpacity, ImageBackground,
-    ActivityIndicator, Platform, Image
+    ActivityIndicator, Platform, Image, Linking
 } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { borderRadiusStyle, Bullet, RTLText } from '../../../utils';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
+import {Covid19TextInfo} from "../../../utils/components";
 
 export default class PrayTimes extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-    
+
         this.flexArr1 = [ 4,2,2 ]
         this.tableData1 = [
             ['שחרית מניין ראשון', '6:15', '6:15' ],
@@ -25,16 +26,23 @@ export default class PrayTimes extends React.Component {
 
         this.flexArr2 = [ 3,4,2.5,3,3 ]
         this.tableData2 = [
-            ['שחרית', 'מזריחת השמש - 09:00', '40 דקות', 'שעתיים (כולל מוסף)', 'שעה (כולל מוסף)' ],
-            ['מנחה', 'מ12:15 - שקיעת החמה', '15 דקות', '30 דקות', '15 דקות' ],
-            ['ערבית', 'מחצי שעה לפני שקיעת החמה - 23:30', '15 דקות', '30 דקות', '15 דקות' ],
-            
+            ['שחרית', /*'מזריחת השמש - 09:00', */ '40 דקות', 'שעתיים (כולל מוסף)', 'שעה (כולל מוסף)' ],
+            ['מנחה', /*'מ12:15 - שקיעת החמה',*/ '15 דקות', '30 דקות', '15 דקות' ],
+            ['ערבית', /*'מחצי שעה לפני שקיעת החמה - 23:30',*/ '15 דקות', '30 דקות', '15 דקות' ],
+
         ];
     }
     render() {
-        
+        const covid19PrayingImageLink = 'https://imgur.com/a/x8zVcVQ'
         return (
             <ScrollView style={{ flex: 1, }} contentContainerStyle={{ alignItems: 'center' }} >
+
+                <View style={styles.covid19Container} >
+                    <Text style={styles.covid19Text}>עקב המצב, זמני התפילות השתנו, והתפילות יתקיימו במבנים שונים על פי חלוקה בה״דית.</Text>
+                    <Text style={[styles.covid19Text, { color: 'blue', textDecorationLine: 'underline' }]}
+                          onPress={() => Linking.openURL(covid19PrayingImageLink)} >למידע נוסף לחץ כאן</Text>
+                </View>
+
                 <View style={{
                     width: '92%', marginVertical: scale(15),
                     alignItems: 'center'
@@ -50,11 +58,11 @@ export default class PrayTimes extends React.Component {
                     <Text style={{fontSize: scale(24), color: '#4b5320', marginTop: scale(20),
                     textDecorationLine: 'underline'}} >יום שבת</Text>
                     <Text style={{fontSize: scale(24), color: '#4b5320',}} >לפי לו"ז שבת המפורסם</Text>
-                
+
 
                     <Text style={styles.title} >משך זמן תפילות המגיע לחייל</Text>
                     <Table style={{ width: '92%', }} borderStyle={{ borderWidth: 0, borderColor: 'lightskyblue' }}>
-                        <Row data={[ '', 'זמן תפילה', 'חול', 'שבת/חג', '(לרבות חוה"מ)' ]} flexArr={this.flexArr2} style={styles.head} textStyle={styles.text} />
+                        <Row data={[ '', /*'זמן תפילה'/*/ 'חול', 'שבת/חג', '(לרבות חוה"מ)' ]} flexArr={this.flexArr2} style={styles.head} textStyle={styles.text} />
                         <Rows data={this.tableData2} flexArr={this.flexArr2} style={styles.row2} textStyle={styles.text} />
 
                     </Table>
@@ -66,14 +74,14 @@ export default class PrayTimes extends React.Component {
                         <Bullet text={'ראש השנה ויום כיפור: ארבע שעות \n(כולל מוסף) '} />
                         <Bullet text={'חנוכה, פורים ויום העצמאות: שעה'} />
                         <Bullet text={`ט' באב: שעה ו15 דקות (כולל קריאת מגילה וקינות)`} />
-                    
+
                     </View>
 
                     <Text style={styles.title} >מנחה</Text>
                     <View style={{ width: '100%' }} >
                         <Bullet text={`יום הכיפורים: שעתיים (כולל נעילה)`} />
                         <Bullet text={`ימי צום: 30 דקות נוספות על הזמן האמור לעיל.`} />
-                        
+
                     </View>
 
                     <Text style={styles.title} >ערבית</Text>
@@ -82,9 +90,9 @@ export default class PrayTimes extends React.Component {
                         <Bullet text={'פורים: 45 דקות'} />
                         <Bullet text={'יום העצמאות: 30 דקות'} />
                         <Bullet text={`ט' באב: 45 דקות (כולל קריאת מגילה וקינות)`} />
-                    
+
                     </View>
-                    
+
                 </View>
             </ScrollView>
         );
@@ -101,5 +109,15 @@ const styles = StyleSheet.create({
     },
     row1: { height: scale(50), },
     row2: { height: scale(70) },
-    text: { textAlign: 'center' }
+    text: { textAlign: 'center' },
+
+    covid19Container: {
+        width: '100%', height: scale(100), backgroundColor: '#e50000',
+        justifyContent: 'center', alignItems: 'center', borderColor: '#000',
+        borderWidth: scale(5)
+    },
+    covid19Text: {
+        textAlign: 'center', color: 'white', width: '90%',
+        fontSize: scale(15), fontWeight: 'bold'
+    }
 })

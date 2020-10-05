@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Alert } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import LinearGradient from "react-native-linear-gradient";
-import changeNavigationBarColor from "react-native-navigation-bar-color";
+//import changeNavigationBarColor from "react-native-navigation-bar-color";
+import { useNavigation } from '@react-navigation/native';
 
 import {
   fetchWeatherOpenWeather,
@@ -15,9 +16,6 @@ import { fetchWeatherHourly } from "./exports/hourlyWeather";
 import HourBar from "./HourBar";
 import { Seperator } from "./Seperator";
 import DailySection from "./DailySection";
-
-
-
 
 class WeatherPage extends React.PureComponent {
   constructor(props) {
@@ -44,27 +42,27 @@ class WeatherPage extends React.PureComponent {
     };
   }
 
-  
+
 
 
   componentDidMount() {
 
-    setTimeout(() => { changeNavigationBarColor('#00c9e5') }, 300);
-    
+    //setTimeout(() => { changeNavigationBarColor('#00c9e5') }, 300);
+
     this.getLocation();
   }
 
   componentWillUnmount() {
-    changeNavigationBarColor('#eaeed3', true)
+    //changeNavigationBarColor('#eaeed3', true)
   }
-  
+
 
   getLocation() {
+        const { navigation } = this.props;
         fetchWeatherOpenWeather(
           lat, lon
         ).then(
           res => {
-            
             this.setState({
               weather: res.weather,
               //location: res.location,
@@ -120,7 +118,7 @@ class WeatherPage extends React.PureComponent {
                 description: json.hourlyForecasts.forecastLocation.forecast[curIndex]
                           .description,
                 skyDescLoaded: true,
-                
+
               });
               /*
               const { perceptionDesc } = this.state;
@@ -130,7 +128,17 @@ class WeatherPage extends React.PureComponent {
               }*/
             })
           )
-        );
+        )/*.catch(err => {
+          if(err.message === "Network request failed")
+            Alert.alert(
+                'שגיאה',
+                'אין חיבור אינטרנט',
+                [
+                  { text: 'חזרה', onPress: () => navigation.goBack() }
+                ],
+                { cancelable: false }
+            );
+        });*/
   }
   getDayOfHour(hour) {
     var day = new Date("2019-02-28"); // Feb 28 2019
@@ -226,7 +234,7 @@ class WeatherPage extends React.PureComponent {
 
   render() {
     var { curHour, lat, lon } = this.state;
-    
+
     //var curHour = "00";
     var nextDay = false;
     const mainWeatherIconName = this.getTempIconName(curHour);
@@ -245,7 +253,7 @@ class WeatherPage extends React.PureComponent {
           <View style={{ alignItems: "center", flexDirection: "row" }}>
             {this.getMainIcon(mainWeatherIconName, mainWeatherIconColor)}
             <Text style={styles.tempText}>{this.state.temp}° </Text>
-            
+
           </View>
 
         </View>
@@ -350,7 +358,11 @@ class WeatherPage extends React.PureComponent {
   }
 }
 
-export default WeatherPage;
+export default function(props) {
+  const navigation = useNavigation();
+
+  return <WeatherPage {...props} navigation={navigation} />;
+}
 
 const styles = StyleSheet.create({
   container: {
